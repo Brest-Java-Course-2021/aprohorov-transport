@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class RouteDaoImpl implements RouteDao {
 
-    public static final Logger LOGGER= LoggerFactory.getLogger(RouteDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -39,44 +39,58 @@ public class RouteDaoImpl implements RouteDao {
 
     @Override
     public List<Route> getAll() {
+        LOGGER.debug("Get all routes from DB");
         String request = "SELECT * FROM ROUTE AS R ORDER BY R.NUMBER_ROUTE";
-        return jdbcTemplate.query(request, rowMapper);
+        List<Route> routes = jdbcTemplate.query(request, rowMapper);
+        LOGGER.info("Get all routes and their numbers is {}", routes.size());
+        return routes;
     }
 
     @Override
     public Route findByNumberRoute(Integer numberRoute) {
-        return jdbcTemplate.queryForObject("SELECT * FROM ROUTE WHERE NUMBER_ROUTE = ?", rowMapper, numberRoute);
+        LOGGER.debug("Find route from DB with number route {}", numberRoute);
+        String request = "SELECT * FROM ROUTE WHERE NUMBER_ROUTE = ?";
+        Route route = jdbcTemplate.queryForObject(request, rowMapper, numberRoute);
+        LOGGER.info("Found route with number route {} ", numberRoute);
+        return route;
     }
 
     @Override
     public Route save(Route model) {
+        LOGGER.debug("Save route with parameters: number_route = {}, " + "length = {}, lap_time = {}, number_of_stops = {}",
+                model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops());
         Number number = simpleJdbcInsert.executeAndReturnKey(mapRoute(model));
         model.setRouteId(number.intValue());
-
+        LOGGER.info("Save route which have number route => {}", model.getNumberRoute());
         return model;
     }
 
     @Override
     public Integer delete(Integer numberRoute) {
-        int delete = jdbcTemplate.update("DELETE FROM ROUTE WHERE NUMBER_ROUTE = ?", numberRoute);
-        LOGGER.info("Удаление по numberRoute = {} и количество удаленных  данных = {}", numberRoute, delete);
+        LOGGER.debug("Delete route from DB by numberRoute => {} ", numberRoute);
+        String request = "DELETE FROM ROUTE WHERE NUMBER_ROUTE = ?";
+        int delete = jdbcTemplate.update(request, numberRoute);
+        LOGGER.info("Route with number route {} deleted from DB in quantity {}", numberRoute,delete);
         return delete;
     }
 
     @Override
     public Integer update(Route model) {
+        LOGGER.debug("Update route with  number route {} in DB", model.getNumberRoute());
         String request = "UPDATE ROUTE SET NUMBER_ROUTE = ?,LENGTH = ?,LAP_TIME = ?,NUMBER_OF_STOPS= ? WHERE NUMBER_ROUTE = ?";
         int update = jdbcTemplate.update(request, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getNumberRoute());
-        LOGGER.info("UPDATE по numberRoute = {} и количество удаленных  данных = {}", model.getNumberRoute(), update);
+        LOGGER.info("Route with number route {} updated in BD", model.getNumberRoute());
         return update;
     }
 
     private Map<String, Object> mapRoute(Route model) {
+
         Map<String, Object> mapRoute = new HashMap<>();
         mapRoute.put("NUMBER_ROUTE", model.getNumberRoute());
         mapRoute.put("LENGTH", model.getLength());
         mapRoute.put("LAP_TIME", model.getLapTime());
         mapRoute.put("NUMBER_OF_STOPS", model.getNumberOfStops());
+
         return mapRoute;
     }
 }
