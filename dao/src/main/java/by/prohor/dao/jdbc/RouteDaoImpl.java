@@ -2,6 +2,8 @@ package by.prohor.dao.jdbc;
 
 import by.prohor.dao.RouteDao;
 import by.prohor.model.Route;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +19,8 @@ import java.util.Map;
  */
 
 public class RouteDaoImpl implements RouteDao {
+
+    public static final Logger LOGGER= LoggerFactory.getLogger(RouteDaoImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -55,7 +59,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer delete(Integer numberRoute) {
         int delete = jdbcTemplate.update("DELETE FROM ROUTE WHERE NUMBER_ROUTE = ?", numberRoute);
-//        LOGGER.info("Удаление по id = {} и количество удаленных  данных = {}", id, delete);
+        LOGGER.info("Удаление по numberRoute = {} и количество удаленных  данных = {}", numberRoute, delete);
         return delete;
     }
 
@@ -63,7 +67,7 @@ public class RouteDaoImpl implements RouteDao {
     public Integer update(Route model) {
         String request = "UPDATE ROUTE SET NUMBER_ROUTE = ?,LENGTH = ?,LAP_TIME = ?,NUMBER_OF_STOPS= ? WHERE NUMBER_ROUTE = ?";
         int update = jdbcTemplate.update(request, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getNumberRoute());
-//        LOGGER.info("Удаление по id = {} и количество удаленных  данных = {}", model.getRouteId()id, update);
+        LOGGER.info("UPDATE по numberRoute = {} и количество удаленных  данных = {}", model.getNumberRoute(), update);
         return update;
     }
 

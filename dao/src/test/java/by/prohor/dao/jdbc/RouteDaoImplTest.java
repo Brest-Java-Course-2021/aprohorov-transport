@@ -5,6 +5,7 @@ import by.prohor.model.Route;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -47,10 +48,16 @@ public class RouteDaoImplTest {
         Route byNumberRoute = routeDao.findByNumberRoute(7);
         byNumberRoute.setLength(99999.999);
         assertEquals(1, (int) routeDao.update(byNumberRoute));
+        assertEquals(routeDao.findByNumberRoute(7).getLength(),byNumberRoute.getLength());
     }
 
     @Test
     public void findByNumberRoute() {
         assertNotNull(routeDao.findByNumberRoute(7));
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void findByNumberRoute_thanEmptyResultDataAccessException(){
+        routeDao.findByNumberRoute(99999);
     }
 }
