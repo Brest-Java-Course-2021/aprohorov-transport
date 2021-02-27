@@ -49,28 +49,28 @@
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <input class="form-control-sm me-sm-2" name="start" type="number" aria-label="Search">
-                    <input class="form-control-sm me-sm-2" name="end" type="number" aria-label="Search">
+                    <input class="form-control-sm me-sm-2" name="start" type="number" aria-label="Search" step="any" min="1">
+                    <input class="form-control-sm me-sm-2" name="end" type="number" aria-label="Search" step="any" min="1">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             Search Option
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
                             <li>
-                                <button class="dropdown-item" type="submit">Number route</button>
+                                <button class="dropdown-item" type="submit" name="search" value="1">Number route</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit">Length</button>
+                                <button class="dropdown-item" type="submit" name="search" value="2">Length</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit">Lap time</button>
+                                <button class="dropdown-item" type="submit" name="search" value="3">Lap time</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit">Number of stops</button>
+                                <button class="dropdown-item" type="submit" name="search" value="4">Number of stops</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit">Number of vehicles</button>
+                                <button class="dropdown-item" type="submit" name="search" value="5">Number of vehicles</button>
                             </li>
                         </ul>
                     </div>
@@ -112,7 +112,7 @@
                     <td>48</td>
                     <td>14</td>
                     <td>
-                        <a href="transport.html" class="link-info">5</a>
+                        <a href="transport.html" class="link-info">3</a>
                     </td>
                     <td>
                         <a href="route_edit.html">
@@ -130,7 +130,9 @@
                     <td>2.7</td>
                     <td>24</td>
                     <td>8</td>
-                    <td>3</td>
+                <td>
+                    <a href="transport.html" class="link-info">2</a>
+                </td>
                     <td>
                         <a href="route_edit.html">
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
@@ -146,7 +148,9 @@
                     <td>3.4</td>
                     <td>36</td>
                     <td>18</td>
-                    <td>2</td>
+                    <td>
+                        <a href="transport.html" class="link-info">4</a>
+                    </td>
                     <td>
                         <a href="route_edit.html">
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
