@@ -24,6 +24,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>5.3.4</spring.version>
         <junit4.version>4.12</junit4.version>
+        <logback.version>1.2.3</logback.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <thymeleaf.version>3.0.12.RELEASE</thymeleaf.version>
     </properties>
 
@@ -112,9 +114,16 @@
             </dependency>
 
             <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit4.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.30</version>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
@@ -129,15 +138,32 @@
                 <version>${logback.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit4.version}</version>
-                <scope>test</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.6</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
