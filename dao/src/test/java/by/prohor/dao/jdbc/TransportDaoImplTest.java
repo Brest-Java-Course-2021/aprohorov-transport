@@ -57,7 +57,7 @@ public class TransportDaoImplTest {
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    public void findByNumberRoute_thanEmptyResultDataAccessException(){
+    public void findByNumberRoute_thanEmptyResultDataAccessException() {
         transportDao.findById(9999);
     }
 }

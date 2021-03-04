@@ -37,6 +37,7 @@ public class TransportDaoImpl implements TransportDao {
                 .usingGeneratedKeyColumns("TRANSPORT_ID");
     }
 
+
     @Override
     public List<Transport> getAll() {
         LOGGER.debug("Get all transports from DB");
@@ -70,7 +71,7 @@ public class TransportDaoImpl implements TransportDao {
         LOGGER.debug("Delete transport  from DB with id => {} ", transportId);
         String request = "DELETE FROM TRANSPORT WHERE TRANSPORT_ID = ?";
         int delete = jdbcTemplate.update(request, transportId);
-        LOGGER.info("Transport with id {} deleted from DB in quantity {}", transportId,delete);
+        LOGGER.info("Transport with id {} deleted from DB in quantity {}", transportId, delete);
         return delete;
     }
 
@@ -79,7 +80,7 @@ public class TransportDaoImpl implements TransportDao {
         LOGGER.debug("Update transport with id {} in DB", model.getNumberRoute());
         String request = "UPDATE TRANSPORT SET TRANSPORT_TYPE = ?,FUEL_TYPE = ?,REGISTER_NUMBER= ?,CAPACITY= ?, DATE_OF_MANUFACTURE = ? WHERE TRANSPORT_ID = ?";
         int update = jdbcTemplate.update(request, String.valueOf(model.getTransportType()), String.valueOf(model.getFuelType()), model.getRegisterNumber(), model.getCapacity(), model.getDateOfManufacture(), model.getTransportId());
-        LOGGER.info("Transport with id {} updated in BD in quantity {}", model.getNumberRoute(),update);
+        LOGGER.info("Transport with id {} updated in BD in quantity {}", model.getNumberRoute(), update);
         return update;
     }
 

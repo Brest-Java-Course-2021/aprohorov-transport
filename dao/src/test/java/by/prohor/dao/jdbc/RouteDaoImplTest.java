@@ -48,7 +48,7 @@ public class RouteDaoImplTest {
         Route byNumberRoute = routeDao.findByNumberRoute(7);
         byNumberRoute.setLength(99999.999);
         assertEquals(1, (int) routeDao.update(byNumberRoute));
-        assertEquals(routeDao.findByNumberRoute(7).getLength(),byNumberRoute.getLength());
+        assertEquals(routeDao.findByNumberRoute(7).getLength(), byNumberRoute.getLength());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class RouteDaoImplTest {
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
-    public void findByNumberRoute_thanEmptyResultDataAccessException(){
+    public void findByNumberRoute_thanEmptyResultDataAccessException() {
         routeDao.findByNumberRoute(99999);
     }
 }
