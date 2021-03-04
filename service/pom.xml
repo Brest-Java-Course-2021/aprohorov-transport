@@ -6,14 +6,15 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>by.prohorov</groupId>
         <artifactId>transportPark</artifactId>
+        <groupId>by.prohorov</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dao</artifactId>
+    <artifactId>service</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>model</artifactId>
@@ -21,31 +22,28 @@
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>test-db</artifactId>
+            <artifactId>dao</artifactId>
         </dependency>
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>dao-api</artifactId>
+            <artifactId>service-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>

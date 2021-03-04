@@ -2,6 +2,7 @@ package by.prohor.model;
 
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TypeTransport;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
 /**
  * Created by Artsiom Prokharau 22.02.2021
  */
+
 
 public class Transport {
 

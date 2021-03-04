@@ -1,10 +1,13 @@
 package by.prohor.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
 /**
  * Created by Artsiom Prokharau 22.02.2021
  */
+
 
 public class Route {
 
