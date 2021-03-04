@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <style>
 
@@ -7,23 +7,25 @@
             padding-top: 10px;
         }
 
-
     </style>
     <meta charset="UTF-8">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="static/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="static/css/style_navbar.css"/>
+
     <title>Edit</title>
 </head>
 <body>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light  bg-navbar" th:fragment="header">
         <div class="container-xl">
             <a class="navbar-brand" href="startpage.html">
-                <img src="static/img/public-transport.svg" alt="" width="30" height="24" class="d-inline-block align-top">
+                <img src="static/images/public-transport.svg" alt="" width="30" height="24"
+                     class="d-inline-block align-top">
                 Home
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -42,50 +44,36 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
-                            <label for="type">Transport Type</label>
-                            <select id="type" name="transportType">
-                                <option value="Tram">Tram</option>
-                                <option value="Trolley">Trolley</option>
-                                <option value="Bus">Bus</option>
-                            </select>
+                            <label for="numberRoute">Number route</label>
+                            <input id="numberRoute" name="numberRoute" type="number" value="1" min="1">
                         </div>
 
                         <div>
-                            <label for="fuelType">Fuel Type</label>
-                            <select id="fuelType" name="fuel">
-                                <option value="Gasoline">Gasoline</option>
-                                <option value="Diesel">Diesel</option>
-                                <option value="Gas">Gas</option>
-                                <option value="Electric">Electric</option>
-                            </select>
+                            <label for="length">Length (km)</label>
+                            <input id="length" name="length" type="number" step="0.1" value="0.1" min="0.1">
                         </div>
 
                         <div>
-                            <label for="registerNumber">Register number</label>
-                            <input id="registerNumber" name="registerNumber" type="text" placeholder="0000 XX-0">
+                            <label for="lapTime">Lap time (min)</label>
+                            <input id="lapTime" name="lapTime" type="number" value="1" min="1">
                         </div>
 
                         <div>
-                            <label for="capacity">Capacity</label>
-                            <input id="capacity" name="capacity" type="number" min="1" value="1">
-                        </div>
-
-                        <div>
-                            <label for="date">Date of manufacture</label>
-                            <input id="date" name="date" type="date"/>
+                            <label for="numberOfStops">Number of stops</label>
+                            <input id="numberOfStops" name="numberOfStops" type="number" value="1" min="1">
                         </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-3">
-                                <a href="transport.html">
+                                <a href="route.html">
                                     <button class="btn btn-secondary" type="button">Back</button>
                                 </a>
                             </div>
                             <div class="col-xl-9">
                                 <form action="route.html">
-                                    <button class="btn btn-success" type="submit" onclick="alert('Transport create!!')">
-                                        Save
+                                    <button class="btn btn-success" type="submit"
+                                            onclick="alert('new route created!!')">Save
                                     </button>
                                 </form>
                             </div>

@@ -70,7 +70,7 @@ public class RouteDaoImpl implements RouteDao {
         LOGGER.debug("Delete route from DB by numberRoute => {} ", numberRoute);
         String request = "DELETE FROM ROUTE WHERE NUMBER_ROUTE = ?";
         int delete = jdbcTemplate.update(request, numberRoute);
-        LOGGER.info("Route with number route {} deleted from DB in quantity {}", numberRoute,delete);
+        LOGGER.info("Route with number route {} deleted from DB in quantity {}", numberRoute, delete);
         return delete;
     }
 

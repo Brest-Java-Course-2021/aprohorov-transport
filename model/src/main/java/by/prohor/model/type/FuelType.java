@@ -6,5 +6,5 @@ package by.prohor.model.type;
 
 
 public enum FuelType {
-    ELECTRIC, GASOLINE,GAS,DIESEL
+    ELECTRIC, GASOLINE, GAS, DIESEL
 }
