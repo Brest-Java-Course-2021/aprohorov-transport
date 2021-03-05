@@ -1,21 +1,16 @@
 package by.prohor.config;
 
-import by.prohor.dao.DaoApplication;
-import by.prohor.service.config.ServiceConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-
-import java.util.ServiceConfigurationError;
 
 /**
  * Created by Artsiom Prokharau 04.03.2021
@@ -23,7 +18,6 @@ import java.util.ServiceConfigurationError;
 
 @Configuration
 @ComponentScan("by.prohor.controller")
-@Import(ServiceConfiguration.class)
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
 
@@ -56,5 +50,12 @@ public class SpringConfig implements WebMvcConfigurer {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
     }
 }

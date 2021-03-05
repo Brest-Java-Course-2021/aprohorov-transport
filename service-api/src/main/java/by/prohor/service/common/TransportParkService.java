@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Artsiom Prokharau 04.03.2021
  */
 
-public interface TransportParkService <T> {
+public interface TransportParkService<T> {
 
     List<T> getAll();
 

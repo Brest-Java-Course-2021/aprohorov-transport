@@ -4,15 +4,11 @@ import by.prohor.dao.RouteDao;
 import by.prohor.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +18,11 @@ import java.util.Map;
  * Created by Artsiom Prokharau 22.02.2021
  */
 
-@Repository
 public class RouteDaoImpl implements RouteDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -38,7 +32,6 @@ public class RouteDaoImpl implements RouteDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @PostConstruct
     public void init() {
         rowMapper = new BeanPropertyRowMapper<>(Route.class);
         simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)

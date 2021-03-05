@@ -12,19 +12,21 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link href="static/css/bootstrap.min.css" rel="stylesheet"
+    <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="static/css/style_navbar.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/style_navbar.css"
+          th:href="@{/resources/css/style_navbar.css}"/>
 
-    <title>Edit</title>
+    <title th:text="${title}">Edit</title>
 </head>
 <body>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light  bg-navbar" th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
         <div class="container-xl">
-            <a class="navbar-brand" href="startpage.html">
-                <img src="static/images/public-transport.svg" alt="" width="30" height="24"
+            <a class="navbar-brand" href="startpage.html" th:href="@{/startpage}">
+                <img src="../../resources/images/public-transport.svg"
+                     th:href="@{/resources/images/public-transport.svg}" alt="" width="30" height="24"
                      class="d-inline-block align-top">
                 Home
             </a>
@@ -38,44 +40,46 @@
 </header>
 
 <section>
-    <form>
+    <form th:action="@{/route/{update} (update=${method})}" th:object="${route}" method="post">
         <fieldset>
             <div class="container-xl">
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
                             <label for="numberRoute">Number route</label>
-                            <input id="numberRoute" name="numberRoute" type="number" value="1" min="1">
+                            <input id="numberRoute" name="numberRoute" type="number" value="1" min="1"
+                                   th:field="*{numberRoute}">
                         </div>
 
                         <div>
                             <label for="length">Length (km)</label>
-                            <input id="length" name="length" type="number" step="0.1" value="0.1" min="0.1">
+                            <input id="length" name="length" type="number" step="0.1" value="0.1" min="0.1"
+                                   th:field="*{length}">
                         </div>
 
                         <div>
                             <label for="lapTime">Lap time (min)</label>
-                            <input id="lapTime" name="lapTime" type="number" value="1" min="1">
+                            <input id="lapTime" name="lapTime" type="number" value="1" min="1"
+                                   th:field="*{lapTime}">
                         </div>
 
                         <div>
                             <label for="numberOfStops">Number of stops</label>
-                            <input id="numberOfStops" name="numberOfStops" type="number" value="1" min="1">
+                            <input id="numberOfStops" name="numberOfStops" type="number" value="1" min="1"
+                                   th:field="*{numberOfStops}">
                         </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-3">
-                                <a href="route.html">
+                                <a href="route.html" th:href="@{/route}">
                                     <button class="btn btn-secondary" type="button">Back</button>
                                 </a>
                             </div>
                             <div class="col-xl-9">
-                                <form action="route.html">
-                                    <button class="btn btn-success" type="submit"
-                                            onclick="alert('new route created!!')">Save
-                                    </button>
-                                </form>
+                                <button class="btn btn-success" type="submit"
+                                        onclick="alert('new route created!!')">Save
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +96,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
         integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
         crossorigin="anonymous"></script>
-<script src="static/js/bootstrap.min.js"
+<script src="../../resources/js/bootstrap.min.js" th:href="@{/resources/js/bootstrap.min.js}"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
 </body>

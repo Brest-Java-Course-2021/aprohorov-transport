@@ -6,13 +6,10 @@ import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TypeTransport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -23,13 +20,11 @@ import java.util.Map;
  * Created by Artsiom Prokharau 22.02.2021
  */
 
-@Repository
 public class TransportDaoImpl implements TransportDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportDaoImpl.class);
 
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -38,7 +33,6 @@ public class TransportDaoImpl implements TransportDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @PostConstruct
     public void init() {
         simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("TRANSPORT")
