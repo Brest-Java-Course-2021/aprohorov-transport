@@ -6,6 +6,7 @@ import java.util.Objects;
  * Created by Artsiom Prokharau 22.02.2021
  */
 
+
 public class Route {
 
     private Integer routeId;
@@ -16,6 +17,15 @@ public class Route {
 //    private List<Transport> numberOfVehicles;
 
     public Route() {
+    }
+
+    //Todo delete. For test controller
+    public Route(Integer routeId, Integer numberRoute, Double length, Integer lapTime, Integer numberOfStops) {
+        this.routeId = routeId;
+        this.numberRoute = numberRoute;
+        this.length = length;
+        this.lapTime = lapTime;
+        this.numberOfStops = numberOfStops;
     }
 
     public Route(Integer numberRoute, Double length, Integer lapTime, Integer numberOfStops) {

@@ -6,14 +6,15 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>by.prohorov</groupId>
         <artifactId>transportPark</artifactId>
+        <groupId>by.prohorov</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>dao</artifactId>
+    <artifactId>service</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>model</artifactId>
@@ -21,12 +22,17 @@
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>test-db</artifactId>
+            <artifactId>dao</artifactId>
         </dependency>
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>dao-api</artifactId>
+            <artifactId>service-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
 
         <dependency>
@@ -37,36 +43,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
         </dependency>
 
     </dependencies>

@@ -22,7 +22,9 @@ public class RouteDaoImpl implements RouteDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
+
     private JdbcTemplate jdbcTemplate;
+
     private SimpleJdbcInsert simpleJdbcInsert;
     private RowMapper<Route> rowMapper;
 

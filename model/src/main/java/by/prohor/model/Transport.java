@@ -10,6 +10,7 @@ import java.util.Objects;
  * Created by Artsiom Prokharau 22.02.2021
  */
 
+
 public class Transport {
 
     private Integer transportId;

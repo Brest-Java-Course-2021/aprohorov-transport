@@ -24,7 +24,9 @@ public class TransportDaoImpl implements TransportDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportDaoImpl.class);
 
+
     private JdbcTemplate jdbcTemplate;
+
     private SimpleJdbcInsert simpleJdbcInsert;
 
     public TransportDaoImpl(JdbcTemplate jdbcTemplate) {
