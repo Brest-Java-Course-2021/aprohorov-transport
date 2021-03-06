@@ -3,6 +3,8 @@ package by.prohor.service.impl;
 import by.prohor.dao.TransportDao;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,12 +12,15 @@ import java.util.List;
  * Created by Artsiom Prokharau 04.03.2021
  */
 
-//@Service
-//@Transactional
+@Service
+@Transactional
 public class TransportServiceImpl implements TransportService {
 
-    //    @Autowired
-    private TransportDao transportDao;
+    private final TransportDao transportDao;
+
+    public TransportServiceImpl(TransportDao transportDao) {
+        this.transportDao = transportDao;
+    }
 
     @Override
     public Transport findById(Integer Id) {

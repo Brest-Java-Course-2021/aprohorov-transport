@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <logger name="by.prohor.dao.jdbc" level="DEBUG">
+    <logger name="by.prohor.dao.jdbc" level="INFO">
         <appender-ref ref="CONSOLE"/>
     </logger>
 

@@ -9,5 +9,4 @@ import by.prohor.service.common.TransportParkService;
 
 public interface TransportService extends TransportParkService<Transport> {
 
-    Transport findById(Integer transportId);
 }
