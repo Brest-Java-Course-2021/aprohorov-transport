@@ -4,10 +4,12 @@ import by.prohor.dao.RouteDao;
 import by.prohor.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,15 +20,31 @@ import java.util.Map;
  * Created by Artsiom Prokharau 22.02.2021
  */
 
+@Repository
 public class RouteDaoImpl implements RouteDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
     private RowMapper<Route> rowMapper;
+
+    @Value("${route.getAll}")
+    private String getAllSql;
+
+    @Value("${route.findByNumberRoute}")
+    private String findByNumberRouteSql;
+
+    @Value("${route.findById}")
+    private String findByIdSql;
+
+    @Value("${route.delete}")
+    private String deleteSql;
+
+    @Value("${route.update}")
+    private String updateSql;
 
     public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -42,8 +60,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public List<Route> getAll() {
         LOGGER.debug("Get all routes from DB");
-        String request = "SELECT * FROM ROUTE AS R ORDER BY R.NUMBER_ROUTE";
-        List<Route> routes = jdbcTemplate.query(request, rowMapper);
+        List<Route> routes = jdbcTemplate.query(getAllSql, rowMapper);
         LOGGER.info("Get all routes and their numbers is {}", routes.size());
         return routes;
     }
@@ -51,8 +68,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Route findByNumberRoute(Integer numberRoute) {
         LOGGER.debug("Find route from DB with number route {}", numberRoute);
-        String request = "SELECT * FROM ROUTE WHERE NUMBER_ROUTE = ?";
-        Route route = jdbcTemplate.queryForObject(request, rowMapper, numberRoute);
+        Route route = jdbcTemplate.queryForObject(findByNumberRouteSql, rowMapper, numberRoute);
         LOGGER.info("Found route with number route {} ", numberRoute);
         return route;
     }
@@ -70,8 +86,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer delete(Integer numberRoute) {
         LOGGER.debug("Delete route from DB by numberRoute => {} ", numberRoute);
-        String request = "DELETE FROM ROUTE WHERE NUMBER_ROUTE = ?";
-        int delete = jdbcTemplate.update(request, numberRoute);
+        int delete = jdbcTemplate.update(deleteSql, numberRoute);
         LOGGER.info("Route with number route {} deleted from DB in quantity {}", numberRoute, delete);
         return delete;
     }
@@ -79,10 +94,17 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer update(Route model) {
         LOGGER.debug("Update route with  number route {} in DB", model.getNumberRoute());
-        String request = "UPDATE ROUTE SET NUMBER_ROUTE = ?,LENGTH = ?,LAP_TIME = ?,NUMBER_OF_STOPS= ? WHERE NUMBER_ROUTE = ?";
-        int update = jdbcTemplate.update(request, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getNumberRoute());
+        int update = jdbcTemplate.update(updateSql, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getNumberRoute());
         LOGGER.info("Route with number route {} updated in BD", model.getNumberRoute());
         return update;
+    }
+
+    @Override
+    public Route findById(Integer id) {
+        LOGGER.debug("Find route from DB with id {}", id);
+        Route route = jdbcTemplate.queryForObject(findByIdSql, rowMapper, id);
+        LOGGER.info("Found route with id {} ", id);
+        return route;
     }
 
     private Map<String, Object> mapRoute(Route model) {

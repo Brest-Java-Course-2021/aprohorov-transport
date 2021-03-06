@@ -1,6 +1,7 @@
 package by.prohor.dao.jdbc;
 
 import by.prohor.dao.TransportDao;
+import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TypeTransport;
@@ -17,7 +18,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:config-db.xml", "classpath*:test-dao.xml"})
+@ContextConfiguration(classes = DaoConfiguration.class)
 public class TransportDaoImplTest {
 
     @Autowired

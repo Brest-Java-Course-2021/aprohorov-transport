@@ -1,6 +1,7 @@
 package by.prohor.dao.jdbc;
 
 import by.prohor.dao.RouteDao;
+import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.model.Route;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:config-db.xml", "classpath*:test-dao.xml"})
+@ContextConfiguration(classes = DaoConfiguration.class)
 public class RouteDaoImplTest {
 
     @Autowired
@@ -59,5 +60,9 @@ public class RouteDaoImplTest {
     @Test(expected = EmptyResultDataAccessException.class)
     public void findByNumberRoute_thanEmptyResultDataAccessException() {
         routeDao.findByNumberRoute(99999);
+    }
+
+    @Test
+    public void findById() {
     }
 }

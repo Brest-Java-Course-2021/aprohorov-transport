@@ -16,5 +16,6 @@ public interface TransportParkService<T> {
 
     Integer update(T model);
 
+    T findById(Integer id);
 }
 

@@ -1,8 +1,11 @@
 package by.prohor.service.impl;
 
 import by.prohor.dao.RouteDao;
+import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,12 +13,15 @@ import java.util.List;
  * Created by Artsiom Prokharau 04.03.2021
  */
 
-//@Service
-//@Transactional
+@Transactional
+@Service
 public class RouteServiceImpl implements RouteService {
 
-    //@Autowired
-    private RouteDao routeDao;
+    private final RouteDao routeDao;
+
+    public RouteServiceImpl(RouteDao routeDao) {
+        this.routeDao = routeDao;
+    }
 
 
     @Override
@@ -41,5 +47,10 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public Integer update(Route model) {
         return routeDao.update(model);
+    }
+
+    @Override
+    public Route findById(Integer id) {
+        return routeDao.findById(id);
     }
 }

@@ -17,5 +17,6 @@ public interface TransportParkDao<T> {
 
     Integer update(T model);
 
+    T findById(Integer id);
 
 }
