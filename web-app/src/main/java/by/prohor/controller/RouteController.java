@@ -37,7 +37,6 @@ public class RouteController {
 
     @PostMapping("/route/update")
     public String updateRouteinDb(@ModelAttribute Route route, BindingResult errors) {
-
         System.out.println(route);
         //Todo update in DB
         return "redirect:/route";
@@ -49,6 +48,7 @@ public class RouteController {
         int count = 0;
         route.setRouteId(++count);
         routes.add(route);
+        System.out.println(route);
         //Todo save in DB
         return "redirect:/route";
     }

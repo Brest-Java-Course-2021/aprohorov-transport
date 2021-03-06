@@ -24,6 +24,17 @@ public class Transport {
     public Transport() {
     }
 
+    //Todo delete. For test controller
+    public Transport(Integer transportId, TypeTransport transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
+        this.transportId = transportId;
+        this.transportType = transportType;
+        this.fuelType = fuelType;
+        this.registerNumber = registerNumber;
+        this.capacity = capacity;
+        this.dateOfManufacture = dateOfManufacture;
+        this.numberRoute = numberRoute;
+    }
+
     public Transport(TypeTransport transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
         this.transportType = transportType;
         this.fuelType = fuelType;
