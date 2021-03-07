@@ -24,7 +24,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
         <div class="container-xl">
-            <a class="navbar-brand" href="startpage.html" th:href="@{/startpage}">
+            <a class="navbar-brand" href="startpage.html" th:href="@{/}">
                 <img src="../../resources/images/public-transport.svg"
                      th:href="@{/resources/images/public-transport.svg}" alt="" width="30" height="24"
                      class="d-inline-block align-top">
@@ -47,26 +47,25 @@
                     <div class="col-sm-8">
                         <div>
                             <label for="numberRoute">Number route</label>
-                            <input id="numberRoute" name="numberRoute" type="number" value="1" min="1"
-                                   th:field="*{numberRoute}">
+                            <input id="numberRoute" th:field="*{numberRoute}" type="number"
+                                    th:placeholder="${route_edit.getNumberRoute()}" min="1"/>
                         </div>
-
                         <div>
                             <label for="length">Length (km)</label>
-                            <input id="length" name="length" type="number" step="0.1" value="0.1" min="0.1"
-                                   th:field="*{length}">
+                            <input id="length" th:field="*{length}" type="number"
+                                   th:placeholder="${route_edit.getLength()}"  step="0.1" min="0.1"/>
                         </div>
 
                         <div>
                             <label for="lapTime">Lap time (min)</label>
-                            <input id="lapTime" name="lapTime" type="number" value="1" min="1"
-                                   th:field="*{lapTime}">
+                            <input id="lapTime" th:field="*{lapTime}" type="number"
+                                   th:placeholder="${route_edit.getLapTime()}"  min="1"/>
                         </div>
 
                         <div>
                             <label for="numberOfStops">Number of stops</label>
-                            <input id="numberOfStops" name="numberOfStops" type="number" value="1" min="1"
-                                   th:field="*{numberOfStops}">
+                            <input id="numberOfStops" th:field="*{numberOfStops}" type="number"
+                                    th:placeholder="${route_edit.getNumberOfStops()}" min="1"/>
                         </div>
                     </div>
                     <div class="container">
@@ -77,9 +76,35 @@
                                 </a>
                             </div>
                             <div class="col-xl-9">
-                                <button class="btn btn-success" type="submit"
-                                        onclick="alert('new route created!!')">Save
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#create"
+                                        class="btn btn-success " th:text="${title}">Save
                                 </button>
+                            </div>
+                            <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"
+                                                th:text="${title} + ' route' "> Route</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body"
+                                             th:text="'Are you sure you want to ' + ${method} + ' information about this route?'">
+                                            <h4>Are you sure you want to ... information about this route?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <a href="route.html" th:href="@{/route/new}">
+                                                <button type="submit" class="btn btn-success" th:text="${title}">Save
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

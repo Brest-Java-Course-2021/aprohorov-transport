@@ -16,14 +16,14 @@
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../../resources/css/style_navbar.css"
           th:href="@{/resources/css/style_navbar.css}"/>
-    <title>Edit</title>
+    <title th:text="${title}">Edit</title>
 </head>
 <body>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
         <div class="container-xl">
-            <a class="navbar-brand" href="startpage.html" th:href="@{/startpage}">
+            <a class="navbar-brand" href="startpage.html" th:href="@{/}">
                 <img src="../../resources/images/public-transport.svg"
                      th:href="@{/resources/images/public-transport.svg}" alt="" width="30" height="24"
                      class="d-inline-block align-top">
@@ -46,7 +46,7 @@
                     <div class="col-sm-8">
                         <div>
                             <label for="type">Transport Type</label>
-                            <select id="type" name="transportType" th:field="*{transportType}">
+                            <select id="type" name="transportType" th:field="*{transportType}" >
                                 <option value="TRAM">Tram</option>
                                 <option value="TROLLEY">Trolley</option>
                                 <option value="BUS">Bus</option>
@@ -55,7 +55,7 @@
 
                         <div>
                             <label for="fuelType">Fuel Type</label>
-                            <select id="fuelType" name="fuel" th:field="*{fuelType}">
+                            <select id="fuelType" name="fuel" th:field="*{fuelType}" >
                                 <option value="GASOLINE">Gasoline</option>
                                 <option value="DIESEL">Diesel</option>
                                 <option value="GAS">Gas</option>
@@ -64,18 +64,18 @@
                         </div>
                         <div>
                             <label for="registerNumber">Register number</label>
-                            <input id="registerNumber" name="registerNumber" type="text" placeholder="0000 XX-0"
+                            <input id="registerNumber" name="registerNumber" type="text"   placeholder="0000 XX-0"
                                    th:field="*{registerNumber}">
                         </div>
 
                         <div>
                             <label for="capacity">Capacity</label>
-                            <input id="capacity" name="capacity" type="number" min="1" value="1" th:field="*{capacity}">
+                            <input id="capacity" name="capacity" type="number" min="1"  th:field="*{capacity}">
                         </div>
 
                         <div>
                             <label for="date">Date of manufacture</label>
-                            <input id="date" name="date" type="date" th:field="*{dateOfManufacture}">
+                            <input id="date" name="date" type="date" th:field="*{dateOfManufacture}" >
                         </div>
                     </div>
                     <div class="container">
@@ -86,9 +86,30 @@
                                 </a>
                             </div>
                             <div class="col-xl-9">
-                                <button class="btn btn-success" type="submit" onclick="alert('Transport create!!')">
-                                    Save
-                                </button>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#create"
+                                        class="btn btn-success " th:text="${title}">Save</button>
+                            </div>
+                            <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel" th:text="${method} + ' transport' "> Transport</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body"  th:text="'Are you sure you want to ' + ${method} + ' information about this transport?'">
+                                            <h4>Are you sure you want to ... information about this transport?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                            </button>
+                                            <a href="transport.html" th:href="@{/transport/new}">
+                                                <button type="submit" class="btn btn-success"  th:text="${title}">Save</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -98,7 +119,7 @@
     </form>
 </section>
 
-<footer>
+    <footer>
     <hr/>
     <p class="container-xl">&copy;Created by Artsiom Prokharau 2021</p>
 </footer>

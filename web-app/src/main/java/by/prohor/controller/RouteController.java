@@ -4,10 +4,7 @@ import by.prohor.model.Route;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,35 +14,35 @@ import java.util.List;
  */
 
 @Controller
+@RequestMapping(value="/route")
 public class RouteController {
 
 
     public List<Route> routes = routesAdd();
+    public static int count = 0;
 
-
-    @GetMapping("/route")
+    @GetMapping("")
     public String allRoute(Model model) {
         model.addAttribute("routes", routes);
         return "route";
     }
 
-    @GetMapping("/delete/{numberRoute}")
-    public String deleteRoute(Model model, @PathVariable int numberRoute) {
-        routes.remove(numberRoute);
+    @GetMapping("/delete/{id}")
+    public String deleteRoute(Model model, @PathVariable int id) {
+        routes.remove(id - 1);
         return "redirect:/route";
     }
 
-    @PostMapping("/route/update")
+    @PostMapping("/update")
     public String updateRouteinDb(@ModelAttribute Route route, BindingResult errors) {
         System.out.println(route);
         //Todo update in DB
         return "redirect:/route";
     }
 
-    @PostMapping("/route/new")
+    @PostMapping("/new")
     public String createRouteInDb(@ModelAttribute Route route, BindingResult errors) {
         System.out.println(route);
-        int count = 0;
         route.setRouteId(++count);
         routes.add(route);
         System.out.println(route);
@@ -53,27 +50,29 @@ public class RouteController {
         return "redirect:/route";
     }
 
-    @GetMapping("/route_edit/{id}")
+    @GetMapping("/edit/{id}")
     public String editRoute(Model model, @PathVariable Integer id) {
         Route route = new Route();
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
         model.addAttribute("route", route);
+        model.addAttribute("route_edit", routes.get(id - 1));
         return "route_edit";
     }
 
-    @GetMapping("/route/create")
+    @GetMapping("/create")
     public String createRoute(Model model) {
         Route route = new Route();
         model.addAttribute("title", "Create");
         model.addAttribute("method", "new");
         model.addAttribute("route", route);
+        // Todo test auto
+        model.addAttribute("route_edit", new Route());
         return "route_edit";
     }
 
     private List<Route> routesAdd() {
         routes = new ArrayList<>();
-        int count = 0;
         routes.add(new Route(++count, 1, 12.3, 26, 11));
         routes.add(new Route(++count, 6, 34.4, 43, 8));
         routes.add(new Route(++count, 2, 24.5, 11, 21));
