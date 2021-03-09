@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class TransportDaoImpl implements TransportDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @PostConstruct
     public void init() {
         simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("TRANSPORT")

@@ -17,13 +17,11 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
  */
 
 @Configuration
-@ComponentScan("by.prohor.controller")
-@EnableWebMvc
-public class SpringConfig implements WebMvcConfigurer {
+public class ThymeleafConfiguration implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
 
-    public SpringConfig(ApplicationContext applicationContext) {
+    public ThymeleafConfiguration(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

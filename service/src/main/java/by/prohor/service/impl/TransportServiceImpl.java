@@ -3,6 +3,7 @@ package by.prohor.service.impl;
 import by.prohor.dao.TransportDao;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class TransportServiceImpl implements TransportService {
     public TransportServiceImpl(TransportDao transportDao) {
         this.transportDao = transportDao;
     }
+
 
     @Override
     public Transport findById(Integer Id) {

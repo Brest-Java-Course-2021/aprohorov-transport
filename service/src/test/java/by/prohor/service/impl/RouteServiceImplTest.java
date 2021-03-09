@@ -1,6 +1,5 @@
 package by.prohor.service.impl;
 
-import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.service.RouteService;
 import by.prohor.service.config.ServiceConfiguration;
 import org.junit.Test;
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = ServiceConfiguration.class)
+@ContextConfiguration(classes = {ServiceConfiguration.class})
 public class RouteServiceImplTest {
 
 
