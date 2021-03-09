@@ -88,18 +88,18 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Integer delete(Integer numberRoute) {
-        LOGGER.debug("Delete route from DB by numberRoute => {} ", numberRoute);
-        int delete = jdbcTemplate.update(deleteSql, numberRoute);
-        LOGGER.info("Route with number route {} deleted from DB in quantity {}", numberRoute, delete);
+    public Integer delete(Integer id) {
+        LOGGER.debug("Delete route from DB by id => {} ", id);
+        int delete = jdbcTemplate.update(deleteSql, id);
+        LOGGER.info("Route with id => {} deleted from DB in quantity {}", id, delete);
         return delete;
     }
 
     @Override
     public Integer update(Route model) {
-        LOGGER.debug("Update route with  number route {} in DB", model.getNumberRoute());
-        int update = jdbcTemplate.update(updateSql, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getNumberRoute());
-        LOGGER.info("Route with number route {} updated in BD", model.getNumberRoute());
+        LOGGER.debug("Update route with  Id => {} in DB", model.getRouteId());
+        int update = jdbcTemplate.update(updateSql, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getRouteId());
+        LOGGER.info("Route with id => {} updated in BD", model.getRouteId());
         return update;
     }
 

@@ -129,32 +129,32 @@
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#delete"
+                        <button type="button" data-bs-toggle="modal"  data-bs-target="#delete"
                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
                                 class="d-none d-md-inline">&nbspDelete</span></button>
 
-                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h6 class="modal-title" id="exampleModalLabel">Delete Route</h6>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4>Are you sure you want to delete information about this route? </h4>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                        </button>
-                                        <a href="route.html" th:href="@{/route/delete/{id}(id=${route.getRouteId()})}">
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </a>
-                                    </div>
+                    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title" id="exampleModalLabel">Delete Route</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Are you sure you want to delete information about this route? </h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <a href="route.html" th:href="@{/route/delete/{id}(id=${route.getNumberRoute()})}">
+                                        <button type="button" class="btn btn-danger">Delete</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </td>
                 </tr>
                 <!--                <tr>-->

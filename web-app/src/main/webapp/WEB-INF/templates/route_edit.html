@@ -40,32 +40,35 @@
 </header>
 
 <section>
-    <form th:action="@{/route/{update} (update=${method})}" th:object="${route}" method="post">
+    <form th:action="@{/route/{update} (update=${method})}"  method="post">
         <fieldset>
             <div class="container-xl">
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
+                            <input type="hidden" th:field="*{current_route.routeId}"/>
+                        </div>
+                        <div>
                             <label for="numberRoute">Number route</label>
-                            <input id="numberRoute" th:field="*{numberRoute}" type="number"
-                                    th:placeholder="${route_edit.getNumberRoute()}" min="1"/>
+                            <input id="numberRoute" th:name="numberRoute" type="number"
+                                    th:value="${current_route.getNumberRoute()}" min="1"/>
                         </div>
                         <div>
                             <label for="length">Length (km)</label>
-                            <input id="length" th:field="*{length}" type="number"
-                                   th:placeholder="${route_edit.getLength()}"  step="0.1" min="0.1"/>
+                            <input id="length" th:name="length" type="number"
+                                   th:value="${current_route.getLength()}"  step="0.1" min="0.1"/>
                         </div>
 
                         <div>
                             <label for="lapTime">Lap time (min)</label>
-                            <input id="lapTime" th:field="*{lapTime}" type="number"
-                                   th:placeholder="${route_edit.getLapTime()}"  min="1"/>
+                            <input id="lapTime" th:name="lapTime" type="number"
+                                   th:value="${current_route.getLapTime()}"  min="1"/>
                         </div>
 
                         <div>
                             <label for="numberOfStops">Number of stops</label>
-                            <input id="numberOfStops" th:field="*{numberOfStops}" type="number"
-                                    th:placeholder="${route_edit.getNumberOfStops()}" min="1"/>
+                            <input id="numberOfStops" th:name="numberOfStops" type="number"
+                                    th:value="${current_route.getNumberOfStops()}" min="1"/>
                         </div>
                     </div>
                     <div class="container">
@@ -98,7 +101,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                 Close
                                             </button>
-                                            <a href="route.html" th:href="@{/route/new}">
+                                            <a href="route.html" th:href="@{/route/{update} (update=${method})}">
                                                 <button type="submit" class="btn btn-success" th:text="${title}">Save
                                                 </button>
                                             </a>

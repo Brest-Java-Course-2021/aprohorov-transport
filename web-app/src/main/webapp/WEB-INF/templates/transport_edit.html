@@ -45,6 +45,9 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
+                            <input type="hidden" th:field="*{transportId}"/>
+                        </div>
+                        <div>
                             <label for="type">Transport Type</label>
                             <select id="type" name="transportType" th:field="*{transportType}" >
                                 <option value="TRAM">Tram</option>

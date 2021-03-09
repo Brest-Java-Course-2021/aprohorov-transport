@@ -46,10 +46,10 @@ public class RouteDaoImplTest {
 
     @Test
     public void update() {
-        Route byNumberRoute = routeDao.findByNumberRoute(7);
-        byNumberRoute.setLength(99999.999);
-        assertEquals(1, (int) routeDao.update(byNumberRoute));
-        assertEquals(routeDao.findByNumberRoute(7).getLength(), byNumberRoute.getLength());
+        Route route = routeDao.save(new Route(9, 0.9, 9, 9));
+        routeDao.update(new Route(8, 0.8, 8, 8));
+        Route updateRoute = routeDao.findByNumberRoute(8);
+        assertNotEquals(route,updateRoute);
     }
 
     @Test

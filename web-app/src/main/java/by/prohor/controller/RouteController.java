@@ -27,43 +27,36 @@ public class RouteController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteRoute(Model model, @PathVariable int id) {
+    public String deleteRoute(@PathVariable int id) {
         routeService.delete(id);
         return "redirect:/route";
     }
 
     @PostMapping("/update")
-    public String updateRouteinDb(@ModelAttribute Route route, BindingResult errors) {
-        System.out.println(route);
+    public String updateRouteInDb(@ModelAttribute Route route, BindingResult errors) {
         routeService.update(route);
         return "redirect:/route";
     }
 
     @PostMapping("/new")
     public String createRouteInDb(@ModelAttribute Route route, BindingResult errors) {
-        System.out.println(route);
         routeService.save(route);
-        //Todo save in DB
         return "redirect:/route";
     }
 
     @GetMapping("/edit/{id}")
     public String editRoute(Model model, @PathVariable Integer id) {
-        Route route = new Route();
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
-        model.addAttribute("route", route);
         model.addAttribute("current_route", routeService.findById(id));
         return "route_edit";
     }
 
     @GetMapping("/create")
     public String createRoute(Model model) {
-        Route route = new Route();
         model.addAttribute("title", "Create");
         model.addAttribute("method", "new");
-        model.addAttribute("route", route);
-        model.addAttribute("route_edit", new Route());
+        model.addAttribute("current_route", new Route());
         return "route_edit";
     }
 }
