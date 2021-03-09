@@ -1,9 +1,11 @@
 package by.prohor.config;
 
+import by.prohor.service.config.ServiceConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -17,6 +19,9 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
  */
 
 @Configuration
+@ComponentScan("by.prohor.controller")
+@Import(ServiceConfiguration.class)
+@EnableWebMvc
 public class ThymeleafConfiguration implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -24,7 +29,6 @@ public class ThymeleafConfiguration implements WebMvcConfigurer {
     public ThymeleafConfiguration(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
-
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
