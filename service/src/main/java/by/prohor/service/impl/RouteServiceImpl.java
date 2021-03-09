@@ -1,9 +1,9 @@
 package by.prohor.service.impl;
 
 import by.prohor.dao.RouteDao;
-import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

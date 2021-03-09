@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       lang="en">
-<head>
+<head xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <style>
@@ -43,7 +43,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="route.html" th:href="@{/route}">Route</a>
+                        <a class="nav-link" href="route.html" th:href="@{route}">Route</a>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -65,7 +65,7 @@
                 <h1 class="text-decoration-underline">Transport</h1>
             </div>
             <div class="col-sm-2 my-auto">
-                <a href="transport_edit.html" th:href="@{/transport_edit}">
+                <a href="transport_edit.html" th:href="@{/transport/create}">
                     <button type="button" class="btn btn-success"><i class="bi bi-plus-square"></i><span
                             class="d-none d-md-inline">&nbsp;New Transport</span></button>
                 </a>
@@ -92,13 +92,36 @@
                     <td th:text="${transport.getDateOfManufacture()}">12.02.2020</td>
                     <td>
                         <a href="transport_edit.html"
-                           th:href="@{/transport_edit/{id}(id=${transport.getTransportId()})}">
+                           th:href="@{/transport/edit/{id}(id=${transport.getTransportId()})}">
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#delete"
                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
                                 class="d-none d-md-inline">&nbspDelete</span></button>
+
+                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Are you sure you want to delete information about this transport?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <a href="transport.html" th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <!--                <tr>-->
@@ -134,31 +157,7 @@
                 <!--                                class="d-none d-md-inline">&nbspDelete</span></button>-->
 
                 <!--  Modal button delete                      -->
-                <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <h4>Are you sure you want to delete information about this transport?</h4>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                </button>
-                                <a href="transport.html">
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                </td>
-                </tr>
             </table>
         </div>
     </div>

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @ComponentScan("by.prohor.service")
-@Import(value = {DaoConfiguration.class})
+@Import({DaoConfiguration.class})
 public class ServiceConfiguration {
 
 
