@@ -80,11 +80,16 @@
                             <label for="date">Date of manufacture</label>
                             <input id="date" name="date" type="date" th:field="*{dateOfManufacture}" >
                         </div>
+
+                        <div>
+                            <label for="numberRoute">Number route</label>
+                            <input id="numberRoute" name="numberRoute" type="number" th:field="*{numberRoute}" min="1" >
+                        </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-3">
-                                <a href="route.html" th:href="@{/transport}">
+                                <a href="transport.html" th:href="@{/transport}">
                                     <button class="btn btn-secondary" type="button">Back</button>
                                 </a>
                             </div>

@@ -22,6 +22,7 @@ public class TransportController {
     @GetMapping("")
     public String getTransport(Model model) {
         model.addAttribute("transports", transportService.getAll());
+        model.addAttribute("heading", "Transport");
         return "transport";
     }
 
@@ -57,5 +58,12 @@ public class TransportController {
         model.addAttribute("method", "new");
         model.addAttribute("current_transport", new Transport());
         return "transport_edit";
+    }
+
+    @GetMapping("/route/{id}")
+    public String getTransportWithNumberRoute(Model model, @PathVariable int id) {
+        model.addAttribute("heading", "Transport route " + id);
+        model.addAttribute("transports", transportService.findByNumberRoute(id));
+        return "transport";
     }
 }

@@ -48,4 +48,9 @@ public class TransportServiceImpl implements TransportService {
     public Integer update(Transport model) {
         return transportDao.update(model);
     }
+
+    @Override
+    public List<Transport> findByNumberRoute(Integer numberRoute){
+        return transportDao.findByNumberRoute(numberRoute);
+    }
 }
