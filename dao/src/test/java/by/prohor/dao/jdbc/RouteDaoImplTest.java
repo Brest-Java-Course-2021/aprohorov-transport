@@ -47,9 +47,10 @@ public class RouteDaoImplTest {
     @Test
     public void update() {
         Route route = routeDao.save(new Route(9, 0.9, 9, 9));
-        routeDao.update(new Route(8, 0.8, 8, 8));
-        Route updateRoute = routeDao.findByNumberRoute(8);
-        assertNotEquals(route,updateRoute);
+        route.setLength(1.1);
+        route.setLapTime(11);
+        assertTrue(routeDao.update(route) > 0);
+        assertEquals(routeDao.findByNumberRoute(9),route);
     }
 
     @Test
