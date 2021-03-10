@@ -45,6 +45,9 @@ public class TransportDaoImpl implements TransportDao {
     @Value("${transport.update}")
     private String updateSql;
 
+    @Value("${transport.findByNumberRoute}")
+    private String getTransportsFindByNumberRouteSql;
+
     public TransportDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -94,7 +97,7 @@ public class TransportDaoImpl implements TransportDao {
     @Override
     public Integer update(Transport model) {
         LOGGER.debug("Update transport with id {} in DB", model.getNumberRoute());
-        int update = jdbcTemplate.update(updateSql, String.valueOf(model.getTransportType()), String.valueOf(model.getFuelType()), model.getRegisterNumber(), model.getCapacity(), model.getDateOfManufacture(), model.getTransportId());
+        int update = jdbcTemplate.update(updateSql, String.valueOf(model.getTransportType()), String.valueOf(model.getFuelType()), model.getRegisterNumber(), model.getCapacity(), model.getDateOfManufacture(), model.getNumberRoute(), model.getTransportId());
         LOGGER.info("Transport with id {} updated in BD in quantity {}", model.getNumberRoute(), update);
         return update;
     }
@@ -109,6 +112,14 @@ public class TransportDaoImpl implements TransportDao {
         mapRoute.put("DATE_OF_MANUFACTURE", model.getDateOfManufacture());
         mapRoute.put("NUMBER_ROUTE", model.getNumberRoute());
         return mapRoute;
+    }
+
+    @Override
+    public List<Transport> findByNumberRoute(Integer numberRoute) {
+        LOGGER.debug("Get all transports from DB with number route => " + numberRoute);
+        List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(),numberRoute);
+        LOGGER.info("Get all transports  with number route => {} and their numbers is {}",numberRoute,transports.size());
+        return transports;
     }
 
     private class TransportRowMapper implements RowMapper<Transport> {
