@@ -83,7 +83,7 @@ public class RouteDaoImpl implements RouteDao {
                 model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops());
         Number number = simpleJdbcInsert.executeAndReturnKey(mapRoute(model));
         model.setRouteId(number.intValue());
-        LOGGER.info("Save route which have number route => {}", model.getNumberRoute());
+        LOGGER.info("Save route which have id => {}", model.getRouteId());
         return model;
     }
 

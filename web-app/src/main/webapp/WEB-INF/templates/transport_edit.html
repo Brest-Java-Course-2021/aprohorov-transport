@@ -39,17 +39,17 @@
 </header>
 
 <section>
-    <form th:action="@{/transport/{update} (update=${method})}" th:object="${transport}" method="post">
+    <form th:action="@{/transport/{update} (update=${method})}"  method="post">
         <fieldset>
             <div class="container-xl">
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
-                            <input type="hidden" th:field="*{transportId}"/>
+                            <input type="hidden" th:field="*{current_transport.transportId}"/>
                         </div>
                         <div>
                             <label for="type">Transport Type</label>
-                            <select id="type" name="transportType" th:field="*{transportType}" >
+                            <select id="type" name="transportType" th:field="*{current_transport.transportType}" >
                                 <option value="TRAM">Tram</option>
                                 <option value="TROLLEY">Trolley</option>
                                 <option value="BUS">Bus</option>
@@ -58,7 +58,7 @@
 
                         <div>
                             <label for="fuelType">Fuel Type</label>
-                            <select id="fuelType" name="fuel" th:field="*{fuelType}" >
+                            <select id="fuelType" name="fuel" th:field="*{current_transport.fuelType}" >
                                 <option value="GASOLINE">Gasoline</option>
                                 <option value="DIESEL">Diesel</option>
                                 <option value="GAS">Gas</option>
@@ -68,28 +68,28 @@
                         <div>
                             <label for="registerNumber">Register number</label>
                             <input id="registerNumber" name="registerNumber" type="text"   placeholder="0000 XX-0"
-                                   th:field="*{registerNumber}">
+                                   th:field="*{current_transport.registerNumber}">
                         </div>
 
                         <div>
                             <label for="capacity">Capacity</label>
-                            <input id="capacity" name="capacity" type="number" min="1"  th:field="*{capacity}">
+                            <input id="capacity" name="capacity" type="number" min="1"  th:field="*{current_transport.capacity}">
                         </div>
 
                         <div>
                             <label for="date">Date of manufacture</label>
-                            <input id="date" name="date" type="date" th:field="*{dateOfManufacture}" >
+                            <input id="date" name="date" type="date" th:field="*{current_transport.dateOfManufacture}" >
                         </div>
 
                         <div>
                             <label for="numberRoute">Number route</label>
-                            <input id="numberRoute" name="numberRoute" type="number" th:field="*{numberRoute}" min="1" >
+                            <input id="numberRoute" name="numberRoute" type="number" th:field="*{current_transport.numberRoute}" min="1" >
                         </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-3">
-                                <a href="transport.html" th:href="@{/transport}">
+                                <a href="transport.html" th:href="@{/transport/route/{id} (id=${current_transport.getNumberRoute()})}">
                                     <button class="btn btn-secondary" type="button">Back</button>
                                 </a>
                             </div>
@@ -112,7 +112,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                             </button>
-                                            <a href="transport.html" th:href="@{/transport/new}">
+                                            <a href="transport.html" th:href="@{/transport/{update} (update=${method})}">
                                                 <button type="submit" class="btn btn-success"  th:text="${title}">Save</button>
                                             </a>
                                         </div>

@@ -5,7 +5,6 @@ import by.prohor.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,30 +26,41 @@ public class TransportController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteTransport(Model model, @PathVariable int id) {
+    public String deleteTransport(@PathVariable int id) {
         transportService.delete(id);
-        return "redirect:/transport";
+        return "redirect:/route";
     }
 
     @PostMapping("/update")
-    public String updateTransportInDb(@ModelAttribute Transport transport, BindingResult errors) {
+    public String updateTransportInDb(@ModelAttribute Transport transport) {
         transportService.update(transport);
-        return "redirect:/transport";
+        return "redirect:/route";
     }
 
     @PostMapping("/new")
-    public String createTransportInDb(@ModelAttribute Transport transport, BindingResult errors) {
+    public String createTransportInDb(@ModelAttribute Transport transport) {
        transportService.save(transport);
-        return "redirect:/transport";
+        return "redirect:/route";
     }
 
     @GetMapping("/edit/{id}")
-    public String editTransport(Model model, @PathVariable Integer id) {
+    public String editTransport(Model model, @PathVariable int id) {
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
-        model.addAttribute("transport", transportService.findById(id));
+        model.addAttribute("current_transport", transportService.findById(id));
         return "transport_edit";
     }
+
+    @GetMapping("/create/{id}")
+    public String createTransport(Model model, @PathVariable int id) {
+        model.addAttribute("title", "Create");
+        model.addAttribute("method", "new");
+        Transport transport = new Transport();
+        transport.setNumberRoute(id);
+        model.addAttribute("current_transport", transport);
+        return "transport_edit";
+    }
+
 
     @GetMapping("/create")
     public String createTransport(Model model) {
@@ -64,6 +74,7 @@ public class TransportController {
     public String getTransportWithNumberRoute(Model model, @PathVariable int id) {
         model.addAttribute("heading", "Transport route " + id);
         model.addAttribute("transports", transportService.findByNumberRoute(id));
+        model.addAttribute("new transport", id);
         return "transport";
     }
 }
