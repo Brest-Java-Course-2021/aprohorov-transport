@@ -28,12 +28,14 @@ public class RouteController {
 
     @GetMapping("/delete/{id}")
     public String deleteRoute(@PathVariable int id) {
+        System.out.println(id);
         routeService.delete(id);
         return "redirect:/route";
     }
 
     @PostMapping("/update")
     public String updateRouteInDb(@ModelAttribute Route route, BindingResult errors) {
+        System.out.println(route);
         routeService.update(route);
         return "redirect:/route";
     }

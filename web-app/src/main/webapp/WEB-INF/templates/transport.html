@@ -26,6 +26,29 @@
 </head>
 <body>
 
+<!--<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+<!--                        aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <h4>Are you sure you want to delete information about this transport?</h4>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close-->
+<!--                </button>-->
+<!--                <a href="transport.html" th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">-->
+<!--                    <button type="button" class="btn btn-danger">Delete</button>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
         <div class="container-xl">
@@ -96,68 +119,14 @@
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
+                        <a href="transport_edit.html"
+                           th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#delete"
                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
                                 class="d-none d-md-inline">&nbspDelete</span></button>
-
-                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4>Are you sure you want to delete information about this transport?</h4>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                        </button>
-                                        <a href="transport.html" th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </td>
                 </tr>
-                <!--                <tr>-->
-                <!--                <tr>-->
-                <!--                    <td>Tram</td>-->
-                <!--                    <td>Electric</td>-->
-                <!--                    <td>2484 AN-1</td>-->
-                <!--                    <td>52</td>-->
-                <!--                    <td>12.02.2015</td>-->
-                <!--                    <td>-->
-                <!--                        <a href="transport_edit.html">-->
-                <!--                            <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span-->
-                <!--                                    class="d-none d-md-inline">&nbsp;Edit</span></button>-->
-                <!--                        </a>-->
-                <!--                        <button type="button" data-bs-toggle="modal" data-bs-target="#delete"-->
-                <!--                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span-->
-                <!--                                class="d-none d-md-inline">&nbspDelete</span></button>-->
-                <!--                    </td>-->
-                <!--                </tr>-->
-                <!--                <tr>-->
-                <!--                    <td>Trolley</td>-->
-                <!--                    <td>Electric</td>-->
-                <!--                    <td>5421 AA-1</td>-->
-                <!--                    <td>87</td>-->
-                <!--                    <td>12.02.2012</td>-->
-                <!--                    <td>-->
-                <!--                        <a href="transport_edit.html">-->
-                <!--                            <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span-->
-                <!--                                    class="d-none d-md-inline">&nbsp;Edit</span></button>-->
-                <!--                        </a>-->
-                <!--                        <button type="button" data-bs-toggle="modal" data-bs-target="#delete"-->
-                <!--                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span-->
-                <!--                                class="d-none d-md-inline">&nbspDelete</span></button>-->
-
-                <!--  Modal button delete                      -->
-
             </table>
         </div>
     </div>

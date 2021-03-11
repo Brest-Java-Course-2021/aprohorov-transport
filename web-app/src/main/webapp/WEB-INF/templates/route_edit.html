@@ -40,7 +40,7 @@
 </header>
 
 <section>
-    <form th:action="@{/route/{update} (update=${method})}"  method="post">
+    <form th:action="@{/route/{update} (update=${method})}"  th:method="post" >
         <fieldset>
             <div class="container-xl">
                 <div class="row">
@@ -83,12 +83,12 @@
                                         class="btn btn-success " th:text="${title}">Save
                                 </button>
                             </div>
-                            <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            <div class="modal  fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel"
+                                            <h5 class="modal-title text-center" id="exampleModalLabel"
                                                 th:text="${title} + ' route' "> Route</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
