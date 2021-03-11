@@ -14,7 +14,6 @@ public class Route {
     private Double length;
     private Integer lapTime;
     private Integer numberOfStops;
-//    private List<Transport> numberOfVehicles;
 
     public Route() {
     }
@@ -66,13 +65,6 @@ public class Route {
         this.numberOfStops = numberOfStops;
     }
 
-//    public List<Transport> getNumberOfVehicles() {
-//        return numberOfVehicles;
-//    }
-
-//    public void setNumberOfVehicles(List<Transport> numberOfVehicles) {
-//        this.numberOfVehicles = numberOfVehicles;
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -84,12 +76,11 @@ public class Route {
                 Objects.equals(getLength(), route.getLength()) &&
                 Objects.equals(getLapTime(), route.getLapTime()) &&
                 Objects.equals(getNumberOfStops(), route.getNumberOfStops());
-//                Objects.equals(getNumberOfVehicles(), route.getNumberOfVehicles());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRouteId(), getNumberRoute(), getLength(), getLapTime(), getNumberOfStops());//getNumberOfVehicles());
+        return Objects.hash(getRouteId(), getNumberRoute(), getLength(), getLapTime(), getNumberOfStops());
     }
 
     @Override
