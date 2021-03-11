@@ -31,15 +31,15 @@ public class RouteController {
     @GetMapping("")
     public String allRoute(Model model) {
         List<Route> allRoutes = routeService.getAll();
-        LOGGER.debug("Used {} routes for  rendering template 'route'", allRoutes.size());
+        LOGGER.debug("Used {} routes for rendering template 'route'", allRoutes.size());
         model.addAttribute("routes", allRoutes);
-        LOGGER.info("View all routes and start URL method GET => ( '/' )");
+        LOGGER.info("View all routes and start URL method GET => ( '/route' )");
         return "route";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteRoute(@PathVariable int id) {
-        LOGGER.debug("Delete with template route with number route {}", id);
+        LOGGER.debug("Delete with template route with number route => {}", id);
         routeService.delete(id);
         LOGGER.info("View start URL method GET => ( 'route/delete/{id}' )");
         return "redirect:/route";
@@ -47,7 +47,7 @@ public class RouteController {
 
     @PostMapping("/update")
     public String updateRoute(@ModelAttribute Route route, BindingResult errors) {
-        LOGGER.debug("Update route with template route with parameters =>{}", route);
+        LOGGER.debug("Update route with parameters =>{}", route);
         routeService.update(route);
         LOGGER.info("View start URL method POST => ( 'route/update/' )");
         return "redirect:/route";
@@ -55,7 +55,7 @@ public class RouteController {
 
     @PostMapping("/new")
     public String createRoute(@ModelAttribute Route route, BindingResult errors) {
-        LOGGER.debug("Create new route with template with parameters =>{}", route);
+        LOGGER.debug("Create new with parameters =>{}", route);
         routeService.save(route);
         LOGGER.info("View start URL method POST => ( 'route/new' )");
         return "redirect:/route";
@@ -63,7 +63,7 @@ public class RouteController {
 
     @GetMapping("/edit/{id}")
     public String editRoute(Model model, @PathVariable Integer id) {
-        LOGGER.debug("Update route with template with id =>{}", id);
+        LOGGER.debug("Update route with id =>{}", id);
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
         model.addAttribute("current_route", routeService.findById(id));
@@ -73,11 +73,11 @@ public class RouteController {
 
     @GetMapping("/create")
     public String createRoute(Model model) {
-        LOGGER.debug("Create new route with template");
+        LOGGER.debug("Create new route");
         model.addAttribute("title", "Create");
         model.addAttribute("method", "new");
         model.addAttribute("current_route", new Route());
-        LOGGER.info("View start URL method GET => ( 'route//create' )");
+        LOGGER.info("View start URL method GET => ( 'route/create' )");
         return "route_edit";
     }
 }
