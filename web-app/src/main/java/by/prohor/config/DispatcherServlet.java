@@ -6,7 +6,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
  * Created by Artsiom Prokharau 04.03.2021
  */
 
-public class MyDispatherServlet extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class DispatcherServlet extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -15,7 +15,7 @@ public class MyDispatherServlet extends AbstractAnnotationConfigDispatcherServle
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{ThymeleafConfiguration.class};
+        return new Class[]{AppConfiguration.class};
     }
 
     @Override

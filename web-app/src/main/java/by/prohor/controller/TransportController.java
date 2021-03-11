@@ -2,7 +2,8 @@ package by.prohor.controller;
 
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,16 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @Controller
-@RequestMapping(value="/transport")
+@RequestMapping(value = "/transport")
 public class TransportController {
 
-    @Autowired
-    public TransportService transportService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportController.class);
+
+    public final TransportService transportService;
+
+    public TransportController(TransportService transportService) {
+        this.transportService = transportService;
+    }
 
     @GetMapping("")
     public String getTransport(Model model) {
@@ -39,7 +45,7 @@ public class TransportController {
 
     @PostMapping("/new")
     public String createTransportInDb(@ModelAttribute Transport transport) {
-       transportService.save(transport);
+        transportService.save(transport);
         return "redirect:/route";
     }
 

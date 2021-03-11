@@ -117,8 +117,8 @@ public class TransportDaoImpl implements TransportDao {
     @Override
     public List<Transport> findByNumberRoute(Integer numberRoute) {
         LOGGER.debug("Get all transports from DB with number route => " + numberRoute);
-        List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(),numberRoute);
-        LOGGER.info("Get all transports  with number route => {} and their numbers is {}",numberRoute,transports.size());
+        List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(), numberRoute);
+        LOGGER.info("Get all transports  with number route => {} and their numbers is {}", numberRoute, transports.size());
         return transports;
     }
 

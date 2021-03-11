@@ -50,7 +50,7 @@ public class RouteDaoImplTest {
         route.setLength(1.1);
         route.setLapTime(11);
         assertTrue(routeDao.update(route) > 0);
-        assertEquals(routeDao.findByNumberRoute(9),route);
+        assertEquals(routeDao.findByNumberRoute(9), route);
     }
 
     @Test

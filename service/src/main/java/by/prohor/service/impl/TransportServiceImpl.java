@@ -3,7 +3,6 @@ package by.prohor.service.impl;
 import by.prohor.dao.TransportDao;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +49,7 @@ public class TransportServiceImpl implements TransportService {
     }
 
     @Override
-    public List<Transport> findByNumberRoute(Integer numberRoute){
+    public List<Transport> findByNumberRoute(Integer numberRoute) {
         return transportDao.findByNumberRoute(numberRoute);
     }
 }

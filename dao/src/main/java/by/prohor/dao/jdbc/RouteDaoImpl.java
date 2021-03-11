@@ -88,10 +88,10 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Integer delete(Integer id) {
-        LOGGER.debug("Delete route from DB by id => {} ", id);
-        int delete = jdbcTemplate.update(deleteSql, id);
-        LOGGER.info("Route with id => {} deleted from DB in quantity {}", id, delete);
+    public Integer delete(Integer numberRoute) {
+        LOGGER.debug("Delete route from DB by number route => {} ", numberRoute);
+        int delete = jdbcTemplate.update(deleteSql, numberRoute);
+        LOGGER.info("Route with number route => {} deleted from DB in quantity {}", numberRoute, delete);
         return delete;
     }
 

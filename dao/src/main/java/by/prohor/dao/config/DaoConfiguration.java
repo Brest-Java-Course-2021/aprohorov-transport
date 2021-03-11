@@ -1,7 +1,10 @@
 package by.prohor.dao.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -17,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("by.prohor.dao")
-@PropertySource({"classpath:request.properties", "classpath:database_configuration.properties"})
+@PropertySource({"classpath:request.properties", "classpath:test_database_configuration.properties"})
 public class DaoConfiguration {
 
     @Value("classpath:schema.sql")

@@ -16,6 +16,7 @@
         <module>service</module>
         <module>service-api</module>
         <module>web-app</module>
+        <module>test-db</module>
     </modules>
 
     <properties>
@@ -179,8 +180,8 @@
         </dependencies>
     </dependencyManagement>
 
-   <build>
-       <plugins>
+    <build>
+        <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -200,20 +201,20 @@
                     </execution>
                 </executions>
             </plugin>
-           <plugin>
-               <groupId>org.eclipse.jetty</groupId>
-               <artifactId>jetty-maven-plugin</artifactId>
-               <version>10.0.1</version>
-               <configuration>
-                   <webApp>
-                       <contextPath>/</contextPath>
-                   </webApp>
-                   <httpConnector>
-                       <port>8080</port>
-                   </httpConnector>
-               </configuration>
-           </plugin>
-       </plugins>
-   </build>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>10.0.1</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>8060</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
