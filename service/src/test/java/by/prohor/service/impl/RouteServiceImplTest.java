@@ -39,14 +39,6 @@ public class RouteServiceImplTest {
     }
 
     @Test
-    public void testFindByNumberRoute_thenDaoReturnNotSameValue() {
-        Route route =new Route(9, 0.9, 9, 9);
-        when(routeDaoImpl.findByNumberRoute(9)).thenReturn(route);
-        assertNull(routeServiceImpl.findByNumberRoute(999));
-        assertNotEquals(route, routeServiceImpl.findByNumberRoute(999));
-    }
-
-    @Test
     public void testGetAll_whenReturnEmptyList() {
         assertNotNull(routeServiceImpl.getAll());
     }
