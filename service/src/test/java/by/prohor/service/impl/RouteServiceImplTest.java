@@ -61,7 +61,6 @@ public class RouteServiceImplTest {
 
     @Test
     public void testSave() {
-        when(routeDaoImpl.save(null)).thenReturn();
     }
 
     @Test
