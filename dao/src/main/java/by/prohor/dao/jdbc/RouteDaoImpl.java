@@ -1,6 +1,7 @@
 package by.prohor.dao.jdbc;
 
 import by.prohor.dao.RouteDao;
+import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +50,9 @@ public class RouteDaoImpl implements RouteDao {
     @Value("${route.update}")
     private String updateSql;
 
+    @Value("${route.check}")
+    private String checkSql;
+
     public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -81,6 +85,10 @@ public class RouteDaoImpl implements RouteDao {
     public Route save(Route model) {
         LOGGER.debug("Save route with parameters: number_route = {}, " + "length = {}, lap_time = {}, number_of_stops = {}",
                 model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops());
+        if (!isRouteUnique(model)) {
+            LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
+            throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
+        }
         Number number = simpleJdbcInsert.executeAndReturnKey(mapRoute(model));
         model.setRouteId(number.intValue());
         LOGGER.info("Save route which have id => {}", model.getRouteId());
@@ -98,8 +106,12 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer update(Route model) {
         LOGGER.debug("Update route with  Id => {} in DB", model.getRouteId());
+        if (!isRouteUnique(model)) {
+            LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
+            throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
+        }
         int update = jdbcTemplate.update(updateSql, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getRouteId());
-        LOGGER.info("Route with id => {} updated in BD", model.getRouteId());
+        LOGGER.info("Route with id => {} updated in BD n quantity {}", model.getRouteId(),update);
         return update;
     }
 
@@ -109,6 +121,10 @@ public class RouteDaoImpl implements RouteDao {
         Route route = jdbcTemplate.queryForObject(findByIdSql, rowMapper, id);
         LOGGER.info("Found route with id {} ", id);
         return route;
+    }
+
+    private boolean isRouteUnique(Route model) {
+        return jdbcTemplate.query(checkSql, rowMapper, model.getNumberRoute()).isEmpty();
     }
 
     private Map<String, Object> mapRoute(Route model) {
