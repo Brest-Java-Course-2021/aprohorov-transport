@@ -31,7 +31,7 @@ public class RouteServiceImplTest {
     private RouteDaoImpl routeDaoImpl;
 
     @Test
-    public void testFindByNumberRoute_thenRouteCorrect() {
+    public void testFindByNumberRoute_thenDaoReturnRouteCorrect() {
         Route route =new Route(9, 0.9, 9, 9);
         when(routeDaoImpl.findByNumberRoute(9)).thenReturn(route);
         assertNotNull(routeServiceImpl.findByNumberRoute(9));
@@ -39,12 +39,18 @@ public class RouteServiceImplTest {
     }
 
     @Test
-    public void testGetAll_whenReturnEmptyList() {
+    public void testFindByNumberRoute_thenDaoReturnNull() {
+        when(routeDaoImpl.findByNumberRoute(9)).thenReturn(null);
+        assertNull(routeServiceImpl.findByNumberRoute(9));
+    }
+
+    @Test
+    public void testGetAll_whenReturnAllRoutesIsEmpty() {
         assertNotNull(routeServiceImpl.getAll());
     }
 
     @Test
-    public void testGetAll_whenReturnSomeValues() {
+    public void testGetAll_whenReturnAllRoutesWithSizeThree() {
         List<Route> routes = Arrays.asList(
                 new Route(12, 4.9, 12, 123),
                 new Route(2, 5.9, 22, 1243),
@@ -55,7 +61,7 @@ public class RouteServiceImplTest {
 
     @Test
     public void testSave() {
-
+        when(routeDaoImpl.save(null)).thenReturn();
     }
 
     @Test
