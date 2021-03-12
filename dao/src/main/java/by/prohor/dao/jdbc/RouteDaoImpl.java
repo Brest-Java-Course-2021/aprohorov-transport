@@ -29,7 +29,6 @@ public class RouteDaoImpl implements RouteDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
 
-    @Autowired
     private final JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -85,7 +84,7 @@ public class RouteDaoImpl implements RouteDao {
     public Route save(Route model) {
         LOGGER.debug("Save route with parameters: number_route = {}, " + "length = {}, lap_time = {}, number_of_stops = {}",
                 model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops());
-        if (!isRouteUnique(model)) {
+        if (!isNumberRouteUnique(model)) {
             LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
             throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
         }
@@ -106,7 +105,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer update(Route model) {
         LOGGER.debug("Update route with  Id => {} in DB", model.getRouteId());
-        if (!isRouteUnique(model)) {
+        if (!isNumberRouteUnique(model)) {
             LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
             throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
         }
@@ -123,7 +122,7 @@ public class RouteDaoImpl implements RouteDao {
         return route;
     }
 
-    private boolean isRouteUnique(Route model) {
+    private boolean isNumberRouteUnique(Route model) {
         return jdbcTemplate.query(checkSql, rowMapper, model.getNumberRoute()).isEmpty();
     }
 

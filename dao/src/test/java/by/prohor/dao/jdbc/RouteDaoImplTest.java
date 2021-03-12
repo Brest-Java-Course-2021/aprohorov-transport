@@ -93,13 +93,14 @@ public class RouteDaoImplTest {
     @Test(expected = DuplicateEntityInDbException.class)
     public void update_whenNumberRouteHasAlreadyInDb() {
         routeDao.save(new Route(20, 0.9, 9, 9));
-        Route route = routeDao.save(new Route(9, 0.9, 9, 9));
-        route.setNumberRoute(20);
-        route.setLength(20.0);
-        route.setLapTime(20);
-        route.setNumberOfStops(20);
-        routeDao.update(route);
+        Route routeDuplicate = routeDao.save(new Route(9, 0.9, 9, 9));
+        routeDuplicate.setNumberRoute(20);
+        routeDuplicate.setLength(20.0);
+        routeDuplicate.setLapTime(20);
+        routeDuplicate.setNumberOfStops(20);
+        routeDao.update(routeDuplicate);
     }
+
 
     @Test
     public void update_whenRouteDoesNotExistInDb() {
