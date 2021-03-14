@@ -2,26 +2,21 @@ package by.prohor.service.impl;
 
 import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
-import by.prohor.service.RouteService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
-@RunWith(MockitoJUnitRunner.class)
-public class RouteServiceImplTest {
+@ExtendWith(MockitoExtension.class)
+class RouteServiceImplTest {
 
 
     @InjectMocks
@@ -31,7 +26,7 @@ public class RouteServiceImplTest {
     private RouteDaoImpl routeDaoImpl;
 
     @Test
-    public void testFindByNumberRoute_thenDaoReturnRouteCorrect() {
+    void testFindByNumberRoute_thenDaoReturnRouteCorrect() {
         Route route =new Route(9, 0.9, 9, 9);
         when(routeDaoImpl.findByNumberRoute(9)).thenReturn(route);
         assertNotNull(routeServiceImpl.findByNumberRoute(9));
@@ -39,18 +34,18 @@ public class RouteServiceImplTest {
     }
 
     @Test
-    public void testFindByNumberRoute_thenDaoReturnNull() {
+    void testFindByNumberRoute_thenDaoReturnNull() {
         when(routeDaoImpl.findByNumberRoute(9)).thenReturn(null);
         assertNull(routeServiceImpl.findByNumberRoute(9));
     }
 
     @Test
-    public void testGetAll_whenReturnAllRoutesIsEmpty() {
+    void testGetAll_whenReturnAllRoutesIsEmpty() {
         assertNotNull(routeServiceImpl.getAll());
     }
 
     @Test
-    public void testGetAll_whenReturnAllRoutesWithSizeThree() {
+    void testGetAll_whenReturnAllRoutesWithSizeThree() {
         List<Route> routes = Arrays.asList(
                 new Route(12, 4.9, 12, 123),
                 new Route(2, 5.9, 22, 1243),
@@ -60,18 +55,18 @@ public class RouteServiceImplTest {
     }
 
     @Test
-    public void testSave() {
+    void testSave() {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
     }
 
     @Test
-    public void testFindById() {
+    void testFindById() {
     }
 }
