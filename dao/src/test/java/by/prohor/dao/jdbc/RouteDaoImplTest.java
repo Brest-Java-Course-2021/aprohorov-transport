@@ -4,21 +4,21 @@ import by.prohor.dao.RouteDao;
 import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfiguration.class)
 @SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})})
 public class RouteDaoImplTest {
@@ -28,37 +28,37 @@ public class RouteDaoImplTest {
 
 
     @Test
-    public void getAll() {
+    void getAll() {
         List<Route> routes = routeDao.getAll();
         assertNotNull(routes);
         assertTrue(routes.size() > 0);
     }
 
     @Test
-    public void save_whenRouteCorrect() {
+    void save_whenRouteCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
         assertNotNull(route);
         assertEquals(3, (int) route.getNumberRoute());
         assertEquals(routeDao.findByNumberRoute(3), route);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void  save_whenValueInMethodNull() {
-        routeDao.save(null);
+    @Test
+    void  save_whenValueInMethodNull() {
+        assertThrows(NullPointerException.class, () ->routeDao.save(null));
     }
 
-    @Test(expected = DataIntegrityViolationException.class)
-    public void save_whenOneParametersIsNull() {
+    @Test
+    void save_whenOneParametersIsNull_thenThrowDataIntegrityViolationException() {
         Integer lapTime = null;
-        routeDao.save(new Route(3, 12.3, lapTime, 8));
+        assertThrows(DataIntegrityViolationException.class, () -> routeDao.save(new Route(3, 12.3, lapTime, 8)));
     }
 
-    @Test(expected = DuplicateEntityInDbException.class)
-    public void save_whenRouteIsTheSameInDb() {
+    @Test
+    void save_whenRouteIsTheSameInDb_thenThrowDuplicateEntityInDbException() {
         Route route = new Route(3, 12.3, 26, 8);
         routeDao.save(route);
         assertNotNull(route);
-        routeDao.save(route);
+        assertThrows(DuplicateEntityInDbException.class, () -> routeDao.save(route));
     }
 
     @Test
@@ -70,17 +70,17 @@ public class RouteDaoImplTest {
     }
 
     @Test
-    public void delete_whenRouteDoesNotExistInDb() {
+    void delete_whenRouteDoesNotExistInDb() {
         assertEquals(0, (int) routeDao.delete(0));
     }
 
     @Test()
-    public void delete_whenValueInMethodNull() {
+    void delete_whenValueInMethodNull() {
         assertEquals(0, (int) routeDao.delete(null));
     }
 
     @Test
-    public void update_whenRouteWithCorrectParameters() {
+    void update_whenRouteWithCorrectParameters() {
         Route route = routeDao.save(new Route(9, 0.9, 9, 9));
         route.setNumberRoute(20);
         route.setLength(20.0);
@@ -90,43 +90,43 @@ public class RouteDaoImplTest {
         assertEquals(routeDao.findByNumberRoute(20), route);
     }
 
-    @Test(expected = DuplicateEntityInDbException.class)
-    public void update_whenNumberRouteHasAlreadyInDb() {
+    @Test
+    void update_whenNumberRouteHasAlreadyInDb_thenThrowDuplicateEntityInDbException() {
         routeDao.save(new Route(20, 0.9, 9, 9));
         Route routeDuplicate = routeDao.save(new Route(9, 0.9, 9, 9));
         routeDuplicate.setNumberRoute(20);
         routeDuplicate.setLength(20.0);
         routeDuplicate.setLapTime(20);
         routeDuplicate.setNumberOfStops(20);
-        routeDao.update(routeDuplicate);
+        assertThrows(DuplicateEntityInDbException.class, () -> routeDao.update(routeDuplicate));
     }
 
 
     @Test
-    public void update_whenRouteDoesNotExistInDb() {
+    void update_whenRouteDoesNotExistInDb() {
         Route route = new Route();
         assertEquals(0, (int) routeDao.update(route));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void update_whenValueInMethodNull() {
-        assertEquals(0, (int) routeDao.update(null));
+    @Test
+    void update_whenValueInMethodNull_thenThrowNullPointerException() {
+        assertThrows(NullPointerException.class, () ->routeDao.update(null));
     }
 
     @Test
-    public void findByNumberRoute_whenRouteWithParametersIsCorrect() {
+    void findByNumberRoute_whenRouteWithParametersIsCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
         assertEquals(routeDao.findByNumberRoute(3), route);
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
-    public void findByNumberRoute_whenValueInMethodNull_thenThrowEmptyResultDataAccessException() {
-        routeDao.findByNumberRoute(null);
+    @Test
+    void findByNumberRoute_whenValueInMethodNull_thenThrowEmptyResultDataAccessException() {
+        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(null));
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void findByNumberRoute_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
-        routeDao.findByNumberRoute(0);
+        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(0));
     }
 
     @Test
@@ -135,13 +135,13 @@ public class RouteDaoImplTest {
         assertEquals(routeDao.findById(route.getRouteId()), route);
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void findById_whenValueInMethodNull_thenThrowEmptyResultDataAccessException() {
-        routeDao.findById(null);
+        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findById(null));
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void findById_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
-        routeDao.findById(0);
+        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findById(0));
     }
 }
