@@ -1,7 +1,7 @@
 package by.prohor.model;
 
 import by.prohor.model.type.FuelType;
-import by.prohor.model.type.TypeTransport;
+import by.prohor.model.type.TransportType;
 
 import java.sql.Date;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Transport {
 
     private Integer transportId;
-    private TypeTransport transportType;
+    private TransportType transportType;
     private FuelType fuelType;
     private String registerNumber;
     private Integer capacity;
@@ -25,7 +25,7 @@ public class Transport {
     }
 
     //Todo delete. For test controller
-    public Transport(Integer transportId, TypeTransport transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
+    public Transport(Integer transportId, TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
         this.transportId = transportId;
         this.transportType = transportType;
         this.fuelType = fuelType;
@@ -35,7 +35,7 @@ public class Transport {
         this.numberRoute = numberRoute;
     }
 
-    public Transport(TypeTransport transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
+    public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
         this.transportType = transportType;
         this.fuelType = fuelType;
         this.registerNumber = registerNumber;
@@ -53,11 +53,11 @@ public class Transport {
         this.transportId = transportId;
     }
 
-    public TypeTransport getTransportType() {
+    public TransportType getTransportType() {
         return transportType;
     }
 
-    public void setTransportType(TypeTransport transportType) {
+    public void setTransportType(TransportType transportType) {
         this.transportType = transportType;
     }
 

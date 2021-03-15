@@ -5,7 +5,7 @@ import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
-import by.prohor.model.type.TypeTransport;
+import by.prohor.model.type.TransportType;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class TransportDaoImplTestINTEGR {
 
     @Test
     void save_whenTransportCorrect() {
-        Transport transport = transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         assertNotNull(transport);
         Integer transportId = transport.getTransportId();
         assertEquals(transportDao.findById(transportId), transport);
@@ -55,20 +55,20 @@ class TransportDaoImplTestINTEGR {
     @Test
     void save_whenOneParametersIsNull_thenThrowsDataIntegrityViolationException() {
         Integer capacityNull = null;
-        Transport transport = new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", capacityNull, Date.valueOf("2020-02-12"), 5);
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", capacityNull, Date.valueOf("2020-02-12"), 5);
         assertThrows(DataIntegrityViolationException.class, () -> transportDao.save(transport));
     }
 
     @Test
     void save_whenTransportIsTheSameInDb_thenThrowsDuplicateEntityInDbException() {
-        Transport transport = transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         assertNotNull(transport);
         assertThrows(DuplicateEntityInDbException.class, () -> transportDao.save(transport));
     }
 
     @Test
     void delete_whenTransportCorrect() {
-        Transport transport = transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         Integer transportId = transport.getTransportId();
         assertEquals(transportDao.findById(transportId), transport);
         assertEquals(1, (int) transportDao.delete(transportId));
@@ -88,9 +88,9 @@ class TransportDaoImplTestINTEGR {
     @Test
     @Disabled
     void update_whenTransportWithCorrectParameters() {
-        Transport transport = transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         Integer transportId = transport.getTransportId();
-        transport.setTransportType(TypeTransport.TRAM);
+        transport.setTransportType(TransportType.TRAM);
         transport.setFuelType(FuelType.ELECTRIC);
         transport.setRegisterNumber("1111 AZ-1");
         transport.setCapacity(100);
@@ -102,17 +102,36 @@ class TransportDaoImplTestINTEGR {
     }
 
     @Test
-    void update_whenRegisterNumberHasAlreadyInDb_thenThrowsDuplicateEntityInDbException() {
-        transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
-        Transport duplicateRegisterNumber = new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5);
-        duplicateRegisterNumber.setRegisterNumber("2356 AB-1");
-        assertThrows(DuplicateEntityInDbException.class, () -> transportDao.update(duplicateRegisterNumber));
+    void update_whenRegisterNumberHasAlreadyInDbAndEqualsUpdatedTransport() {
+        Transport transportSaveInDb = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport duplicateRegisterNumber = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5);
+        duplicateRegisterNumber.setTransportType(TransportType.BUS);
+        duplicateRegisterNumber.setFuelType(FuelType.ELECTRIC);
+        duplicateRegisterNumber.setTransportId(transportSaveInDb.getTransportId());
+        assertEquals(1, transportDao.update(duplicateRegisterNumber));
+        assertEquals(duplicateRegisterNumber, transportDao.findById(duplicateRegisterNumber.getTransportId()));
     }
 
     @Test
-    void update_whenTransportDoesNotExistInDb() {
+    void update_whenRegisterNumberHasAlreadyInDbAndNotEqualsUpdatedTransportButHeExistsInDb_thenThrowsDuplicateEntityInDbException() {
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transportSaveInDb = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AA-1", 45, Date.valueOf("2020-02-12"), 5));
+        transportSaveInDb.setRegisterNumber("2356 AB-1");
+        assertThrows(DuplicateEntityInDbException.class, () -> transportDao.update(transportSaveInDb));
+    }
+
+    @Test
+    void update_whenRegisterNumberHasAlreadyInDbAndNotEqualsUpdatedTransportButHeNotExistsInDb() {
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transportSaveInDb = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AA-1", 45, Date.valueOf("2020-02-12"), 5));
+        transportSaveInDb.setRegisterNumber("1212 AS-1");
+        assertEquals(1, transportDao.update(transportSaveInDb));
+    }
+
+    @Test
+    void update_whenTransportDoesNotExistInDb_thenThrowEmptyResultDataAccessException() {
         Transport transport = new Transport();
-        assertEquals(0, (int) transportDao.update(transport));
+        assertThrows(EmptyResultDataAccessException.class, () -> transportDao.update(transport));
     }
 
     @Test
@@ -125,8 +144,8 @@ class TransportDaoImplTestINTEGR {
     void findByNumberRoute_whenTransportWithParametersIsCorrect() {
         // Todo do it real
         Integer numberRoute = 6;
-        transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
 
         assertEquals(2, transportDao.findByNumberRoute(numberRoute).size());
     }
@@ -145,7 +164,7 @@ class TransportDaoImplTestINTEGR {
 
     @Test
     void findById_whenTransportWithParametersIsCorrect() {
-        Transport transport = transportDao.save(new Transport(TypeTransport.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), 5));
+        Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         Integer transportId = transport.getTransportId();
         assertEquals(transportDao.findById(transportId), transport);
     }

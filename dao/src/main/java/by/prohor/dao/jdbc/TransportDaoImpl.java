@@ -2,10 +2,9 @@ package by.prohor.dao.jdbc;
 
 import by.prohor.dao.TransportDao;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
-import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
-import by.prohor.model.type.TypeTransport;
+import by.prohor.model.type.TransportType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -106,7 +105,7 @@ public class TransportDaoImpl implements TransportDao {
     @Override
     public Integer update(Transport model) {
         LOGGER.debug("Update transport with id {} in DB", model.getNumberRoute());
-        if (!isRegisterNumberUnique(model)) {
+        if (!isRegisterNumberUniqueForUpdateTransport(model)) {
             LOGGER.warn("Transport with the same register number ( {} ) already exists in Db",model.getRegisterNumber());
             throw new DuplicateEntityInDbException("Transport with the same register number already exists in Db");
         }
@@ -115,6 +114,14 @@ public class TransportDaoImpl implements TransportDao {
         return update;
     }
 
+
+    @Override
+    public List<Transport> findByNumberRoute(Integer numberRoute) {
+        LOGGER.debug("Get all transports from DB with number route => " + numberRoute);
+        List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(), numberRoute);
+        LOGGER.info("Get all transports  with number route => {} and their numbers is {}", numberRoute, transports.size());
+        return transports;
+    }
 
     private Map<String, Object> mapTransport(Transport model) {
         Map<String, Object> mapRoute = new HashMap<>();
@@ -127,15 +134,15 @@ public class TransportDaoImpl implements TransportDao {
         return mapRoute;
     }
 
-    @Override
-    public List<Transport> findByNumberRoute(Integer numberRoute) {
-        LOGGER.debug("Get all transports from DB with number route => " + numberRoute);
-        List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(), numberRoute);
-        LOGGER.info("Get all transports  with number route => {} and their numbers is {}", numberRoute, transports.size());
-        return transports;
+    private boolean isRegisterNumberUnique(Transport model) {
+        return jdbcTemplate.query(checkSql, new TransportRowMapper(), model.getRegisterNumber()).isEmpty();
     }
 
-    private boolean isRegisterNumberUnique(Transport model) {
+    private boolean isRegisterNumberUniqueForUpdateTransport(Transport model) {
+        Transport transportInDb = findById(model.getTransportId());
+        if (model.getRegisterNumber().equals(transportInDb.getRegisterNumber())) {
+            return true;
+        }
         return jdbcTemplate.query(checkSql, new TransportRowMapper(), model.getRegisterNumber()).isEmpty();
     }
 
@@ -146,7 +153,7 @@ public class TransportDaoImpl implements TransportDao {
             Transport transport = new Transport();
 
             transport.setTransportId(resultSet.getInt("TRANSPORT_ID"));
-            transport.setTransportType(TypeTransport.valueOf(resultSet.getString("TRANSPORT_TYPE")));
+            transport.setTransportType(TransportType.valueOf(resultSet.getString("TRANSPORT_TYPE")));
             transport.setFuelType(FuelType.valueOf(resultSet.getString("FUEL_TYPE")));
             transport.setRegisterNumber(resultSet.getString("REGISTER_NUMBER"));
             transport.setCapacity(resultSet.getInt("CAPACITY"));

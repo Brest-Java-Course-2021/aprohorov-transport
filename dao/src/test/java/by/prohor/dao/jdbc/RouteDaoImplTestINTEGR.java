@@ -43,8 +43,8 @@ public class RouteDaoImplTestINTEGR {
     }
 
     @Test
-    void  save_whenValueInMethodNull_thenThrowNullPointerException() {
-        assertThrows(NullPointerException.class, () ->routeDao.save(null));
+    void save_whenValueInMethodNull_thenThrowNullPointerException() {
+        assertThrows(NullPointerException.class, () -> routeDao.save(null));
     }
 
     @Test
@@ -116,7 +116,7 @@ public class RouteDaoImplTestINTEGR {
 
     @Test
     void update_whenValueInMethodNull_thenThrowNullPointerException() {
-        assertThrows(NullPointerException.class, () ->routeDao.update(null));
+        assertThrows(NullPointerException.class, () -> routeDao.update(null));
     }
 
     @Test
