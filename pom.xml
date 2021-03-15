@@ -253,7 +253,7 @@
                     <runOrder>alphabetical</runOrder>
                     <reportsDirectory>${junit.utReportFolder}</reportsDirectory>
                     <excludes>
-                        <exclude>**/*IT*</exclude>
+                        <exclude>**/*INTEGR*</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -282,7 +282,7 @@
                         --illegal-access=permit
                     </argLine>
                     <includes>
-                        <include>**/*IT*</include>
+                        <include>**/*INTEGR*</include>
                     </includes>
                 </configuration>
             </plugin>
