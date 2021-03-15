@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = DaoConfiguration.class)
 @SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})})
-public class RouteDaoImplTest {
+public class RouteDaoImplTestINTEGR {
 
     @Autowired
     private RouteDao routeDao;
@@ -43,7 +43,7 @@ public class RouteDaoImplTest {
     }
 
     @Test
-    void  save_whenValueInMethodNull() {
+    void  save_whenValueInMethodNull_thenThrowNullPointerException() {
         assertThrows(NullPointerException.class, () ->routeDao.save(null));
     }
 
@@ -59,6 +59,12 @@ public class RouteDaoImplTest {
         routeDao.save(route);
         assertNotNull(route);
         assertThrows(DuplicateEntityInDbException.class, () -> routeDao.save(route));
+    }
+
+    @Test
+    void save_whenObjectRouteIsEmpty_thenThrowDataIntegrityViolationException() {
+        Route route = new Route();
+        assertThrows(DataIntegrityViolationException.class, () -> routeDao.save(route));
     }
 
     @Test
@@ -144,4 +150,5 @@ public class RouteDaoImplTest {
     public void findById_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
         assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findById(0));
     }
+
 }
