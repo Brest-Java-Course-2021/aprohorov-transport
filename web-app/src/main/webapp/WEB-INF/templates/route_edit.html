@@ -40,35 +40,39 @@
 </header>
 
 <section>
-    <form th:action="@{/route/{update} (update=${method})}" th:method="post">
+    <form th:action="@{/route/{update} (update=${method})}" th:method="post"  th:object="${route}">
         <fieldset>
             <div class="container-xl">
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
-                            <input type="hidden" th:field="*{current_route.routeId}"/>
+                            <input type="hidden" th:field="*{routeId}"/>
                         </div>
                         <div>
                             <label for="numberRoute">Number route</label>
                             <input id="numberRoute" th:name="numberRoute" type="number"
-                                   th:value="${current_route.getNumberRoute()}" min="1"/>
+                                   th:value="${route.getNumberRoute()}" min="1"/>
+                            <div th:if="${#fields.hasErrors('numberRoute')}" th:errors="*{numberRoute}"></div>
                         </div>
                         <div>
                             <label for="length">Length (km)</label>
                             <input id="length" th:name="length" type="number"
-                                   th:value="${current_route.getLength()}" step="0.1" min="0.1"/>
+                                   th:value="${route.getLength()}" step="0.1" min="0.1"/>
+                            <div th:if="${#fields.hasErrors('length')}" th:errors="*{length}"></div>
                         </div>
 
                         <div>
                             <label for="lapTime">Lap time (min)</label>
                             <input id="lapTime" th:name="lapTime" type="number"
-                                   th:value="${current_route.getLapTime()}" min="1"/>
+                                   th:value="${route.getLapTime()}" min="1"/>
+                            <div th:if="${#fields.hasErrors('lapTime')}" th:errors="*{lapTime}"></div>
                         </div>
 
                         <div>
                             <label for="numberOfStops">Number of stops</label>
                             <input id="numberOfStops" th:name="numberOfStops" type="number"
-                                   th:value="${current_route.getNumberOfStops()}" min="1"/>
+                                   th:value="${route.getNumberOfStops()}" min="1"/>
+                            <div th:if="${#fields.hasErrors('numberOfStops')}" th:errors="*{numberOfStops}"></div>
                         </div>
                     </div>
                     <div class="container">
