@@ -82,17 +82,20 @@
                             <input id="date" name="date" type="date" th:field="*{current_transport.dateOfManufacture}">
                         </div>
 
-                        <div>
+                        <div th:unless="${method.equals('new')}">
                             <label for="numberRoute">Number route</label>
-                            <input id="numberRoute" name="numberRoute" type="number"
-                                   th:field="*{current_transport.numberRoute}" min="1">
+                            <select id="numberRoute" name="numberRoute" th:field="*{current_transport.numberRoute}">
+                                <option th:value="null" th:text="none"></option>
+                                <option th:each=" route : ${allRoutes}" th:value="${route.numberRoute}" th:text="${route.numberRoute}">
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-3">
                                 <a href="transport.html"
-                                   th:href="@{/transport/route/{id} (id=${current_transport.getNumberRoute()})}">
+                                   th:href="@{/transport}">
                                     <button class="btn btn-secondary" type="button">Back</button>
                                 </a>
                             </div>
@@ -100,6 +103,8 @@
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#create"
                                         class="btn btn-success " th:text="${title}">Save
                                 </button>
+
+                                <!--        MODAL SAVE                        -->
                             </div>
                             <div class="modal fade" id="create" tabindex="-1" aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">

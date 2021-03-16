@@ -65,6 +65,7 @@ public class TransportController {
         LOGGER.debug("Update transport with id =>{}", id);
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
+        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         model.addAttribute("current_transport", transportService.findById(id));
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
         return "transport_edit";
@@ -74,7 +75,7 @@ public class TransportController {
     public String createTransport(Model model, @PathVariable int id) {
         LOGGER.debug("Create new transport with number route => {}", id);
         model.addAttribute("title", "Create");
-        model.addAttribute("method", "new");
+        model.addAttribute("method", "create");
         Transport transport = new Transport();
         transport.setNumberRoute(id);
         model.addAttribute("current_transport", transport);

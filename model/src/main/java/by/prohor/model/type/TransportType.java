@@ -5,6 +5,6 @@ package by.prohor.model.type;
  */
 
 
-public enum TypeTransport {
+public enum TransportType {
     TRAM, TROLLEY, BUS
 }

@@ -1,6 +1,7 @@
 package by.prohor.dao;
 
 import by.prohor.dao.common.TransportParkDao;
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
 
 import java.util.List;
@@ -13,4 +14,6 @@ import java.util.List;
 public interface TransportDao extends TransportParkDao<Transport> {
 
     List<Transport> findByNumberRoute(Integer numberRoute);
+
+    List<Route> getAllNumberRoutes();
 }
