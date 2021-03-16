@@ -1,6 +1,7 @@
 package by.prohor.service.impl;
 
 import by.prohor.dao.TransportDao;
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,10 @@ public class TransportServiceImpl implements TransportService {
     @Override
     public List<Transport> findByNumberRoute(Integer numberRoute) {
         return transportDao.findByNumberRoute(numberRoute);
+    }
+
+    @Override
+    public List<Route> getAllNumberRoutes() {
+        return transportDao.getAllNumberRoutes();
     }
 }

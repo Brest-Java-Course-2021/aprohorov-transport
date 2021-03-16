@@ -2,12 +2,14 @@ package by.prohor.dao.jdbc;
 
 import by.prohor.dao.TransportDao;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -51,6 +53,9 @@ public class TransportDaoImpl implements TransportDao {
 
     @Value("${transport.check}")
     private String checkSql;
+
+    @Value("${transport.allNumberRoutes}")
+    private String getAllNumberRoutesSql;
 
     public TransportDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -121,6 +126,14 @@ public class TransportDaoImpl implements TransportDao {
         List<Transport> transports = jdbcTemplate.query(getTransportsFindByNumberRouteSql, new TransportRowMapper(), numberRoute);
         LOGGER.info("Get all transports  with number route => {} and their numbers is {}", numberRoute, transports.size());
         return transports;
+    }
+
+    @Override
+    public List<Route> getAllNumberRoutes() {
+        LOGGER.debug("Get all number routes from DB");
+        List<Route> allNumberRoutes = jdbcTemplate.query(getAllNumberRoutesSql, new BeanPropertyRowMapper<>(Route.class));
+        LOGGER.info("Get all number routes and their numbers is {}", allNumberRoutes.size());
+        return allNumberRoutes;
     }
 
     private Map<String, Object> mapTransport(Transport model) {

@@ -1,6 +1,7 @@
 package by.prohor.service.impl;
 
 import by.prohor.dao.jdbc.TransportDaoImpl;
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
@@ -114,5 +115,12 @@ class TransportServiceImplTest {
                 new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         when(transportDao.findByNumberRoute(5)).thenReturn(transports);
         assertEquals(3, transportServiceImpl.findByNumberRoute(5).size());
+    }
+
+    @Test
+    void testGetAll_whenDaoReturnAllNumberRoutesIsEmpty() {
+        when(transportDao.getAllNumberRoutes()).thenReturn(Collections.emptyList());
+        assertNotNull(transportServiceImpl.getAllNumberRoutes());
+        assertEquals(0, transportServiceImpl.getAllNumberRoutes().size());
     }
 }

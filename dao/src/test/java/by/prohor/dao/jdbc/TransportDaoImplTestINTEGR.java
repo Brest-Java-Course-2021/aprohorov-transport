@@ -3,6 +3,7 @@ package by.prohor.dao.jdbc;
 import by.prohor.dao.TransportDao;
 import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
@@ -86,7 +87,6 @@ class TransportDaoImplTestINTEGR {
     }
 
     @Test
-    @Disabled
     void update_whenTransportWithCorrectParameters() {
         Transport transport = transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"), 5));
         Integer transportId = transport.getTransportId();
@@ -95,8 +95,6 @@ class TransportDaoImplTestINTEGR {
         transport.setRegisterNumber("1111 AZ-1");
         transport.setCapacity(100);
         transport.setDateOfManufacture(Date.valueOf("2012-12-12"));
-        // Todo not created in DB
-        transport.setNumberRoute(999);
         assertTrue(transportDao.update(transport) > 0);
         assertEquals(transportDao.findById(transportId), transport);
     }
@@ -140,14 +138,12 @@ class TransportDaoImplTestINTEGR {
     }
 
     @Test
-    @Disabled
-    void findByNumberRoute_whenTransportWithParametersIsCorrect() {
-        // Todo do it real
-        Integer numberRoute = 6;
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-
-        assertEquals(2, transportDao.findByNumberRoute(numberRoute).size());
+    void findByNumberRoute_whenTransportWithParametersIsCorrectWithOutNumberRoute() {
+        int sizeBefore = transportDao.getAll().size();
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"),null));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"),null));;
+        int sizeAfter = transportDao.getAll().size();
+        assertNotEquals(sizeAfter,sizeBefore);
     }
 
     @Test
@@ -177,5 +173,12 @@ class TransportDaoImplTestINTEGR {
     @Test
     void findById_whenTransportDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
         assertThrows(EmptyResultDataAccessException.class, () -> transportDao.findById(0));
+    }
+
+    @Test
+    void getAllNumberRoutes() {
+        List<Route> numberRoutes = transportDao.getAllNumberRoutes();
+        assertNotNull(numberRoutes);
+        assertTrue(numberRoutes.size() > 0);
     }
 }
