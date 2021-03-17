@@ -82,11 +82,13 @@
                             <input id="date" name="date" type="date" th:field="*{current_transport.dateOfManufacture}">
                         </div>
 
-                        <div th:unless="${method.equals('new')}">
+                        <div th:if="${hidden}">
                             <label for="numberRoute">Number route</label>
-                            <select id="numberRoute" name="numberRoute" th:field="*{current_transport.numberRoute}">
+                            <select id="numberRoute" name="numberRoute" th:field="*{current_transport.numberRoute}"
+                                    th:value="${current_transport.numberRoute}">
                                 <option th:value="null" th:text="none"></option>
-                                <option th:each=" route : ${allRoutes}" th:value="${route.numberRoute}" th:text="${route.numberRoute}">
+                                <option th:each=" route : ${allRoutes}" th:value="${route.numberRoute}"
+                                        th:text="${route.numberRoute}">
                                 </option>
                             </select>
                         </div>

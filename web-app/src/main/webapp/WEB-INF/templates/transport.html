@@ -26,28 +26,27 @@
 </head>
 <body>
 
-<!--<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"-->
-<!--     aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal"-->
-<!--                        aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <h4>Are you sure you want to delete information about this transport?</h4>-->
-<!--            </div>-->
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close-->
-<!--                </button>-->
-<!--                <a href="transport.html" th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">-->
-<!--                    <button type="button" class="btn btn-danger">Delete</button>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<!-- MODAL DELETE  -->
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Transport</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete information about this transport?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+                <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
@@ -119,12 +118,11 @@
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
-                        <a href="transport_edit.html"
-                           th:href="@{/transport/delete/{id}(id=${transport.getTransportId()})}">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#delete"
-                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
-                                    class="d-none d-md-inline">&nbspDelete</span></button>
-                        </a>
+                        <button data-bs-toggle="modal" data-bs-target="#delete"
+                                th:attr="data-id=${transport.getTransportId()}"
+                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
+                                class="d-none d-md-inline">&nbspDelete</span>
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -143,5 +141,13 @@
 <script src="../../resources/js/bootstrap.min.js" th:href="@{/resources/js/bootstrap.min.js}"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
+<script src="../../resources/js/jquery-3.4.1.slim.min.js"
+        th:src="@{/resources/js/jquery-3.4.1.slim.min.js}"></script>
+<script>
+    $('#delete').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget)
+        document.getElementById('deleteUrl').href = '/transport/delete/' + target.data('id');
+    })
+</script>
 </body>
 </html>

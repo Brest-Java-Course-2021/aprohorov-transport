@@ -7,7 +7,6 @@ import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,10 +139,11 @@ class TransportDaoImplTestINTEGR {
     @Test
     void findByNumberRoute_whenTransportWithParametersIsCorrectWithOutNumberRoute() {
         int sizeBefore = transportDao.getAll().size();
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"),null));
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"),null));;
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), null));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"), null));
+        ;
         int sizeAfter = transportDao.getAll().size();
-        assertNotEquals(sizeAfter,sizeBefore);
+        assertNotEquals(sizeAfter, sizeBefore);
     }
 
     @Test

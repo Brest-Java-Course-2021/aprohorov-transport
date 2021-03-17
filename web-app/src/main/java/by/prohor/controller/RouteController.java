@@ -2,6 +2,7 @@ package by.prohor.controller;
 
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -46,16 +47,22 @@ public class RouteController {
     }
 
     @PostMapping("/update")
-    public String updateRoute(@ModelAttribute Route route, BindingResult errors) {
+    public String updateRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors) {
         LOGGER.debug("Update route with parameters =>{}", route);
+        if (errors.hasErrors()) {
+            return "route_edit";
+        }
         routeService.update(route);
         LOGGER.info("View start URL method POST => ( 'route/update/' )");
         return "redirect:/route";
     }
 
     @PostMapping("/new")
-    public String createRoute(@ModelAttribute Route route, BindingResult errors) {
+    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors) {
         LOGGER.debug("Create new with parameters =>{}", route);
+        if (errors.hasErrors()) {
+            return "route_edit";
+        }
         routeService.save(route);
         LOGGER.info("View start URL method POST => ( 'route/new' )");
         return "redirect:/route";
@@ -66,7 +73,7 @@ public class RouteController {
         LOGGER.debug("Update route with id =>{}", id);
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
-        model.addAttribute("current_route", routeService.findById(id));
+        model.addAttribute("route", routeService.findById(id));
         LOGGER.info("View start URL method GET => ( 'route/edit/{id}' )");
         return "route_edit";
     }
@@ -76,7 +83,7 @@ public class RouteController {
         LOGGER.debug("Create new route");
         model.addAttribute("title", "Create");
         model.addAttribute("method", "new");
-        model.addAttribute("current_route", new Route());
+        model.addAttribute("route", new Route());
         LOGGER.info("View start URL method GET => ( 'route/create' )");
         return "route_edit";
     }
