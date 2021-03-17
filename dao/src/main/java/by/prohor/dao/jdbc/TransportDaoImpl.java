@@ -82,7 +82,7 @@ public class TransportDaoImpl implements TransportDao {
         LOGGER.debug("Save transport with parameters: transport type = {}, " + "fuel type = {}, " + "register number = {}, capacity = {}, date of manufacture = {}, number route = {}",
                 model.getTransportType(), model.getFuelType(), model.getRegisterNumber(), model.getCapacity(), model.getDateOfManufacture(), model.getNumberRoute());
         if (!isRegisterNumberUnique(model)) {
-            LOGGER.warn("Transport with the same register number ( {} ) already exists in Db",model.getRegisterNumber());
+            LOGGER.warn("Transport with the same register number ( {} ) already exists in Db", model.getRegisterNumber());
             throw new DuplicateEntityInDbException("Transport with the same register number already exists in Db");
         }
         Number number = simpleJdbcInsert.executeAndReturnKey(mapTransport(model));
@@ -111,7 +111,7 @@ public class TransportDaoImpl implements TransportDao {
     public Integer update(Transport model) {
         LOGGER.debug("Update transport with id {} in DB", model.getNumberRoute());
         if (!isRegisterNumberUniqueForUpdateTransport(model)) {
-            LOGGER.warn("Transport with the same register number ( {} ) already exists in Db",model.getRegisterNumber());
+            LOGGER.warn("Transport with the same register number ( {} ) already exists in Db", model.getRegisterNumber());
             throw new DuplicateEntityInDbException("Transport with the same register number already exists in Db");
         }
         int update = jdbcTemplate.update(updateSql, String.valueOf(model.getTransportType()), String.valueOf(model.getFuelType()), model.getRegisterNumber(), model.getCapacity(), model.getDateOfManufacture(), model.getNumberRoute(), model.getTransportId());

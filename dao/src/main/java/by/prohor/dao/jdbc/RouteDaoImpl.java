@@ -5,7 +5,6 @@ import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -85,7 +84,7 @@ public class RouteDaoImpl implements RouteDao {
         LOGGER.debug("Save route with parameters: number_route = {}, " + "length = {}, lap_time = {}, number_of_stops = {}",
                 model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops());
         if (!isNumberRouteUnique(model)) {
-            LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
+            LOGGER.warn("Route with the same number route ( {} ) already exists in Db", model.getNumberRoute());
             throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
         }
         Number number = simpleJdbcInsert.executeAndReturnKey(mapRoute(model));
@@ -106,11 +105,11 @@ public class RouteDaoImpl implements RouteDao {
     public Integer update(Route model) {
         LOGGER.debug("Update route with  Id => {} in DB", model.getRouteId());
         if (!isNumberRouteUnique(model)) {
-            LOGGER.warn("Route with the same number route ( {} ) already exists in Db",model.getNumberRoute());
+            LOGGER.warn("Route with the same number route ( {} ) already exists in Db", model.getNumberRoute());
             throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
         }
         int update = jdbcTemplate.update(updateSql, model.getNumberRoute(), model.getLength(), model.getLapTime(), model.getNumberOfStops(), model.getRouteId());
-        LOGGER.info("Route with id => {} updated in BD n quantity {}", model.getRouteId(),update);
+        LOGGER.info("Route with id => {} updated in BD n quantity {}", model.getRouteId(), update);
         return update;
     }
 

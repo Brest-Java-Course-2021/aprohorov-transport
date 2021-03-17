@@ -2,6 +2,7 @@ package by.prohor.model;
 
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
+import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
 import java.util.Objects;
@@ -14,11 +15,18 @@ import java.util.Objects;
 public class Transport {
 
     private Integer transportId;
+
     private TransportType transportType;
+
     private FuelType fuelType;
+
+    @NotNull
     private String registerNumber;
+
     private Integer capacity;
+
     private Date dateOfManufacture;
+
     private Integer numberRoute;
 
     public Transport() {

@@ -2,6 +2,7 @@ package by.prohor.controller;
 
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -58,9 +58,9 @@ public class RouteController {
     }
 
     @PostMapping("/new")
-    public String createRoute(@ModelAttribute("route")  @Valid Route route, BindingResult errors) {
+    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors) {
         LOGGER.debug("Create new with parameters =>{}", route);
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "route_edit";
         }
         routeService.save(route);

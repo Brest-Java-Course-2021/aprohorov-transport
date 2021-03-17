@@ -30,7 +30,7 @@ public class TransportController {
     public String getTransport(Model model) {
         List<Transport> allTransports = transportService.getAll();
         LOGGER.debug("Used {} transports for rendering template 'transport'", allTransports.size());
-        model.addAttribute("transports", allTransports );
+        model.addAttribute("transports", allTransports);
         model.addAttribute("heading", "Transport");
         LOGGER.info("View all transport and start URL method GET => ( '/transport' )");
         return "transport";
@@ -41,7 +41,7 @@ public class TransportController {
         LOGGER.debug("Delete with template transport with id => {}", id);
         transportService.delete(id);
         LOGGER.info("View start URL method GET => ( 'transport/delete/{id}' )");
-        return "redirect:/route";
+        return "redirect:transport";
     }
 
     @PostMapping("/update")
@@ -49,7 +49,7 @@ public class TransportController {
         LOGGER.debug("Update transport with parameters =>{}", transport);
         transportService.update(transport);
         LOGGER.info("View start URL method POST => ( 'transport/update/' )");
-        return "redirect:/route";
+        return "redirect:transport";
     }
 
     @PostMapping("/new")
@@ -65,6 +65,7 @@ public class TransportController {
         LOGGER.debug("Update transport with id =>{}", id);
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
+        model.addAttribute("hidden", true);
         model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         model.addAttribute("current_transport", transportService.findById(id));
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
@@ -75,10 +76,12 @@ public class TransportController {
     public String createTransport(Model model, @PathVariable int id) {
         LOGGER.debug("Create new transport with number route => {}", id);
         model.addAttribute("title", "Create");
-        model.addAttribute("method", "create");
+        model.addAttribute("hidden", true);
+        model.addAttribute("method", "new");
         Transport transport = new Transport();
         transport.setNumberRoute(id);
         model.addAttribute("current_transport", transport);
+        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         LOGGER.info("View start URL method GET => ( 'route/create/{id}' )");
         return "transport_edit";
     }
@@ -88,6 +91,7 @@ public class TransportController {
     public String createTransport(Model model) {
         LOGGER.debug("Create new transport ");
         model.addAttribute("title", "Create");
+        model.addAttribute("hidden", false);
         model.addAttribute("method", "new");
         model.addAttribute("current_transport", new Transport());
         LOGGER.info("View start URL method GET => ( 'route/create' )");

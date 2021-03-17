@@ -31,31 +31,6 @@
 </head>
 <body>
 
-<!-- modal -->
-<!--                        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel"-->
-<!--                             aria-hidden="true">-->
-<!--                            <div class="modal-dialog">-->
-<!--                                <div class="modal-content">-->
-<!--                                    <div class="modal-header">-->
-<!--                                        <h6 class="modal-title" id="exampleModalLabel">Delete Route</h6>-->
-<!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
-<!--                                                aria-label="Close"></button>-->
-<!--                                    </div>-->
-<!--                                    <div class="modal-body">-->
-<!--                                        <h4>Are you sure you want to delete information about this route? </h4>-->
-<!--                                    </div>-->
-<!--                                    <div class="modal-footer">-->
-<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close-->
-<!--                                        </button>-->
-<!--                                        <a href="route.html"-->
-<!--                                           th:href="@{/route/delete/{id}(id=${route.getNumberRoute()})}">-->
-<!--                                            <button type="button" class="btn btn-danger">Delete</button>-->
-<!--                                        </a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
 <header>
     <nav class="navbar navbar-expand-lg navbar-light  bg-navbar">
         <div class="container-xl">
@@ -153,11 +128,12 @@
                             <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-pencil"></i><span
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
-                        <a th:href="@{/route/delete/{id}(id=${route.getNumberRoute()})}">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#delete"
-                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
-                                    class="d-none d-md-inline">&nbspDelete</span></button>
-                        </a>
+                        <button data-bs-toggle="modal" data-bs-target="#delete"
+                                th:attr="data-id=${route.getNumberRoute()}"
+                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
+                                class="d-none d-md-inline">&nbspDelete</span>
+                        </button>
+                    </td>
                 </tr>
                 <tr th:remove="all">
                     <td>
@@ -176,7 +152,7 @@
                                 class="d-none d-md-inline">&nbspDelete</span></button>
                     </td>
                 </tr>
-                <tr  th:remove="all">
+                <tr th:remove="all">
                     <td>
                         <a href="transport.html" class="link-info">4</a>
                     </td>
@@ -203,11 +179,41 @@
     <p class="container-xl">&copy;Created by Artsiom Prokharau 2021</p>
 </footer>
 
+<!-- MODAL DELETE  -->
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <h6 class="modal-title" id="exampleModalLabel">Delete Route</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete information about this route? </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                </button>
+                <a id="deleteUrl" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
         integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
         crossorigin="anonymous"></script>
 <script src="../../resources/js/bootstrap.min.js " th:href="@{/resources/js/bootstrap.min.js}"
         integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
         crossorigin="anonymous"></script>
+<script src="../../resources/js/jquery-3.4.1.slim.min.js"
+        th:src="@{/resources/js/jquery-3.4.1.slim.min.js}"></script>
+<script>
+    $('#delete').on('show.bs.modal', function (event) {
+        var target = $(event.relatedTarget)
+        document.getElementById('deleteUrl').href = '/route/delete/' + target.data('id');
+    })
+</script>
 </body>
 </html>

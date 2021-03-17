@@ -1,7 +1,6 @@
 package by.prohor.service.impl;
 
 import by.prohor.dao.jdbc.TransportDaoImpl;
-import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
