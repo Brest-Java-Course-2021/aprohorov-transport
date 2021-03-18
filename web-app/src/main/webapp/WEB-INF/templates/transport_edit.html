@@ -85,7 +85,7 @@
 
                         <div>
                             <label for="capacity">Capacity</label>
-                            <input id="capacity" name="capacity" type="number" min="1"
+                            <input id="capacity" name="capacity" type="number" min="1" max="999"
                                    th:field="*{capacity}">
                             <th:block th:if="${#fields.hasErrors('capacity')}">
                                 <div th:errorclass="invalid-input" th:errors="*{capacity}"></div>
