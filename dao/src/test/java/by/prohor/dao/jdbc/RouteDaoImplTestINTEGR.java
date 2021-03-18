@@ -109,9 +109,9 @@ public class RouteDaoImplTestINTEGR {
 
 
     @Test
-    void update_whenRouteDoesNotExistInDb() {
+    void update_whenRouteDoesNotExistInDb_thenThrowEmptyResultDataAccessException() {
         Route route = new Route();
-        assertEquals(0, (int) routeDao.update(route));
+        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.update(route));
     }
 
     @Test

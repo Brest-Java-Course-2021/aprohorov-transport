@@ -156,7 +156,7 @@ public class TransportDaoImpl implements TransportDao {
         if (model.getRegisterNumber().equals(transportInDb.getRegisterNumber())) {
             return true;
         }
-        return jdbcTemplate.query(checkSql, new TransportRowMapper(), model.getRegisterNumber()).isEmpty();
+        return isRegisterNumberUnique(model);
     }
 
     private class TransportRowMapper implements RowMapper<Transport> {

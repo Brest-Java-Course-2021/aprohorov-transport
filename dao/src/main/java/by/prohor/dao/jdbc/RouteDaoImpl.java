@@ -3,6 +3,7 @@ package by.prohor.dao.jdbc;
 import by.prohor.dao.RouteDao;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
+import by.prohor.model.Transport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -104,7 +105,7 @@ public class RouteDaoImpl implements RouteDao {
     @Override
     public Integer update(Route model) {
         LOGGER.debug("Update route with  Id => {} in DB", model.getRouteId());
-        if (!isNumberRouteUnique(model)) {
+        if (!isNumberRouteUniqueForUpdateRoute(model)) {
             LOGGER.warn("Route with the same number route ( {} ) already exists in Db", model.getNumberRoute());
             throw new DuplicateEntityInDbException("Route with the same number route already exists in Db");
         }
@@ -123,6 +124,14 @@ public class RouteDaoImpl implements RouteDao {
 
     private boolean isNumberRouteUnique(Route model) {
         return jdbcTemplate.query(checkSql, rowMapper, model.getNumberRoute()).isEmpty();
+    }
+
+    private boolean isNumberRouteUniqueForUpdateRoute(Route model) {
+        Route routeInDb = findById(model.getRouteId());
+        if (model.getNumberRoute().equals(routeInDb.getNumberRoute())) {
+            return true;
+        }
+        return isNumberRouteUnique(model);
     }
 
     private Map<String, Object> mapRoute(Route model) {

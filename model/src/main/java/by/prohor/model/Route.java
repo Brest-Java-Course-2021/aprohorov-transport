@@ -1,8 +1,10 @@
 package by.prohor.model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
@@ -16,18 +18,22 @@ public class Route {
 
     @NotNull(message = "Number route should not be empty")
     @Min(value = 1, message = "Number route should be greater than 0")
+    @Max(value = 9999,message = "Number route should be less than 9999")
     private Integer numberRoute;
 
     @NotNull(message = "Length should not be empty")
     @Min(value = 1, message = "Length should be greater than 0")
+    @Max(value = 9999,message = "length should be less than 9999")
     private Double length;
 
     @NotNull(message = "Lap Time  should not be empty")
     @Min(value = 1, message = "Lap Time  should be greater than 0")
+    @Max(value = 9999,message = "lap time should be less than 9999")
     private Integer lapTime;
 
     @NotNull(message = "Number of stops should not be empty")
     @Min(value = 1, message = "Number of stops should be greater than 0")
+    @Max(value = 9999,message = "Number of stops should be less than 9999")
     private Integer numberOfStops;
 
     public Route() {

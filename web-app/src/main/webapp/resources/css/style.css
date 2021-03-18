@@ -1,0 +1,8 @@
+.bg-navbar {
+    background-color: lightgrey;
+}
+
+.invalid-input {
+    color: #cb4846;
+    font-size: .75rem;
+}

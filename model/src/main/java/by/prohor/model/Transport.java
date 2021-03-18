@@ -2,8 +2,10 @@ package by.prohor.model;
 
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
-import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
+
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.Objects;
 
@@ -16,31 +18,27 @@ public class Transport {
 
     private Integer transportId;
 
+    @NotNull(message="Transport type should not be empty")
     private TransportType transportType;
 
+    @NotNull(message="Fuel type should not be empty")
     private FuelType fuelType;
 
-    @NotNull
+    @NotBlank(message="Register number should not be empty")
+    @Pattern(regexp= "\\d{4}\\s[A-Z]{2}-[0-9]",message="Register number is not correct")
     private String registerNumber;
 
+    @NotNull(message = "Capacity should not be empty")
+    @Min(value = 1, message = "Capacity should be greater than 0")
+    @Max(value = 9999,message = "Capacity should be less than 9999")
     private Integer capacity;
 
+    // todo create validate
     private Date dateOfManufacture;
 
     private Integer numberRoute;
 
     public Transport() {
-    }
-
-    //Todo delete. For test controller
-    public Transport(Integer transportId, TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
-        this.transportId = transportId;
-        this.transportType = transportType;
-        this.fuelType = fuelType;
-        this.registerNumber = registerNumber;
-        this.capacity = capacity;
-        this.dateOfManufacture = dateOfManufacture;
-        this.numberRoute = numberRoute;
     }
 
     public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {

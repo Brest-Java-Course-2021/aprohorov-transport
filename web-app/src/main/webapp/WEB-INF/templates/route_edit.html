@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../../resources/css/style_navbar.css"
-          th:href="@{/resources/css/style_navbar.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/style.css"
+          th:href="@{/resources/css/style.css}"/>
 
     <title th:text="${title}">Edit</title>
 </head>
@@ -51,28 +51,36 @@
                         <div>
                             <label for="numberRoute">Number route</label>
                             <input id="numberRoute" th:field="*{numberRoute}" type="number"
-                                   th:value="${route.getNumberRoute()}" min="1"/>
-                            <div th:if="${#fields.hasErrors('numberRoute')}" th:errors="*{numberRoute}"></div>
+                                   th:value="${route.getNumberRoute()}" min="1" max="999"/>
+                            <th:block th:if="${#fields.hasErrors('numberRoute')}">
+                                <div th:errorclass="invalid-input" th:errors="*{numberRoute}"></div>
+                            </th:block>
                         </div>
                         <div>
                             <label for="length">Length (km)</label>
                             <input id="length" th:field="*{length}" type="number"
-                                   th:value="${route.getLength()}" step="0.1" min="0.1"/>
-                            <div th:if="${#fields.hasErrors('length')}" th:errors="*{length}"></div>
+                                   th:value="${route.getLength()}" step="0.1" min="0.1" max="999"/>
+                            <th:block th:if="${#fields.hasErrors('length')}">
+                                <div th:errorclass="invalid-input" th:errors="*{length}"></div>
+                            </th:block>
                         </div>
 
                         <div>
                             <label for="lapTime">Lap time (min)</label>
                             <input id="lapTime" th:field="*{lapTime}" type="number"
-                                   th:value="${route.getLapTime()}" min="1"/>
-                            <div th:if="${#fields.hasErrors('lapTime')}" th:errors="*{lapTime}"></div>
+                                   th:value="${route.getLapTime()}" min="1" max="999"/>
+                            <th:block th:if="${#fields.hasErrors('lapTime')}">
+                                <div th:errorclass="invalid-input" th:errors="*{lapTime}"></div>
+                            </th:block>
                         </div>
 
                         <div>
                             <label for="numberOfStops">Number of stops</label>
                             <input id="numberOfStops" th:field="*{numberOfStops}" type="number"
-                                   th:value="${route.getNumberOfStops()}" min="1"/>
-                            <div th:if="${#fields.hasErrors('numberOfStops')}" th:errors="*{numberOfStops}"></div>
+                                   th:value="${route.getNumberOfStops()}" min="1" max="999"/>
+                            <th:block th:if="${#fields.hasErrors('numberOfStops')}">
+                            <div th:errorclass="invalid-input" th:errors="*{numberOfStops}"></div>
+                        </th:block>
                         </div>
                     </div>
                     <div class="container">

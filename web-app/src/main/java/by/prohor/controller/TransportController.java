@@ -6,8 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -41,23 +44,45 @@ public class TransportController {
         LOGGER.debug("Delete with template transport with id => {}", id);
         transportService.delete(id);
         LOGGER.info("View start URL method GET => ( 'transport/delete/{id}' )");
-        return "redirect:transport";
+        return "redirect:";
     }
 
     @PostMapping("/update")
-    public String updateTransportInDb(@ModelAttribute Transport transport) {
+    public String updateTransportInDb(@ModelAttribute @Valid Transport transport, BindingResult bindingResult,
+                                      Model model,RedirectAttributes redirectAttributes) {
         LOGGER.debug("Update transport with parameters =>{}", transport);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "Edit");
+            model.addAttribute("method", "update");
+            model.addAttribute("hidden", true);
+            return "transport_edit";
+        }
         transportService.update(transport);
         LOGGER.info("View start URL method POST => ( 'transport/update/' )");
-        return "redirect:transport";
+        if (transport.getNumberRoute() != null) {
+            redirectAttributes.addAttribute("numberRoute", transport.getNumberRoute());
+            return "redirect:route/{numberRoute}";
+        }
+        return "redirect:/transport";
     }
 
     @PostMapping("/new")
-    public String createTransportInDb(@ModelAttribute Transport transport) {
+    public String createTransportInDb(@ModelAttribute @Valid Transport transport, BindingResult bindingResult,
+                                      Model model, RedirectAttributes redirectAttributes) {
         LOGGER.debug("Create new route with parameters =>{}", transport);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "Create");
+            model.addAttribute("hidden", false);
+            model.addAttribute("method", "new");
+            return "transport_edit";
+        }
         transportService.save(transport);
         LOGGER.info("View start URL method POST => ( 'transport/new' )");
-        return "redirect:/route";
+        if (transport.getNumberRoute() != null) {
+            redirectAttributes.addAttribute("numberRoute", transport.getNumberRoute());
+            return "redirect:route/{numberRoute}";
+        }
+        return "redirect:/transport";
     }
 
     @GetMapping("/edit/{id}")
@@ -67,7 +92,7 @@ public class TransportController {
         model.addAttribute("method", "update");
         model.addAttribute("hidden", true);
         model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
-        model.addAttribute("current_transport", transportService.findById(id));
+        model.addAttribute("transport", transportService.findById(id));
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
         return "transport_edit";
     }
@@ -80,7 +105,7 @@ public class TransportController {
         model.addAttribute("method", "new");
         Transport transport = new Transport();
         transport.setNumberRoute(id);
-        model.addAttribute("current_transport", transport);
+        model.addAttribute("transport", transport);
         model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         LOGGER.info("View start URL method GET => ( 'route/create/{id}' )");
         return "transport_edit";
@@ -93,7 +118,7 @@ public class TransportController {
         model.addAttribute("title", "Create");
         model.addAttribute("hidden", false);
         model.addAttribute("method", "new");
-        model.addAttribute("current_transport", new Transport());
+        model.addAttribute("transport", new Transport());
         LOGGER.info("View start URL method GET => ( 'route/create' )");
         return "transport_edit";
     }
