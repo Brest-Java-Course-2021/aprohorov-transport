@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="../../resources/css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../../resources/css/style_navbar.css"
-          th:href="@{/resources/css/style_navbar.css}"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/style.css"
+          th:href="@{/resources/css/style.css}"/>
+
     <title th:text="${title}">Edit</title>
 </head>
 <body>
@@ -39,58 +40,77 @@
 </header>
 
 <section>
-    <form th:action="@{/transport/{update} (update=${method})}" th:method="post">
+    <form th:action="@{/transport/{update} (update=${method})}" th:method="post" th:object="${transport}">
         <fieldset>
             <div class="container-xl">
                 <div class="row">
                     <div class="col-sm-8">
                         <div>
-                            <input type="hidden" th:field="*{current_transport.transportId}"/>
+                            <input type="hidden" th:field="*{transportId}"/>
                         </div>
                         <div>
                             <label for="type">Transport Type</label>
-                            <select id="type" name="transportType" th:field="*{current_transport.transportType}">
+                            <select id="type" name="transportType" th:field="*{transportType}">
+                                <option th:value="null" th:text="none"></option>
                                 <option value="TRAM">Tram</option>
                                 <option value="TROLLEY">Trolley</option>
                                 <option value="BUS">Bus</option>
                             </select>
+                            <th:block th:if="${#fields.hasErrors('transportType')}">
+                                <div th:errorclass="invalid-input" th:errors="*{transportType}"></div>
+                            </th:block>
                         </div>
 
                         <div>
                             <label for="fuelType">Fuel Type</label>
-                            <select id="fuelType" name="fuel" th:field="*{current_transport.fuelType}">
+                            <select id="fuelType" name="fuel" th:field="*{fuelType}">
+                                <option th:value="null" th:text="none"></option>
                                 <option value="GASOLINE">Gasoline</option>
                                 <option value="DIESEL">Diesel</option>
                                 <option value="GAS">Gas</option>
                                 <option value="ELECTRIC">Electric</option>
                             </select>
+                            <th:block th:if="${#fields.hasErrors('fuelType')}">
+                                <div th:errorclass="invalid-input" th:errors="*{fuelType}"></div>
+                            </th:block>
                         </div>
                         <div>
                             <label for="registerNumber">Register number</label>
-                            <input id="registerNumber" name="registerNumber" type="text" placeholder="0000 XX-0"
-                                   th:field="*{current_transport.registerNumber}">
+                            <input id="registerNumber" name="registerNumber" type="text" th:placeholder="${'0000 XX-0'}"
+                                   th:field="*{registerNumber}">
+                            <th:block th:if="${#fields.hasErrors('registerNumber')}">
+                                <div th:errorclass="invalid-input" th:errors="*{registerNumber}"></div>
+                            </th:block>
                         </div>
 
                         <div>
                             <label for="capacity">Capacity</label>
                             <input id="capacity" name="capacity" type="number" min="1"
-                                   th:field="*{current_transport.capacity}">
+                                   th:field="*{capacity}">
+                            <th:block th:if="${#fields.hasErrors('capacity')}">
+                                <div th:errorclass="invalid-input" th:errors="*{capacity}"></div>
+                            </th:block>
                         </div>
 
                         <div>
                             <label for="date">Date of manufacture</label>
-                            <input id="date" name="date" type="date" th:field="*{current_transport.dateOfManufacture}">
+                            <input id="date" name="date" type="date" th:field="*{dateOfManufacture}">
+                            <th:block th:if="${#fields.hasErrors('dateOfManufacture')}">
+                                <div th:errorclass="invalid-input" th:errors="*{dateOfManufacture}"></div>
+                            </th:block>
                         </div>
 
                         <div th:if="${hidden}">
                             <label for="numberRoute">Number route</label>
-                            <select id="numberRoute" name="numberRoute" th:field="*{current_transport.numberRoute}"
-                                    th:value="${current_transport.numberRoute}">
+                            <select id="numberRoute" name="numberRoute" th:field="*{numberRoute}">
                                 <option th:value="null" th:text="none"></option>
                                 <option th:each=" route : ${allRoutes}" th:value="${route.numberRoute}"
                                         th:text="${route.numberRoute}">
                                 </option>
                             </select>
+                            <th:block th:if="${#fields.hasErrors('numberRoute')}">
+                                <div th:errorclass="invalid-input" th:errors="*{numberRoute}"></div>
+                            </th:block>
                         </div>
                     </div>
                     <div class="container">

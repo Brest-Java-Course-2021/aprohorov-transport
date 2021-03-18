@@ -2,14 +2,15 @@ package by.prohor.controller;
 
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -47,9 +48,11 @@ public class RouteController {
     }
 
     @PostMapping("/update")
-    public String updateRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors) {
+    public String updateRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors,Model model) {
         LOGGER.debug("Update route with parameters =>{}", route);
         if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit");
+            model.addAttribute("method", "update");
             return "route_edit";
         }
         routeService.update(route);
@@ -58,9 +61,11 @@ public class RouteController {
     }
 
     @PostMapping("/new")
-    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors) {
+    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors,Model model) {
         LOGGER.debug("Create new with parameters =>{}", route);
         if (errors.hasErrors()) {
+            model.addAttribute("title", "Create");
+            model.addAttribute("method", "new");
             return "route_edit";
         }
         routeService.save(route);
