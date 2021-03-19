@@ -3,6 +3,8 @@ package by.prohor.service;
 import by.prohor.model.Route;
 import by.prohor.service.common.TransportParkService;
 
+import java.util.List;
+
 /**
  * Created by Artsiom Prokharau 04.03.2021
  */
@@ -11,4 +13,6 @@ import by.prohor.service.common.TransportParkService;
 public interface RouteService extends TransportParkService<Route> {
 
     Route findByNumberRoute(Integer numberRoute);
+
+    List<Route> searchOnPageRoute(String search, Integer start, Integer end);
 }

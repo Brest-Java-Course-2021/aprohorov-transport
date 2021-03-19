@@ -111,4 +111,12 @@ class RouteServiceImplTest {
         when(routeDaoImpl.findById(any(Integer.class))).thenThrow(EmptyResultDataAccessException.class);
         assertThrows(EmptyResultDataAccessException.class, () -> routeServiceImpl.findById(0));
     }
+
+    @Test
+    void searchOnPageRoute_whenMethodParametersIsCorrect() {
+        List<Route> routes = List.of(new Route(9, 0.9, 9, 9),
+                new Route(13, 13.9, 13, 13));
+        when(routeDaoImpl.searchOnPageRoute(any(String.class),any(Integer.class),any(Integer.class))).thenReturn(routes);
+        assertEquals(2, routeServiceImpl.searchOnPageRoute("NUMBER_ROUTE", 5, 13).size());
+    }
 }
