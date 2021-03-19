@@ -29,6 +29,11 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
+    public List<Route> searchOnPageRoute(String search, Integer start, Integer end) {
+        return routeDao.searchOnPageRoute(search,start,end);
+    }
+
+    @Override
     public List<Route> getAll() {
         return routeDao.getAll();
     }

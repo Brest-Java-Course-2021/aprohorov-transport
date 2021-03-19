@@ -48,14 +48,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="transport.html" th:href="@{transport}">Transport</a>
+                        <a class="nav-link" href="transport.html" th:href="@{/transport}">Transport</a>
                     </li>
                 </ul>
-                <form class="d-flex">
+                <form class="d-flex" th:action="@{/route/search}" th:method="get">
                     <input class="form-control-sm me-sm-2" name="start" type="number" aria-label="Search" step="any"
                            min="1">
                     <input class="form-control-sm me-sm-2" name="end" type="number" aria-label="Search" step="any"
-                           min="1">
+                           min="2">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,21 +63,17 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
-                                <button class="dropdown-item" type="submit" name="search" value="1">Number route
+                                <button class="dropdown-item" type="submit" name="search" value="NUMBER_ROUTE">Number route
                                 </button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit" name="search" value="2">Length</button>
+                                <button class="dropdown-item" type="submit" name="search" value="LENGTH">Length</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit" name="search" value="3">Lap time</button>
+                                <button class="dropdown-item" type="submit" name="search" value="LAP_TIME">Lap time</button>
                             </li>
                             <li>
-                                <button class="dropdown-item" type="submit" name="search" value="4">Number of stops
-                                </button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item" type="submit" name="search" value="5">Number of vehicles
+                                <button class="dropdown-item" type="submit" name="search" value="NUMBER_OF_STOPS">Number of stops
                                 </button>
                             </li>
                         </ul>
@@ -114,6 +110,9 @@
                     <th scope="col"></th>
                 </tr>
                 </thead>
+                <div th:if="${routes.size() == 0}" class="alert alert-info" role="alert">
+                    Not found routes with your parameters. <a th:href="@{/route}" class="alert-link">Click to display all routes</a>
+                </div>
                 <tr th:each="route : ${routes}">
                     <td>
                         <a href="transport.html" class="link-info"

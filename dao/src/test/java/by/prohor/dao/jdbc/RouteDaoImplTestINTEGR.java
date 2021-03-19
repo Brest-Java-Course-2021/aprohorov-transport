@@ -6,6 +6,9 @@ import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,6 +18,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -131,12 +135,12 @@ public class RouteDaoImplTestINTEGR {
     }
 
     @Test
-    public void findByNumberRoute_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
+    void findByNumberRoute_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
         assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(0));
     }
 
     @Test
-    public void findById_whenRouteWithParametersIsCorrect() {
+    void findById_whenRouteWithParametersIsCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
         assertEquals(routeDao.findById(route.getRouteId()), route);
     }
@@ -147,8 +151,46 @@ public class RouteDaoImplTestINTEGR {
     }
 
     @Test
-    public void findById_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
+    void findById_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
         assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findById(0));
     }
 
+    @Test
+     void searchOnPageRoute_whenValueInMethodNull_thenReturnEmptyList(){
+        List<Route> routes = routeDao.searchOnPageRoute(null, null, null);
+        assertEquals(0, routes.size());
+    }
+
+    @Test
+     void searchOnPageRoute_whenCorrectParametersInMethod(){
+        routeDao.save(new Route(15, 23.5, 45, 12));
+        routeDao.save(new Route(17, 12.3, 26, 8));
+        String search = "NUMBER_ROUTE";
+        Integer start = 15;
+        Integer end = 17;
+        List<Route> routes = routeDao.searchOnPageRoute(search,start, end);
+        assertEquals(2, routes.size());
+    }
+
+    @ParameterizedTest
+    @MethodSource("checkValue")
+     void searchOnPageRoute_whenStartMoreThanEnd(String search,Integer start,Integer end, Integer result){
+        routeDao.save(new Route(15, 150.5, 900, 300));
+        routeDao.save(new Route(17, 130.3, 700, 245));
+        List<Route> routes = routeDao.searchOnPageRoute(search,start, end);
+        assertEquals(result, routes.size());
+    }
+
+    private static Stream<Arguments> checkValue() {
+        return Stream.of(
+                Arguments.of("NUMBER_ROUTE", 15, 17,2),
+                Arguments.of("NUMBER_ROUTE", 13, 16,1),
+                Arguments.of("LENGTH", 120,131,1),
+                Arguments.of("LENGTH", 100,155,2),
+                Arguments.of("LAP_TIME", 200, 600,0),
+                Arguments.of("LAP_TIME", 700, 900,2),
+                Arguments.of("NUMBER_OF_STOPS", 230, 310,2),
+                Arguments.of("NUMBER_OF_STOPS", 200, 230,0)
+        );
+    }
 }

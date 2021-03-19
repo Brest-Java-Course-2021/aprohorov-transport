@@ -1,5 +1,6 @@
 package by.prohor.controller;
 
+import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
 import org.slf4j.Logger;
@@ -91,5 +92,16 @@ public class RouteController {
         model.addAttribute("route", new Route());
         LOGGER.info("View start URL method GET => ( 'route/create' )");
         return "route_edit";
+    }
+
+    @GetMapping("/search")
+    public String searchRoute(@RequestParam("start") Integer start,
+                              @RequestParam("end") Integer end,
+                              @RequestParam("search") String search, Model model) {
+        List<Route> routes = routeService.searchOnPageRoute(search, start, end);
+        LOGGER.debug("Found route by {} with parameters start => {} and end => {} In the amount of {} " , search,start,end,routes.size());
+        model.addAttribute("routes", routes);
+        LOGGER.info("View start URL method GET => ( 'route' ) with parameters start => {} and end => {}",start,end);
+        return "route";
     }
 }
