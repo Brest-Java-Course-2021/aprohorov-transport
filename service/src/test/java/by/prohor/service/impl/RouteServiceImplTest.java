@@ -2,6 +2,7 @@ package by.prohor.service.impl;
 
 import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
+import by.prohor.model.dto.RouteDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -118,5 +119,12 @@ class RouteServiceImplTest {
                 new Route(13, 13.9, 13, 13));
         when(routeDaoImpl.searchOnPageRoute(any(String.class),any(Integer.class),any(Integer.class))).thenReturn(routes);
         assertEquals(2, routeServiceImpl.searchOnPageRoute("NUMBER_ROUTE", 5, 13).size());
+    }
+
+    @Test
+    void getAllWithNumberOfVehicles_whenDaoReturnAllRoutes() {
+        List<RouteDto> routes = List.of(new RouteDto());
+        when(routeDaoImpl.getAllWithNumberOfVehicles()).thenReturn(routes);
+        assertEquals(1, routeServiceImpl.getAllWithNumberOfVehicles().size());
     }
 }

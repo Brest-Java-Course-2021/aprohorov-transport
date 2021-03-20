@@ -44,7 +44,7 @@ public class TransportController {
         LOGGER.debug("Delete with template transport with id => {}", id);
         transportService.delete(id);
         LOGGER.info("View start URL method GET => ( 'transport/delete/{id}' )");
-        return "redirect:";
+        return "redirect:/route";
     }
 
     @PostMapping("/update")
