@@ -190,7 +190,7 @@ public class RouteDaoImplTestINTEGR {
     }
 
     @Test
-    void getAllWithNumberOfVehicles_whenCorrectParametersInMethod() {
+    void getAllWithNumberOfVehicles_whenCorrectParameters() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));

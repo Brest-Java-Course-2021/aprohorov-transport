@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,9 @@ public class TransportDaoImpl implements TransportDao {
 
     @Value("${transport.allNumberRoutes}")
     private String getAllNumberRoutesSql;
+
+    @Value("${transport.searchByDate}")
+    private String searchByDateSql;
 
     public TransportDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -134,6 +138,14 @@ public class TransportDaoImpl implements TransportDao {
         List<Route> allNumberRoutes = jdbcTemplate.query(getAllNumberRoutesSql, new BeanPropertyRowMapper<>(Route.class));
         LOGGER.info("Get all number routes and their numbers is {}", allNumberRoutes.size());
         return allNumberRoutes;
+    }
+
+    @Override
+    public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
+        LOGGER.debug("Find all transports from DB with date of manufacture");
+        List<Transport> allTransportsByDate = jdbcTemplate.query(searchByDateSql, new TransportRowMapper(),dateBefore,dateAfter);
+        LOGGER.info("Found all transports by date and their numbers is {}", allTransportsByDate.size());
+        return allTransportsByDate;
     }
 
     private Map<String, Object> mapTransport(Transport model) {

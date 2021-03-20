@@ -9,6 +9,9 @@ import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -141,7 +145,6 @@ class TransportDaoImplTestINTEGR {
         int sizeBefore = transportDao.getAll().size();
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2020-02-12"), null));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2020-02-12"), null));
-        ;
         int sizeAfter = transportDao.getAll().size();
         assertNotEquals(sizeAfter, sizeBefore);
     }
@@ -180,5 +183,25 @@ class TransportDaoImplTestINTEGR {
         List<Route> numberRoutes = transportDao.getAllNumberRoutes();
         assertNotNull(numberRoutes);
         assertTrue(numberRoutes.size() > 0);
+    }
+
+    @ParameterizedTest
+    @MethodSource("checkValue")
+    void searchOnPageTransportByDate_whenTransportWithParameters(String dateBefore,String dateAfter,int result) {
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2002-02-12"), 5));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2006-02-12"), 5));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "9999 AB-1", 45, Date.valueOf("2004-02-12"), 5));
+        assertEquals(result, transportDao.searchOnPageTransportByDate(Date.valueOf(dateBefore), Date.valueOf(dateAfter)).size());
+    }
+
+    private static Stream<Arguments> checkValue() {
+        return Stream.of(
+                Arguments.of("2001-02-12", "2008-02-12", 3),
+                Arguments.of("2005-02-12", "2009-02-12", 1),
+                Arguments.of("2010-02-12", "2011-02-12", 0),
+                Arguments.of("2001-02-12", "2005-02-12", 2),
+                Arguments.of("2021-02-12", "2021-02-12", 0),
+                Arguments.of("2021-02-12", "2008-02-12", 0)
+        );
     }
 }

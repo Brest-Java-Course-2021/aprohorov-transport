@@ -87,9 +87,9 @@ public class RouteDaoImpl implements RouteDao {
 
     @Override
     public List<Route> searchOnPageRoute(String search, Integer start, Integer end) {
-        LOGGER.debug("Get all routes from DB with used search by {}", search);
+        LOGGER.debug("Find all routes from DB with used search by {}", search);
         // todo вынести в проперти
-        String searchSql =  " SELECT * FROM ROUTE WHERE " + search + " BETWEEN ? AND ? ORDER BY " + search;
+        String searchSql =  " SELECT * FROM ROUTE AS R WHERE " + search + " BETWEEN ? AND ? ORDER BY R.NUMBER_ROUTE";
         List<Route> routes = jdbcTemplate.query(searchSql, rowMapper,start,end);
         LOGGER.info("Get all routes with used search by {} and their numbers is {}",search, routes.size());
         return routes;
