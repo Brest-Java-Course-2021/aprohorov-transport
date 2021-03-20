@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 
 @Configuration
-@ComponentScan("by.prohor.controller")
-@Import({ServiceConfiguration.class, ThymeleafConfiguration.class})
+@ComponentScan("by.prohor")
+@Import({ThymeleafConfiguration.class})
 @EnableWebMvc
 public class AppConfiguration implements WebMvcConfigurer {
 
