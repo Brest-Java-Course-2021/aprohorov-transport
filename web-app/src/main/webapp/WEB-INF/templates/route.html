@@ -190,7 +190,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body h4">
                 <h4>Are you sure you want to delete information about this route? </h4>
             </div>
             <div class="modal-footer">
@@ -213,6 +213,8 @@
 <script>
     $('#delete').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget)
+        $(this).find('.modal-body').text('Are you sure you want to delete information about this route with number '
+            + target.data('id') + '?' )
         document.getElementById('deleteUrl').href = '/route/delete/' + target.data('id');
     })
 </script>

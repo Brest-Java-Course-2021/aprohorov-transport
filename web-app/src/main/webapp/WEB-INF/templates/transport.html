@@ -36,7 +36,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body h5" >
                 <h4>Are you sure you want to delete information about this transport?</h4>
             </div>
             <div class="modal-footer">
@@ -119,7 +119,7 @@
                                     class="d-none d-md-inline">&nbsp;Edit</span></button>
                         </a>
                         <button data-bs-toggle="modal" data-bs-target="#delete"
-                                th:attr="data-id=${transport.getTransportId()}"
+                                th:attr="data-id=${transport.getTransportId()},data-name=${transport.getRegisterNumber()}"
                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span
                                 class="d-none d-md-inline">&nbspDelete</span>
                         </button>
@@ -146,6 +146,8 @@
 <script>
     $('#delete').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget)
+        $(this).find('.modal-body').text('Are you sure you want to delete information about this transport with register number  '
+            + target.data('name') + '?' )
         document.getElementById('deleteUrl').href = '/transport/delete/' + target.data('id');
     })
 </script>
