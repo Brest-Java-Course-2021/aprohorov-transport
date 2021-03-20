@@ -3,7 +3,7 @@ package by.prohor.dao.jdbc;
 import by.prohor.dao.RouteDao;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
-import by.prohor.model.Transport;
+import by.prohor.model.dto.RouteDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,9 +96,9 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public List<Route> getAllWithNumberOfVehicles() {
+    public List<RouteDto> getAllWithNumberOfVehicles() {
         LOGGER.debug("Get all routes from DB with number of vehicles");
-        List<Route> routes = jdbcTemplate.query(getAllWithNumberSql, rowMapper);
+        List<RouteDto> routes = jdbcTemplate.query(getAllWithNumberSql, new BeanPropertyRowMapper<>(RouteDto.class));
         LOGGER.info("Get all routes and their numbers is {}", routes.size());
         return routes;
     }

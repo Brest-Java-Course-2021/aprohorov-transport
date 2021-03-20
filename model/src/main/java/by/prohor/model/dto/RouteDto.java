@@ -4,7 +4,7 @@ package by.prohor.model.dto;
  * Created by Artsiom Prokharau 20.03.2021
  */
 
-public class RouteDaoDto {
+public class RouteDto {
 
     private Integer routeId;
     private Integer numberRoute;
@@ -13,7 +13,7 @@ public class RouteDaoDto {
     private Integer numberOfStops;
     private Integer numberOfVehicles;
 
-    public RouteDaoDto() {
+    public RouteDto() {
     }
 
     public Integer getRouteId() {
@@ -66,7 +66,7 @@ public class RouteDaoDto {
 
     @Override
     public String toString() {
-        return "RouteDaoDto{" +
+        return "RouteDto{" +
                 "routeId=" + routeId +
                 ", numberRoute=" + numberRoute +
                 ", length=" + length +

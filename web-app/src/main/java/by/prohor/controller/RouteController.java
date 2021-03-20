@@ -2,6 +2,7 @@ package by.prohor.controller;
 
 import by.prohor.dao.jdbc.RouteDaoImpl;
 import by.prohor.model.Route;
+import by.prohor.model.dto.RouteDto;
 import by.prohor.service.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class RouteController {
 
     @GetMapping("")
     public String allRoute(Model model) {
-        List<Route> allRoutes = routeService.getAllWithNumberOfVehicles();
+        List<RouteDto> allRoutes = routeService.getAllWithNumberOfVehicles();
         LOGGER.debug("Used {} routes for rendering template 'route'", allRoutes.size());
         model.addAttribute("routes", allRoutes);
         LOGGER.info("View all routes and start URL method GET => ( '/route' )");

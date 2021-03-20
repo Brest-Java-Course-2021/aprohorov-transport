@@ -2,6 +2,7 @@ package by.prohor.service.impl;
 
 import by.prohor.dao.RouteDao;
 import by.prohor.model.Route;
+import by.prohor.model.dto.RouteDto;
 import by.prohor.service.RouteService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<Route> getAllWithNumberOfVehicles() {
+    public List<RouteDto> getAllWithNumberOfVehicles() {
         return routeDao.getAllWithNumberOfVehicles();
     }
 

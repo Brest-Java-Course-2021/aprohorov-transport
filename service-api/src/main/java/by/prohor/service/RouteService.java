@@ -1,6 +1,7 @@
 package by.prohor.service;
 
 import by.prohor.model.Route;
+import by.prohor.model.dto.RouteDto;
 import by.prohor.service.common.TransportParkService;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface RouteService extends TransportParkService<Route> {
 
     List<Route> searchOnPageRoute(String search, Integer start, Integer end);
 
-    List<Route> getAllWithNumberOfVehicles();
+    List<RouteDto> getAllWithNumberOfVehicles();
 }

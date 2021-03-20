@@ -1,9 +1,13 @@
 package by.prohor.dao.jdbc;
 
 import by.prohor.dao.RouteDao;
+import by.prohor.dao.TransportDao;
 import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
+import by.prohor.model.Transport;
+import by.prohor.model.type.FuelType;
+import by.prohor.model.type.TransportType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,6 +21,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -29,6 +34,9 @@ public class RouteDaoImplTestINTEGR {
 
     @Autowired
     private RouteDao routeDao;
+
+    @Autowired
+    private TransportDao transportDao;
 
 
     @Test
@@ -181,6 +189,23 @@ public class RouteDaoImplTestINTEGR {
         assertEquals(result, routes.size());
     }
 
+    @Test
+    void getAllWithNumberOfVehicles_whenCorrectParametersInMethod() {
+        Integer numberRoute = 1;
+        routeDao.save(new Route(numberRoute, 150.5, 900, 300));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
+        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "9999 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
+        assertEquals(3,routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
+    }
+
+    @Test
+    void getAllWithNumberOfVehicles_whenCorrectParametersInMethod_thenReturnListWithNumberOfVehiclesEmptyValue() {
+        Integer numberRoute = 1;
+        routeDao.save(new Route(numberRoute, 150.5, 900, 300));
+        assertEquals(0,routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
+    }
+
     private static Stream<Arguments> checkValue() {
         return Stream.of(
                 Arguments.of("NUMBER_ROUTE", 15, 17,2),
@@ -193,4 +218,6 @@ public class RouteDaoImplTestINTEGR {
                 Arguments.of("NUMBER_OF_STOPS", 200, 230,0)
         );
     }
+
+
 }
