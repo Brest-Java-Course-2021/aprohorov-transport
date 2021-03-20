@@ -7,6 +7,7 @@ import by.prohor.service.TransportService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,5 +58,10 @@ public class TransportServiceImpl implements TransportService {
     @Override
     public List<Route> getAllNumberRoutes() {
         return transportDao.getAllNumberRoutes();
+    }
+
+    @Override
+    public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
+        return transportDao.searchOnPageTransportByDate(dateBefore, dateAfter);
     }
 }

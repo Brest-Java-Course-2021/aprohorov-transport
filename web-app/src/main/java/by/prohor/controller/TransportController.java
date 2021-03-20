@@ -1,9 +1,12 @@
 package by.prohor.controller;
 
+import by.prohor.model.Route;
 import by.prohor.model.Transport;
+import by.prohor.model.dto.TransportSearchDateDto;
 import by.prohor.service.TransportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -133,4 +137,34 @@ public class TransportController {
         LOGGER.info("View start URL method GET => ( 'transport/route/{id}' )");
         return "transport";
     }
+
+    @GetMapping("/search")
+    public String searchTransportByDate(@RequestParam("dateBefore") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore,
+                                        @RequestParam("dateAfter") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) Date dateAfter ,
+                                        Model model) {
+        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore,dateAfter);
+        LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} " , dateBefore,dateAfter,transports.size());
+        model.addAttribute("transports", transports);
+        model.addAttribute("heading", "Transport");
+        LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}",dateBefore,dateAfter);
+        return "transport";
+    }
+//
+
+//    @PostMapping("/search")
+//    public String searchTransportByDate(@ModelAttribute @Valid TransportSearchDateDto transportSearchDateDto,
+//                                        BindingResult bindingResult,Model model) {
+//        Date dateBefore = transportSearchDateDto.getDateBefore();
+//        Date dateAfter = transportSearchDateDto.getDateAfter();
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("heading", "Transport");
+//            return "transport";
+//        }
+//        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore,dateAfter);
+//        LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} " , dateBefore,dateAfter,transports.size());
+//        model.addAttribute("transports", transports);
+//        model.addAttribute("heading", "Transport");
+//        LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}",dateBefore,dateAfter);
+//        return "transport";
+//    }
 }
