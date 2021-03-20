@@ -34,6 +34,11 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
+    public List<Route> getAllWithNumberOfVehicles() {
+        return routeDao.getAllWithNumberOfVehicles();
+    }
+
+    @Override
     public List<Route> getAll() {
         return routeDao.getAll();
     }

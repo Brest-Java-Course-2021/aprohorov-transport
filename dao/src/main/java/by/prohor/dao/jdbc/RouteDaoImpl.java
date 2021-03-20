@@ -52,6 +52,11 @@ public class RouteDaoImpl implements RouteDao {
     @Value("${route.check}")
     private String checkSql;
 
+    @Value("${route.getAllWithNumber}")
+    private String getAllWithNumberSql;
+
+
+
     public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -87,6 +92,14 @@ public class RouteDaoImpl implements RouteDao {
         String searchSql =  " SELECT * FROM ROUTE WHERE " + search + " BETWEEN ? AND ? ORDER BY " + search;
         List<Route> routes = jdbcTemplate.query(searchSql, rowMapper,start,end);
         LOGGER.info("Get all routes with used search by {} and their numbers is {}",search, routes.size());
+        return routes;
+    }
+
+    @Override
+    public List<Route> getAllWithNumberOfVehicles() {
+        LOGGER.debug("Get all routes from DB with number of vehicles");
+        List<Route> routes = jdbcTemplate.query(getAllWithNumberSql, rowMapper);
+        LOGGER.info("Get all routes and their numbers is {}", routes.size());
         return routes;
     }
 

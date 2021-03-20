@@ -33,7 +33,7 @@ public class RouteController {
 
     @GetMapping("")
     public String allRoute(Model model) {
-        List<Route> allRoutes = routeService.getAll();
+        List<Route> allRoutes = routeService.getAllWithNumberOfVehicles();
         LOGGER.debug("Used {} routes for rendering template 'route'", allRoutes.size());
         model.addAttribute("routes", allRoutes);
         LOGGER.info("View all routes and start URL method GET => ( '/route' )");
