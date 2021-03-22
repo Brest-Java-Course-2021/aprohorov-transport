@@ -15,7 +15,7 @@ public interface RouteService extends TransportParkService<Route> {
 
     Route findByNumberRoute(Integer numberRoute);
 
-    List<Route> searchOnPageRoute(String search, Integer start, Integer end);
+    List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end);
 
     List<RouteDto> getAllWithNumberOfVehicles();
 }

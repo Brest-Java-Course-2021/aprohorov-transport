@@ -99,7 +99,7 @@ public class RouteController {
     public String searchRoute(@RequestParam("start") Integer start,
                               @RequestParam("end") Integer end,
                               @RequestParam("search") String search, Model model) {
-        List<Route> routes = routeService.searchOnPageRoute(search, start, end);
+        List<RouteDto> routes = routeService.searchOnPageRoute(search, start, end);
         //todo refactor mistake
         LOGGER.debug("Found routes by {} with parameters start => {} and end => {} In the amount of {} " , search,start,end,routes.size());
         model.addAttribute("routes", routes);

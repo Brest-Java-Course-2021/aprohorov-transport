@@ -16,6 +16,14 @@ public class RouteDto {
     public RouteDto() {
     }
 
+    public RouteDto(Integer numberRoute, Double length, Integer lapTime, Integer numberOfStops, Integer numberOfVehicles) {
+        this.numberRoute = numberRoute;
+        this.length = length;
+        this.lapTime = lapTime;
+        this.numberOfStops = numberOfStops;
+        this.numberOfVehicles = numberOfVehicles;
+    }
+
     public Integer getRouteId() {
         return routeId;
     }
