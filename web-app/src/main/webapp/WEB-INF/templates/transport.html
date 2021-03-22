@@ -70,14 +70,8 @@
                 </ul>
 
                 <form class="d-flex" th:action="@{/transport/search}" th:method="get" >
-                    <input class="form-control me-2" name="dateBefore" type="date" aria-label="Date">
-<!--                    <th:block th:if="${#fields.hasErrors('dateBefore')}">-->
-<!--                        <div th:errorclass="invalid-input" th:errors="*{dateBefore}"></div>-->
-<!--                    </th:block>-->
-                    <input class="form-control me-2" name="dateAfter" type="date" aria-label="Date">
-<!--                    <th:block th:if="${#fields.hasErrors('dateAfter')}">-->
-<!--                        <div th:errorclass="invalid-input" th:errors="*{dateAfter}"></div>-->
-<!--                    </th:block>-->
+                    <input class="form-control me-2" name="dateBefore" type="date" aria-label="Date" autofocus required>
+                    <input class="form-control me-2" name="dateAfter" type="date" aria-label="Date" autofocus required>
                     <button class="btn btn-outline-success text-nowrap" type="submit">Search Date of manufacture
                     </button>
                 </form>

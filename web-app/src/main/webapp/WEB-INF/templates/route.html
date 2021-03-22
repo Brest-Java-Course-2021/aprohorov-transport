@@ -53,9 +53,9 @@
                 </ul>
                 <form class="d-flex" th:action="@{/route/search}" th:method="get">
                     <input class="form-control-sm me-sm-2" name="start" type="number" aria-label="Search" step="any"
-                           min="1" th:placeholder="0">
+                           min="1" th:placeholder="0" autofocus required>
                     <input class="form-control-sm me-sm-2" name="end" type="number" aria-label="Search" step="any"
-                           min="2" th:placeholder="0">
+                           min="2" th:placeholder="0" autofocus required>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
