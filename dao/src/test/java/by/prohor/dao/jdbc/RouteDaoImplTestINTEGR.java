@@ -6,6 +6,7 @@ import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import by.prohor.model.Transport;
+import by.prohor.model.dto.RouteDto;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
 import org.junit.jupiter.api.Test;
@@ -165,7 +166,7 @@ public class RouteDaoImplTestINTEGR {
 
     @Test
      void searchOnPageRoute_whenValueInMethodNull_thenReturnEmptyList(){
-        List<Route> routes = routeDao.searchOnPageRoute(null, null, null);
+        List<RouteDto> routes = routeDao.searchOnPageRoute("LENGTH", null, null);
         assertEquals(0, routes.size());
     }
 
@@ -176,7 +177,7 @@ public class RouteDaoImplTestINTEGR {
         String search = "NUMBER_ROUTE";
         Integer start = 15;
         Integer end = 17;
-        List<Route> routes = routeDao.searchOnPageRoute(search,start, end);
+        List<RouteDto> routes = routeDao.searchOnPageRoute(search,start, end);
         assertEquals(2, routes.size());
     }
 
@@ -185,7 +186,7 @@ public class RouteDaoImplTestINTEGR {
      void searchOnPageRoute_whenStartMoreThanEnd(String search,Integer start,Integer end, Integer result){
         routeDao.save(new Route(15, 150.5, 900, 300));
         routeDao.save(new Route(17, 130.3, 700, 245));
-        List<Route> routes = routeDao.searchOnPageRoute(search,start, end);
+        List<RouteDto> routes = routeDao.searchOnPageRoute(search,start, end);
         assertEquals(result, routes.size());
     }
 
