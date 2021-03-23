@@ -4,7 +4,6 @@ import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.Objects;
