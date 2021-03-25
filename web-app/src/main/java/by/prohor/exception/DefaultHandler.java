@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class DefaultHandler {
 
     @ExceptionHandler(DuplicateEntityInDbException.class)
-    public String exDuplicateInDb(Model model,DuplicateEntityInDbException ex) {
+    public String exDuplicateInDb(Model model, DuplicateEntityInDbException ex) {
         model.addAttribute("message", ex.getMessage());
         return "error";
     }

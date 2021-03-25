@@ -1,7 +1,6 @@
 package by.prohor.dao.jdbc;
 
 import by.prohor.dao.TransportDao;
-import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import by.prohor.model.Transport;
@@ -15,7 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -28,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DaoConfiguration.class)
 @SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})})
 class TransportDaoImplTestINTEGR {
 
@@ -187,7 +184,7 @@ class TransportDaoImplTestINTEGR {
 
     @ParameterizedTest
     @MethodSource("checkValue")
-    void searchOnPageTransportByDate_whenTransportWithParameters(String dateBefore,String dateAfter,int result) {
+    void searchOnPageTransportByDate_whenTransportWithParameters(String dateBefore, String dateAfter, int result) {
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, Date.valueOf("2002-02-12"), 5));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "5555 AB-1", 45, Date.valueOf("2006-02-12"), 5));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "9999 AB-1", 45, Date.valueOf("2004-02-12"), 5));

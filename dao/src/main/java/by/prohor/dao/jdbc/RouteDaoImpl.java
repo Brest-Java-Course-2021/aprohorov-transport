@@ -56,7 +56,6 @@ public class RouteDaoImpl implements RouteDao {
     private String getAllWithNumberSql;
 
 
-
     public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -89,10 +88,10 @@ public class RouteDaoImpl implements RouteDao {
     public List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end) {
         LOGGER.debug("Find all routes from DB with used search by {}", search);
         // todo вынести в проперти
-        String searchSql =  " SELECT R.*, COUNT(T.NUMBER_ROUTE) AS numberOfVehicles FROM ROUTE AS R " +
+        String searchSql = " SELECT R.*, COUNT(T.NUMBER_ROUTE) AS numberOfVehicles FROM ROUTE AS R " +
                 "  LEFT JOIN TRANSPORT AS T ON R.NUMBER_ROUTE = T.NUMBER_ROUTE WHERE R." + search + " BETWEEN ? AND ? GROUP BY R.ROUTE_ID   ORDER BY R.NUMBER_ROUTE";
-        List<RouteDto> routes = jdbcTemplate.query(searchSql,new BeanPropertyRowMapper<>(RouteDto.class),start,end);
-        LOGGER.info("Get all routes with used search by {} and their numbers is {}",search, routes.size());
+        List<RouteDto> routes = jdbcTemplate.query(searchSql, new BeanPropertyRowMapper<>(RouteDto.class), start, end);
+        LOGGER.info("Get all routes with used search by {} and their numbers is {}", search, routes.size());
         return routes;
     }
 
