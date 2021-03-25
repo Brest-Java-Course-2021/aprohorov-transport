@@ -51,7 +51,7 @@ public class TransportController {
 
     @PostMapping("/update")
     public String updateTransportInDb(@ModelAttribute @Valid Transport transport, BindingResult bindingResult,
-                                      Model model,RedirectAttributes redirectAttributes) {
+                                      Model model, RedirectAttributes redirectAttributes) {
         LOGGER.debug("Update transport with parameters =>{}", transport);
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", "Edit");
@@ -138,31 +138,13 @@ public class TransportController {
 
     @GetMapping("/search")
     public String searchTransportByDate(@RequestParam("dateBefore") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore,
-                                        @RequestParam("dateAfter") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) Date dateAfter ,
+                                        @RequestParam("dateAfter") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAfter,
                                         Model model) {
-        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore,dateAfter);
-        LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} " , dateBefore,dateAfter,transports.size());
+        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore, dateAfter);
+        LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} ", dateBefore, dateAfter, transports.size());
         model.addAttribute("transports", transports);
         model.addAttribute("heading", "Transport");
-        LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}",dateBefore,dateAfter);
+        LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}", dateBefore, dateAfter);
         return "transport";
     }
-//
-
-//    @PostMapping("/search")
-//    public String searchTransportByDate(@ModelAttribute @Valid TransportSearchDateDto transportSearchDateDto,
-//                                        BindingResult bindingResult,Model model) {
-//        Date dateBefore = transportSearchDateDto.getDateBefore();
-//        Date dateAfter = transportSearchDateDto.getDateAfter();
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("heading", "Transport");
-//            return "transport";
-//        }
-//        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore,dateAfter);
-//        LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} " , dateBefore,dateAfter,transports.size());
-//        model.addAttribute("transports", transports);
-//        model.addAttribute("heading", "Transport");
-//        LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}",dateBefore,dateAfter);
-//        return "transport";
-//    }
 }

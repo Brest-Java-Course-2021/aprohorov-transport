@@ -17,7 +17,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
-    th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css}">
+          th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css}">
     <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{css/bootstrap.min.css}"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/style.css"
@@ -37,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body h5" >
+            <div class="modal-body h5">
                 <h4>Are you sure you want to delete information about this transport?</h4>
             </div>
             <div class="modal-footer">
@@ -70,7 +70,7 @@
                     </li>
                 </ul>
 
-                <form class="d-flex" th:action="@{/transport/search}" th:method="get" >
+                <form class="d-flex" th:action="@{/transport/search}" th:method="get">
                     <input class="form-control me-2" name="dateBefore" type="date" aria-label="Date" autofocus required>
                     <input class="form-control me-2" name="dateAfter" type="date" aria-label="Date" autofocus required>
                     <button class="btn btn-outline-success text-nowrap" type="submit">Search Date of manufacture
@@ -109,7 +109,8 @@
                 </tr>
                 </thead>
                 <div th:if="${transports.size() == 0}" class="alert alert-info" role="alert">
-                    Not found transports with your parameters. <a th:href="@{/transport}" class="alert-link">Click to display all transports</a>
+                    Not found transports with your parameters. <a th:href="@{/transport}" class="alert-link">Click to
+                    display all transports</a>
                 </div>
                 <tr th:each="transport : ${transports}">
                     <td th:text="${transport.getTransportType()}">Bus</td>
@@ -153,7 +154,7 @@
     $('#delete').on('show.bs.modal', function (event) {
         var target = $(event.relatedTarget)
         $(this).find('.modal-body').text('Are you sure you want to delete information about this transport with register number  '
-            + target.data('name') + '?' )
+            + target.data('name') + '?')
         document.getElementById('deleteUrl').href = '/transport/delete/' + target.data('id');
     })
 </script>

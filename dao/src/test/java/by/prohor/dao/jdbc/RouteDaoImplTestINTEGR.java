@@ -2,7 +2,6 @@ package by.prohor.dao.jdbc;
 
 import by.prohor.dao.RouteDao;
 import by.prohor.dao.TransportDao;
-import by.prohor.dao.config.DaoConfiguration;
 import by.prohor.dao.exception.DuplicateEntityInDbException;
 import by.prohor.model.Route;
 import by.prohor.model.Transport;
@@ -17,7 +16,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -29,7 +27,6 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = DaoConfiguration.class)
 @SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})})
 public class RouteDaoImplTestINTEGR {
 
@@ -165,28 +162,28 @@ public class RouteDaoImplTestINTEGR {
     }
 
     @Test
-     void searchOnPageRoute_whenValueInMethodNull_thenReturnEmptyList(){
+    void searchOnPageRoute_whenValueInMethodNull_thenReturnEmptyList() {
         List<RouteDto> routes = routeDao.searchOnPageRoute("LENGTH", null, null);
         assertEquals(0, routes.size());
     }
 
     @Test
-     void searchOnPageRoute_whenCorrectParametersInMethod(){
+    void searchOnPageRoute_whenCorrectParametersInMethod() {
         routeDao.save(new Route(15, 23.5, 45, 12));
         routeDao.save(new Route(17, 12.3, 26, 8));
         String search = "NUMBER_ROUTE";
         Integer start = 15;
         Integer end = 17;
-        List<RouteDto> routes = routeDao.searchOnPageRoute(search,start, end);
+        List<RouteDto> routes = routeDao.searchOnPageRoute(search, start, end);
         assertEquals(2, routes.size());
     }
 
     @ParameterizedTest
     @MethodSource("checkValue")
-     void searchOnPageRoute_whenStartMoreThanEnd(String search,Integer start,Integer end, Integer result){
+    void searchOnPageRoute_whenStartMoreThanEnd(String search, Integer start, Integer end, Integer result) {
         routeDao.save(new Route(15, 150.5, 900, 300));
         routeDao.save(new Route(17, 130.3, 700, 245));
-        List<RouteDto> routes = routeDao.searchOnPageRoute(search,start, end);
+        List<RouteDto> routes = routeDao.searchOnPageRoute(search, start, end);
         assertEquals(result, routes.size());
     }
 
@@ -197,26 +194,26 @@ public class RouteDaoImplTestINTEGR {
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
         transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "9999 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        assertEquals(3,routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
+        assertEquals(3, routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
     }
 
     @Test
     void getAllWithNumberOfVehicles_whenCorrectParametersInMethod_thenReturnListWithNumberOfVehiclesEmptyValue() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
-        assertEquals(0,routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
+        assertEquals(0, routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
     }
 
     private static Stream<Arguments> checkValue() {
         return Stream.of(
-                Arguments.of("NUMBER_ROUTE", 15, 17,2),
-                Arguments.of("NUMBER_ROUTE", 13, 16,1),
-                Arguments.of("LENGTH", 120,131,1),
-                Arguments.of("LENGTH", 100,155,2),
-                Arguments.of("LAP_TIME", 200, 600,0),
-                Arguments.of("LAP_TIME", 700, 900,2),
-                Arguments.of("NUMBER_OF_STOPS", 230, 310,2),
-                Arguments.of("NUMBER_OF_STOPS", 200, 230,0)
+                Arguments.of("NUMBER_ROUTE", 15, 17, 2),
+                Arguments.of("NUMBER_ROUTE", 13, 16, 1),
+                Arguments.of("LENGTH", 120, 131, 1),
+                Arguments.of("LENGTH", 100, 155, 2),
+                Arguments.of("LAP_TIME", 200, 600, 0),
+                Arguments.of("LAP_TIME", 700, 900, 2),
+                Arguments.of("NUMBER_OF_STOPS", 230, 310, 2),
+                Arguments.of("NUMBER_OF_STOPS", 200, 230, 0)
         );
     }
 

@@ -143,7 +143,7 @@ public class TransportDaoImpl implements TransportDao {
     @Override
     public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
         LOGGER.debug("Find all transports from DB with date of manufacture");
-        List<Transport> allTransportsByDate = jdbcTemplate.query(searchByDateSql, new TransportRowMapper(),dateBefore,dateAfter);
+        List<Transport> allTransportsByDate = jdbcTemplate.query(searchByDateSql, new TransportRowMapper(), dateBefore, dateAfter);
         LOGGER.info("Found all transports by date and their numbers is {}", allTransportsByDate.size());
         return allTransportsByDate;
     }

@@ -82,8 +82,8 @@
                             <input id="numberOfStops" th:field="*{numberOfStops}" type="number"
                                    th:value="${route.getNumberOfStops()}" min="1" max="999"/>
                             <th:block th:if="${#fields.hasErrors('numberOfStops')}">
-                            <div th:errorclass="invalid-input" th:errors="*{numberOfStops}"></div>
-                        </th:block>
+                                <div th:errorclass="invalid-input" th:errors="*{numberOfStops}"></div>
+                            </th:block>
                         </div>
                     </div>
                     <div class="container">

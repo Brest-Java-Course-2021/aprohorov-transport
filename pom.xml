@@ -17,6 +17,7 @@
         <module>service-api</module>
         <module>web-app</module>
         <module>test-db</module>
+        <module>rest-app</module>
     </modules>
 
     <properties>

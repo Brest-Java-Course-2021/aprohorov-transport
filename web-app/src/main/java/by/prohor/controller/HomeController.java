@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String startPage() {
-        LOGGER.debug("Start startpage view");
+        LOGGER.debug("Start start page view");
         return "startpage";
     }
 }

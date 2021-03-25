@@ -48,7 +48,7 @@ public class RouteController {
     }
 
     @PostMapping("/update")
-    public String updateRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors,Model model) {
+    public String updateRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors, Model model) {
         LOGGER.debug("Update route with parameters =>{}", route);
         if (errors.hasErrors()) {
             model.addAttribute("title", "Edit");
@@ -61,7 +61,7 @@ public class RouteController {
     }
 
     @PostMapping("/new")
-    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors,Model model) {
+    public String createRoute(@ModelAttribute("route") @Valid Route route, BindingResult errors, Model model) {
         LOGGER.debug("Create new with parameters =>{}", route);
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create");
@@ -98,9 +98,9 @@ public class RouteController {
                               @RequestParam("end") Integer end,
                               @RequestParam("search") String search, Model model) {
         List<RouteDto> routes = routeService.searchOnPageRoute(search, start, end);
-        LOGGER.debug("Found routes by {} with parameters start => {} and end => {} In the amount of {} " , search,start,end,routes.size());
+        LOGGER.debug("Found routes by {} with parameters start => {} and end => {} In the amount of {} ", search, start, end, routes.size());
         model.addAttribute("routes", routes);
-        LOGGER.info("View start URL method GET => ( 'route/search' ) with parameters start => {} and end => {}",start,end);
+        LOGGER.info("View start URL method GET => ( 'route/search' ) with parameters start => {} and end => {}", start, end);
         return "route";
     }
 }
