@@ -16,18 +16,22 @@
             <groupId>by.prohorov</groupId>
             <artifactId>model</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>dao-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>dao</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>service-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>by.prohorov</groupId>
             <artifactId>service</artifactId>
@@ -42,13 +46,32 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.4</version>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>by.prohor.RestApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
