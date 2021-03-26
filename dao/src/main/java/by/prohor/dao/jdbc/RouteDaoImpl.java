@@ -55,10 +55,10 @@ public class RouteDaoImpl implements RouteDao {
     @Value("${route.getAllWithNumber}")
     private String getAllWithNumberSql;
 
-
     public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
     @PostConstruct
     public void init() {
