@@ -36,4 +36,4 @@ java -jar rest-app.jar
 
 
 
-This starts Jetty and serves up your project on [http://localhost:8080](http://localhost:8080).
+This starts application and serves up your project on [http://localhost:8080](http://localhost:8080) for web-app and [http://localhost:8090](http://localhost:8090) for rest-app.
