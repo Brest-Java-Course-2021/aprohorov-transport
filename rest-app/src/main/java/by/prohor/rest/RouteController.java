@@ -28,7 +28,7 @@ public class RouteController {
     }
 
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = {"application/json"})
     public ResponseEntity<List<RouteDto>> allRoute() {
         List<RouteDto> allRoutes = routeService.getAllWithNumberOfVehicles();
         LOGGER.debug("Used {} routes", allRoutes.size());
@@ -36,21 +36,21 @@ public class RouteController {
         return new ResponseEntity<>(allRoutes, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleteRoute(@PathVariable int id) {
         LOGGER.debug("Delete route with number route => {}", id);
         LOGGER.info("View start URL method GET => ( 'route/delete/{id}' )");
         return new ResponseEntity<>(routeService.delete(id), HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PutMapping(value = "/update", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateRoute(@ModelAttribute("route") Route route) {
         LOGGER.debug("Update route with parameters =>{}", route);
         LOGGER.info("View start URL method POST => ( 'route/update/' )");
         return new ResponseEntity<>(routeService.update(route), HttpStatus.OK);
     }
 
-    @PostMapping("/new")
+    @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Route> createRoute(@ModelAttribute("route") Route route) {
         LOGGER.debug("Create new with parameters =>{}", route);
         routeService.save(route);
@@ -58,27 +58,27 @@ public class RouteController {
         return new ResponseEntity<>(routeService.save(route), HttpStatus.CREATED);
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping(value = "/edit/{id}", produces = {"application/json"})
     public ResponseEntity<Route> editRoute(@PathVariable Integer id) {
         LOGGER.debug("Update route with id =>{}", id);
         LOGGER.info("View start URL method GET => ( 'route/edit/{id}' )");
-        return new ResponseEntity<>(routeService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(routeService.findById(id), HttpStatus.FOUND);
     }
 
-    @GetMapping("/create")
+    @GetMapping(value = "/create", produces = {"application/json"})
     public ResponseEntity<Route> createRoute() {
         LOGGER.debug("Create new route");
         LOGGER.info("View start URL method GET => ( 'route/create' )");
         return new ResponseEntity<>(new Route(), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = {"application/json"})
     public ResponseEntity<List<RouteDto>> searchRoute(@RequestParam("start") Integer start,
                                                       @RequestParam("end") Integer end,
                                                       @RequestParam("search") String search) {
         List<RouteDto> routes = routeService.searchOnPageRoute(search, start, end);
         LOGGER.debug("Found routes by {} with parameters start => {} and end => {} In the amount of {} ", search, start, end, routes.size());
         LOGGER.info("View start URL method GET => ( 'route/search' ) with parameters start => {} and end => {}", start, end);
-        return new ResponseEntity<>(routes, HttpStatus.OK);
+        return new ResponseEntity<>(routes, HttpStatus.FOUND);
     }
 }
