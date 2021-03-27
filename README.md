@@ -14,9 +14,7 @@ This is sample 'Transport Park' web application.
 mvn clean install
 ```
 
-## Local tests with Jetty Maven Plugin
-
-The [Jetty Maven plugin](https://www.eclipse.org/jetty/documentation/jetty-10/programming-guide/index.html#jetty-maven-plugin) is useful for development and nd local testing.
+## Local tests
 
 From the same directory as your root pom.xml, type:
 for start web-app...
