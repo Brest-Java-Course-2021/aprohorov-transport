@@ -8,17 +8,21 @@ import by.prohor.model.Transport;
 import by.prohor.model.dto.RouteDto;
 import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
+import by.prohor.test.TestConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -26,8 +30,11 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})})
+@ContextConfiguration(classes = {TestConfig.class})
+@JdbcTest
+@PropertySource({"classpath:request.properties"})
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql"})})
 public class RouteDaoImplTestINTEGR {
 
     @Autowired
@@ -41,7 +48,7 @@ public class RouteDaoImplTestINTEGR {
     void getAll() {
         List<Route> routes = routeDao.getAll();
         assertNotNull(routes);
-        assertTrue(routes.size() > 0);
+        assertEquals(0, routes.size());
     }
 
     @Test
@@ -191,10 +198,15 @@ public class RouteDaoImplTestINTEGR {
     void getAllWithNumberOfVehicles_whenCorrectParameters() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        transportDao.save(new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "9999 AB-1", 45, Date.valueOf("2020-02-12"), numberRoute));
-        assertEquals(3, routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
+        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"));
+        transportOne.setNumberRoute(numberRoute);
+        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"));
+        transportSecond.setNumberRoute(numberRoute);
+
+        transportDao.save(transportOne);
+        transportDao.save(transportSecond);
+
+        assertEquals(2, routeDao.getAllWithNumberOfVehicles().get(0).getNumberOfVehicles());
     }
 
     @Test

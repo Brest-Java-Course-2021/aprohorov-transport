@@ -6,6 +6,7 @@ import by.prohor.model.Route;
 import by.prohor.model.dto.RouteDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,7 +30,8 @@ public class RouteDaoImpl implements RouteDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteDaoImpl.class);
 
 
-    private final JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
     private RowMapper<Route> rowMapper;
@@ -54,11 +56,6 @@ public class RouteDaoImpl implements RouteDao {
 
     @Value("${route.getAllWithNumber}")
     private String getAllWithNumberSql;
-
-    public RouteDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
 
     @PostConstruct
     public void init() {

@@ -41,13 +41,12 @@ public class Transport {
     public Transport() {
     }
 
-    public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture, Integer numberRoute) {
+    public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture) {
         this.transportType = transportType;
         this.fuelType = fuelType;
         this.registerNumber = registerNumber;
         this.capacity = capacity;
         this.dateOfManufacture = dateOfManufacture;
-        this.numberRoute = numberRoute;
     }
 
 
