@@ -8,6 +8,7 @@ import by.prohor.model.type.FuelType;
 import by.prohor.model.type.TransportType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,8 +33,8 @@ public class TransportDaoImpl implements TransportDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportDaoImpl.class);
 
-
-    private final JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private SimpleJdbcInsert simpleJdbcInsert;
 
@@ -60,10 +61,6 @@ public class TransportDaoImpl implements TransportDao {
 
     @Value("${transport.searchByDate}")
     private String searchByDateSql;
-
-    public TransportDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @PostConstruct
     public void init() {
