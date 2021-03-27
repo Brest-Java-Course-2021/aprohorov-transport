@@ -29,7 +29,7 @@ public class TransportController {
         this.transportService = transportService;
     }
 
-    @GetMapping("")
+    @GetMapping(value = "")
     public ResponseEntity<List<Transport>> getTransport() {
         List<Transport> allTransports = transportService.getAll();
         LOGGER.debug("Used {} transports", allTransports.size());
@@ -37,37 +37,37 @@ public class TransportController {
         return new ResponseEntity<>(allTransports, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}", produces = {"application/json"})
     public ResponseEntity<Integer> deleteTransport(@PathVariable int id) {
         LOGGER.debug("Delete transport with id => {}", id);
         LOGGER.info("View start URL method GET => ( 'transport/delete/{id}' )");
         return new ResponseEntity<>(transportService.delete(id), HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PutMapping(value = "/update", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateTransportInDb(@ModelAttribute @Valid Transport transport) {
         LOGGER.debug("Update transport with parameters =>{}", transport);
         LOGGER.info("View start URL method POST => ( 'transport/update/' )");
         return new ResponseEntity<>(transportService.update(transport), HttpStatus.OK);
     }
 
-    @PostMapping("/new")
+    @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Transport> createTransportInDb(@ModelAttribute @Valid Transport transport) {
         LOGGER.debug("Create new route with parameters =>{}", transport);
         LOGGER.info("View start URL method POST => ( 'transport/new' )");
         return new ResponseEntity<>(transportService.save(transport), HttpStatus.CREATED);
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping(value = "/edit/{id}", produces = {"application/json"})
     public ResponseEntity<Transport> editTransport(@PathVariable int id) {
         LOGGER.debug("Update transport with id =>{}", id);
         //Todo add in rest method getAllNumberRoutes
 //        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
-        return new ResponseEntity<>(transportService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(transportService.findById(id), HttpStatus.FOUND);
     }
 
-    @GetMapping("/create/{id}")
+    @GetMapping(value = "/create/{id}", produces = {"application/json"})
     public ResponseEntity<Transport> createTransportWithId(@PathVariable int id) {
         LOGGER.debug("Create new transport with number route => {}", id);
         Transport transport = new Transport();
@@ -79,14 +79,14 @@ public class TransportController {
     }
 
 
-    @GetMapping("/create")
+    @GetMapping(value = "/create", produces = {"application/json"})
     public ResponseEntity<Transport> createTransport() {
         LOGGER.debug("Create new transport ");
         LOGGER.info("View start URL method GET => ( 'route/create' )");
         return new ResponseEntity<>(new Transport(), HttpStatus.OK);
     }
 
-    @GetMapping("/route/{id}")
+    @GetMapping(value = "/route/{id}", produces = {"application/json"})
     public ResponseEntity<List<Transport>> getTransportWithNumberRoute(@PathVariable int id) {
         List<Transport> transportsByNumberRoute = transportService.findByNumberRoute(id);
         LOGGER.debug("Used {} with number route => {}", transportsByNumberRoute.size(), id);
@@ -94,12 +94,12 @@ public class TransportController {
         return new ResponseEntity<>(transportsByNumberRoute, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
+    @GetMapping(value = "/search", produces = {"application/json"})
     public ResponseEntity<List<Transport>> searchTransportByDate(@RequestParam("dateBefore") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore,
                                                                  @RequestParam("dateAfter") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAfter) {
         List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore, dateAfter);
         LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} ", dateBefore, dateAfter, transports.size());
         LOGGER.info("View start URL method GET => ( 'transport/search' ) with parameters start => {} and end => {}", dateBefore, dateAfter);
-        return new ResponseEntity<>(transports, HttpStatus.OK);
+        return new ResponseEntity<>(transports, HttpStatus.FOUND);
     }
 }
