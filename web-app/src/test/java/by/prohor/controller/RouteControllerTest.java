@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.stream.Stream;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -27,6 +29,7 @@ class RouteControllerTest {
 
     @MockBean
     private RouteService routeService;
+
 
     @Test
     void allRoute() throws Exception {
@@ -101,15 +104,44 @@ class RouteControllerTest {
     void editRoute_whenIdIsExist() throws Exception {
         Route route = new Route(1, 1.0, 1, 1);
         route.setRouteId(5);
-        mockMvc.perform(get("/route/edit/{id}", route.getRouteId())
-                .param("route", String.valueOf(route))
-        )
+        when(routeService.findById(any(Integer.class))).thenReturn(route);
+        mockMvc.perform(get("/route/edit/{id}", route.getRouteId()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("route_edit"));
     }
 
     @Test
-    void testCreateRoute() {
+    void testCreateRoute() throws Exception {
+        mockMvc.perform(get("/route/create"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("route_edit"));
+    }
+
+    @Test
+    void searchRoute_whenParametersIsCorrect() throws Exception {
+        mockMvc.perform(get("/route/search")
+                .param("start", "1")
+                .param("end", "14")
+                .param("search", "NUMBER_ROUTE"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("route"));
+    }
+
+    @ParameterizedTest
+    @MethodSource("badRequestSearch")
+    void searchRoute_whenParametersIsEmpty(String start, String end, String search) throws Exception {
+        mockMvc.perform(get("/route/search")
+                .param("start", start)
+                .param("end", end)
+                .param("search", search))
+                .andExpect(status().isBadRequest());
+    }
+
+    private static Stream<Arguments> badRequestSearch() {
+        return Stream.of(
+                Arguments.of("sad", "sds", " "),
+                Arguments.of("sda", " ", " "),
+                Arguments.of(" ", " ", "NUMBER_ROUTE"));
     }
 
     private static Stream<Arguments> badParameters() {
@@ -125,4 +157,6 @@ class RouteControllerTest {
                 Arguments.of("32", "13", "64", "26"),
                 Arguments.of("8", "26", "43", "11"));
     }
+
+
 }
