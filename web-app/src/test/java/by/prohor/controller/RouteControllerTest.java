@@ -157,6 +157,4 @@ class RouteControllerTest {
                 Arguments.of("32", "13", "64", "26"),
                 Arguments.of("8", "26", "43", "11"));
     }
-
-
 }

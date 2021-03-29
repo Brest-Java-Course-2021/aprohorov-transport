@@ -50,7 +50,7 @@ public class TransportController {
     }
 
     @PostMapping("/update")
-    public String updateTransportInDb(@ModelAttribute @Valid Transport transport, BindingResult bindingResult,
+    public String updateTransportInDb(@ModelAttribute("transport") @Valid Transport transport, BindingResult bindingResult,
                                       Model model, RedirectAttributes redirectAttributes) {
         LOGGER.debug("Update transport with parameters =>{}", transport);
         if (bindingResult.hasErrors()) {
@@ -69,7 +69,7 @@ public class TransportController {
     }
 
     @PostMapping("/new")
-    public String createTransportInDb(@ModelAttribute @Valid Transport transport, BindingResult bindingResult,
+    public String createTransportInDb(@ModelAttribute("transport") @Valid Transport transport, BindingResult bindingResult,
                                       Model model, RedirectAttributes redirectAttributes) {
         LOGGER.debug("Create new route with parameters =>{}", transport);
         if (bindingResult.hasErrors()) {
