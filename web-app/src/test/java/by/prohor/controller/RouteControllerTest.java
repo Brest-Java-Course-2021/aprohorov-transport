@@ -129,7 +129,7 @@ class RouteControllerTest {
 
     @ParameterizedTest
     @MethodSource("badRequestSearch")
-    void searchRoute_whenParametersIsEmpty(String start, String end, String search) throws Exception {
+    void searchRoute_whenSomeParametersIsEmpty_thenReturnBadRequest(String start, String end, String search) throws Exception {
         mockMvc.perform(get("/route/search")
                 .param("start", start)
                 .param("end", end)

@@ -100,7 +100,7 @@ public class TransportController {
     }
 
     @GetMapping("/create/{id}")
-    public String createTransport(Model model, @PathVariable int id) {
+    public String createTransportById(Model model, @PathVariable int id) {
         LOGGER.debug("Create new transport with number route => {}", id);
         model.addAttribute("title", "Create");
         model.addAttribute("hidden", true);
