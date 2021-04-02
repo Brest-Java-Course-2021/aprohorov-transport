@@ -1,5 +1,6 @@
 package by.prohor;
 
+import by.prohor.dao.TransportDao;
 import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
@@ -24,44 +25,58 @@ public class TransportRestService implements TransportService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportRestService.class);
 
+    String url = "http://localhost:8090/transport";
 
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private TransportDao transportDao;
+
+
     @Override
     public List<Transport> findByNumberRoute(Integer numberRoute) {
-        return null;
+        String findByNumberRouteUrl = url + "/route/{numberRoute}";
+        ResponseEntity<List<Transport>> responseSearch = restTemplate.exchange(findByNumberRouteUrl, HttpMethod.GET, null, new ParameterizedTypeReference<>() {}, "numberRoute");
+        return responseSearch.getBody();
     }
 
     @Override
+    // Todo Maybe this is not the best option
     public List<Route> getAllNumberRoutes() {
-        return null;
+        return transportDao.getAllNumberRoutes();
     }
 
     @Override
     public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
-        return null;
+        String searchOnPageTransportByDateUrl = url + "/search?dateBefore={dateBefore}&dateAfter={dateAfter}";
+        ResponseEntity<List<Transport>> responseSearch = restTemplate.exchange(searchOnPageTransportByDateUrl, HttpMethod.GET, null, new ParameterizedTypeReference<>() {},"dateBefore","dateAfter");
+        return responseSearch.getBody();
     }
 
     @Override
     public List<Transport> getAll() {
-        ResponseEntity<List<Transport>> responseEntity = restTemplate.exchange("http://localhost:8090/transport", HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
-        return responseEntity.getBody();
+        ResponseEntity<List<Transport>> responseAllTransport = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<>() {});
+        return responseAllTransport.getBody();
     }
 
     @Override
     public Transport save(Transport model) {
-        return null;
+        String saveUrl = url + "/new";
+        ResponseEntity<Transport> responseSaveTransport = restTemplate.postForEntity(saveUrl,model, Transport.class);
+        return responseSaveTransport.getBody();
     }
 
     @Override
     public Integer delete(Integer id) {
-        return null;
+        String deleteUrl = url + "/delete/{id}";
+        return restTemplate.getForEntity(deleteUrl,Integer.class, "id").getBody();
     }
 
     @Override
     public Integer update(Transport model) {
-        return null;
+        String updateUrl = url + "/update";
+        return  restTemplate.postForEntity(updateUrl,model, Integer.class).getBody();
     }
 
     @Override
@@ -69,3 +84,4 @@ public class TransportRestService implements TransportService {
         return null;
     }
 }
+
