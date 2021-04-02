@@ -37,7 +37,7 @@
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>rest-service</artifactId>
         </dependency>
 
         <dependency>
