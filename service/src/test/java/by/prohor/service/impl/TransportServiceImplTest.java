@@ -102,7 +102,7 @@ class TransportServiceImplTest {
     @Test
     void findByNumberRoute_whenDaoReturnAllTransportsWithNumberRouteIsEmpty() {
         when(transportDao.findByNumberRoute(any(Integer.class))).thenReturn(Collections.emptyList());
-        assertNotNull(transportServiceImpl.findByNumberRoute(0));
+        assertNotNull(transportServiceImpl.findAllTransportWithNumberRoute(0));
         assertEquals(0, transportServiceImpl.getAll().size());
     }
 
@@ -113,7 +113,7 @@ class TransportServiceImplTest {
                 new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")),
                 new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")));
         when(transportDao.findByNumberRoute(5)).thenReturn(transports);
-        assertEquals(3, transportServiceImpl.findByNumberRoute(5).size());
+        assertEquals(3, transportServiceImpl.findAllTransportWithNumberRoute(5).size());
     }
 
     @Test

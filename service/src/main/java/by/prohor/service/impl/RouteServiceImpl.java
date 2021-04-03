@@ -23,12 +23,6 @@ public class RouteServiceImpl implements RouteService {
         this.routeDao = routeDao;
     }
 
-
-    @Override
-    public Route findByNumberRoute(Integer numberRoute) {
-        return routeDao.findByNumberRoute(numberRoute);
-    }
-
     @Override
     public List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end) {
         return routeDao.searchOnPageRoute(search, start, end);

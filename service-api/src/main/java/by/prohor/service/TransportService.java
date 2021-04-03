@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface TransportService extends TransportParkService<Transport> {
 
-    List<Transport> findByNumberRoute(Integer numberRoute);
+    List<Transport> findAllTransportWithNumberRoute(Integer numberRoute);
 
     List<Route> getAllNumberRoutes();
 

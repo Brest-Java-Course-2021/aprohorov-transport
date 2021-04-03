@@ -48,20 +48,6 @@ class RouteServiceImplTest {
     }
 
     @Test
-    void testFindByNumberRoute_thenDaoReturnRouteCorrect() {
-        Route route = new Route(9, 0.9, 9, 9);
-        when(routeDaoImpl.findByNumberRoute(9)).thenReturn(route);
-        assertNotNull(routeServiceImpl.findByNumberRoute(9));
-        assertEquals(route, routeServiceImpl.findByNumberRoute(9));
-    }
-
-    @Test
-    void testFindByNumberRoute_whenNumberRouteNotExistInDb_thenThrowEmptyResultDataAccessException() {
-        when(routeDaoImpl.findByNumberRoute(0)).thenThrow(EmptyResultDataAccessException.class);
-        assertThrows(EmptyResultDataAccessException.class, () -> routeServiceImpl.findByNumberRoute(0));
-    }
-
-    @Test
     void testSave_whenRouteIsCorrect() {
         Route route = new Route(9, 0.9, 9, 9);
         when(routeDaoImpl.save(route)).thenReturn(route);

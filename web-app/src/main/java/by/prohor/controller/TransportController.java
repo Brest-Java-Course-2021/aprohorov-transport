@@ -127,7 +127,7 @@ public class TransportController {
 
     @GetMapping("/route/{id}")
     public String getTransportWithNumberRoute(Model model, @PathVariable int id) {
-        List<Transport> transportsByNumberRoute = transportService.findByNumberRoute(id);
+        List<Transport> transportsByNumberRoute = transportService.findAllTransportWithNumberRoute(id);
         LOGGER.debug("Used {} transports for rendering template 'transport' with number route => {}", transportsByNumberRoute.size(), id);
         model.addAttribute("heading", "Transport route " + id);
         model.addAttribute("transports", transportsByNumberRoute);

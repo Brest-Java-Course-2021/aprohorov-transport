@@ -51,7 +51,7 @@ public class TransportServiceImpl implements TransportService {
     }
 
     @Override
-    public List<Transport> findByNumberRoute(Integer numberRoute) {
+    public List<Transport> findAllTransportWithNumberRoute(Integer numberRoute) {
         return transportDao.findByNumberRoute(numberRoute);
     }
 

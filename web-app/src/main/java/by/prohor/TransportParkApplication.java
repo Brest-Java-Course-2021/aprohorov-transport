@@ -2,9 +2,7 @@ package by.prohor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by Artsiom Prokharau 23.03.2021
@@ -16,10 +14,5 @@ public class TransportParkApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TransportParkApplication.class, args);
-    }
-
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
     }
 }

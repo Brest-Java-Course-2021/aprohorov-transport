@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @JdbcTest
 @PropertySource({"classpath:request.properties"})
 @Transactional
-//@SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql"})})
 class TransportDaoImplTestINTEGR {
 
     @Autowired

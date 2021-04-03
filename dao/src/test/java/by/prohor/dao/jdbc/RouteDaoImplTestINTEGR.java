@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @JdbcTest
 @PropertySource({"classpath:request.properties"})
 @Transactional
-//@SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql"})})
 public class RouteDaoImplTestINTEGR {
 
     @Autowired
@@ -53,7 +52,7 @@ public class RouteDaoImplTestINTEGR {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
         assertNotNull(route);
         assertEquals(3, (int) route.getNumberRoute());
-        assertEquals(routeDao.findByNumberRoute(3), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
     }
 
     @Test
@@ -84,7 +83,7 @@ public class RouteDaoImplTestINTEGR {
     @Test
     public void delete_whenRouteCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
-        assertEquals(routeDao.findByNumberRoute(3), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
         assertEquals(1, (int) routeDao.delete(route.getNumberRoute()));
         assertEquals(0, (int) routeDao.delete(route.getNumberRoute()));
     }
@@ -107,7 +106,7 @@ public class RouteDaoImplTestINTEGR {
         route.setLapTime(20);
         route.setNumberOfStops(20);
         assertTrue(routeDao.update(route) > 0);
-        assertEquals(routeDao.findByNumberRoute(20), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
     }
 
     @Test
@@ -131,22 +130,6 @@ public class RouteDaoImplTestINTEGR {
     @Test
     void update_whenValueInMethodNull_thenThrowNullPointerException() {
         assertThrows(NullPointerException.class, () -> routeDao.update(null));
-    }
-
-    @Test
-    void findByNumberRoute_whenRouteWithParametersIsCorrect() {
-        Route route = routeDao.save(new Route(3, 12.3, 26, 8));
-        assertEquals(routeDao.findByNumberRoute(3), route);
-    }
-
-    @Test
-    void findByNumberRoute_whenValueInMethodNull_thenThrowEmptyResultDataAccessException() {
-        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(null));
-    }
-
-    @Test
-    void findByNumberRoute_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
-        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(0));
     }
 
     @Test

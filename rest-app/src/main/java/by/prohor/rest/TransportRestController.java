@@ -19,13 +19,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/transport")
-public class TransportController {
+public class TransportRestController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TransportController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportRestController.class);
 
     public final TransportService transportService;
 
-    public TransportController(TransportService transportService) {
+    public TransportRestController(TransportService transportService) {
         this.transportService = transportService;
     }
 
@@ -45,14 +45,14 @@ public class TransportController {
     }
 
     @PutMapping(value = "/update", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> updateTransportInDb(@ModelAttribute @Valid Transport transport) {
+    public ResponseEntity<Integer> updateTransportInDb(@RequestBody Transport transport) {
         LOGGER.debug("Update transport with parameters =>{}", transport);
         LOGGER.info("View start URL method POST => ( 'transport/update/' )");
         return new ResponseEntity<>(transportService.update(transport), HttpStatus.OK);
     }
 
     @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Transport> createTransportInDb(@ModelAttribute @Valid Transport transport) {
+    public ResponseEntity<Transport> createTransportInDb(@RequestBody Transport transport) {
         LOGGER.debug("Create new route with parameters =>{}", transport);
         LOGGER.info("View start URL method POST => ( 'transport/new' )");
         return new ResponseEntity<>(transportService.save(transport), HttpStatus.CREATED);
@@ -61,8 +61,6 @@ public class TransportController {
     @GetMapping(value = "/edit/{id}", produces = {"application/json"})
     public ResponseEntity<Transport> editTransport(@PathVariable int id) {
         LOGGER.debug("Update transport with id =>{}", id);
-        //Todo add in rest method getAllNumberRoutes
-//        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
         return new ResponseEntity<>(transportService.findById(id), HttpStatus.FOUND);
     }
@@ -88,7 +86,7 @@ public class TransportController {
 
     @GetMapping(value = "/route/{id}", produces = {"application/json"})
     public ResponseEntity<List<Transport>> getTransportWithNumberRoute(@PathVariable int id) {
-        List<Transport> transportsByNumberRoute = transportService.findByNumberRoute(id);
+        List<Transport> transportsByNumberRoute = transportService.findAllTransportWithNumberRoute(id);
         LOGGER.debug("Used {} with number route => {}", transportsByNumberRoute.size(), id);
         LOGGER.info("View start URL method GET => ( 'transport/route/{id}' )");
         return new ResponseEntity<>(transportsByNumberRoute, HttpStatus.OK);

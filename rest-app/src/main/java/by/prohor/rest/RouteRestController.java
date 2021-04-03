@@ -17,13 +17,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/route")
-public class RouteController {
+public class RouteRestController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteRestController.class);
 
     private final RouteService routeService;
 
-    public RouteController(RouteService routeService) {
+    public RouteRestController(RouteService routeService) {
         this.routeService = routeService;
     }
 
@@ -44,14 +44,14 @@ public class RouteController {
     }
 
     @PutMapping(value = "/update", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Integer> updateRoute(@ModelAttribute("route") Route route) {
+    public ResponseEntity<Integer> updateRoute(@RequestBody Route route) {
         LOGGER.debug("Update route with parameters =>{}", route);
         LOGGER.info("View start URL method POST => ( 'route/update/' )");
         return new ResponseEntity<>(routeService.update(route), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<Route> createRoute(@ModelAttribute("route") Route route) {
+    @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"aspplication/json"})
+    public ResponseEntity<Route> createRoute(@RequestBody Route route) {
         LOGGER.debug("Create new with parameters =>{}", route);
         routeService.save(route);
         LOGGER.info("View start URL method POST => ( 'route/new' )");

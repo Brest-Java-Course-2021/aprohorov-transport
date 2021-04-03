@@ -74,14 +74,6 @@ public class RouteDaoImpl implements RouteDao {
     }
 
     @Override
-    public Route findByNumberRoute(Integer numberRoute) {
-        LOGGER.debug("Find route from DB with number route {}", numberRoute);
-        Route route = jdbcTemplate.queryForObject(findByNumberRouteSql, rowMapper, numberRoute);
-        LOGGER.info("Found route with number route {} ", numberRoute);
-        return route;
-    }
-
-    @Override
     public List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end) {
         LOGGER.debug("Find all routes from DB with used search by {}", search);
         // todo вынести в проперти
