@@ -5,7 +5,7 @@ import by.prohor.model.type.TransportType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -31,17 +31,17 @@ public class Transport {
     @Max(value = 9999, message = "Capacity should be less than 9999")
     private Integer capacity;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @NotNull(message = "Date of manufacture should not be empty")
     @PastOrPresent(message = "Incorrect value. Date can not be future")
-    private Date dateOfManufacture;
+    private LocalDate dateOfManufacture;
 
     private Integer numberRoute;
 
     public Transport() {
     }
 
-    public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, Date dateOfManufacture) {
+    public Transport(TransportType transportType, FuelType fuelType, String registerNumber, Integer capacity, LocalDate dateOfManufacture) {
         this.transportType = transportType;
         this.fuelType = fuelType;
         this.registerNumber = registerNumber;
@@ -82,11 +82,11 @@ public class Transport {
         this.capacity = capacity;
     }
 
-    public Date getDateOfManufacture() {
+    public LocalDate getDateOfManufacture() {
         return dateOfManufacture;
     }
 
-    public void setDateOfManufacture(Date dateOfManufacture) {
+    public void setDateOfManufacture(LocalDate dateOfManufacture) {
         this.dateOfManufacture = dateOfManufacture;
     }
 

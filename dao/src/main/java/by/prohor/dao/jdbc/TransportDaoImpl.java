@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +72,7 @@ public class TransportDaoImpl implements TransportDao {
 
 
     @Override
-    public List<Transport> getAll() {
+    public List<Transport> getAllTransport() {
         LOGGER.debug("Get all transports from DB");
         List<Transport> transports = jdbcTemplate.query(getAllSql, new TransportRowMapper());
         LOGGER.info("Get all transports and their numbers is {}", transports.size());
@@ -130,7 +131,7 @@ public class TransportDaoImpl implements TransportDao {
     }
 
     @Override
-    public List<Route> getAllNumberRoutes() {
+    public List<Route> getAllAvailableNumberRoutes() {
         LOGGER.debug("Get all number routes from DB");
         List<Route> allNumberRoutes = jdbcTemplate.query(getAllNumberRoutesSql, new BeanPropertyRowMapper<>(Route.class));
         LOGGER.info("Get all number routes and their numbers is {}", allNumberRoutes.size());
@@ -138,7 +139,7 @@ public class TransportDaoImpl implements TransportDao {
     }
 
     @Override
-    public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
+    public List<Transport> searchOnPageTransportByDate(LocalDate dateBefore, LocalDate dateAfter) {
         LOGGER.debug("Find all transports from DB with date of manufacture");
         List<Transport> allTransportsByDate = jdbcTemplate.query(searchByDateSql, new TransportRowMapper(), dateBefore, dateAfter);
         LOGGER.info("Found all transports by date and their numbers is {}", allTransportsByDate.size());
@@ -179,7 +180,7 @@ public class TransportDaoImpl implements TransportDao {
             transport.setFuelType(FuelType.valueOf(resultSet.getString("FUEL_TYPE")));
             transport.setRegisterNumber(resultSet.getString("REGISTER_NUMBER"));
             transport.setCapacity(resultSet.getInt("CAPACITY"));
-            transport.setDateOfManufacture(resultSet.getDate("DATE_OF_MANUFACTURE"));
+            transport.setDateOfManufacture(resultSet.getDate("DATE_OF_MANUFACTURE").toLocalDate());
             transport.setNumberRoute(resultSet.getInt("NUMBER_ROUTE"));
 
             return transport;

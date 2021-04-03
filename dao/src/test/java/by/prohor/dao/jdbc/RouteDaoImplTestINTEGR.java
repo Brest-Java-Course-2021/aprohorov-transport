@@ -21,7 +21,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -38,14 +38,6 @@ public class RouteDaoImplTestINTEGR {
 
     @Autowired
     private TransportDao transportDao;
-
-
-    @Test
-    void getAll() {
-        List<Route> routes = routeDao.getAll();
-        assertNotNull(routes);
-        assertEquals(0, routes.size());
-    }
 
     @Test
     void save_whenRouteCorrect() {
@@ -178,9 +170,9 @@ public class RouteDaoImplTestINTEGR {
     void getAllWithNumberOfVehicles_whenCorrectParameters() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
-        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, LocalDate.of(2020,2,12));
         transportOne.setNumberRoute(numberRoute);
-        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, LocalDate.of(2020,2,12));
         transportSecond.setNumberRoute(numberRoute);
 
         transportDao.save(transportOne);

@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface TransportParkDao<T> {
 
-    List<T> getAll();
-
     T save(T model);
 
     Integer delete(Integer id);

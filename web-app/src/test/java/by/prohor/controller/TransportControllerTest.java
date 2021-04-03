@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.stream.Stream;
 
@@ -63,7 +64,7 @@ class TransportControllerTest {
 
     @Test
     void updateTransport_whenObjectTransportIsCorrect() throws Exception {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, new Date(2002 - 2 - 12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, LocalDate.of(2002,2,12));
         transport.setNumberRoute(4);
         mockMvc.perform(post("/transport/update")
                 .flashAttr("transport", transport))
@@ -74,7 +75,7 @@ class TransportControllerTest {
 
     @Test
     void updateTransport_whenObjectTransportIsCorrectButNumberRouteNull() throws Exception {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, new Date(2002 - 2 - 12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, LocalDate.of(2002,2,12));
         transport.setNumberRoute(null);
         mockMvc.perform(post("/transport/update")
                 .flashAttr("transport", transport))
@@ -95,7 +96,7 @@ class TransportControllerTest {
 
     @Test
     void createTransportInDb_whenObjectTransportIsCorrectButNumberRouteNull() throws Exception {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, new Date(2002 - 2 - 12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, LocalDate.of(2002,2,12));
         transport.setNumberRoute(null);
         mockMvc.perform(post("/transport/new")
                 .flashAttr("transport", transport))
@@ -106,7 +107,7 @@ class TransportControllerTest {
 
     @Test
     void createTransportInDb_whenObjectTransportIsCorrect() throws Exception {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, new Date(2002 - 2 - 12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, LocalDate.of(2002,2,12));
         transport.setNumberRoute(4);
         mockMvc.perform(post("/transport/new")
                 .flashAttr("transport", transport)
@@ -118,7 +119,7 @@ class TransportControllerTest {
 
     @Test
     void editTransport_whenIdIsExist() throws Exception {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, new Date(2002 - 2 - 12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "7777 AB-1", 45, LocalDate.of(2002,2,12));
         transport.setTransportId(5);
         when(transportService.findById(any(Integer.class))).thenReturn(transport);
         mockMvc.perform(get("/transport/edit/{id}", transport.getTransportId()))
@@ -171,8 +172,8 @@ class TransportControllerTest {
     @Test
     void searchTransportByDate_whenParametersIsCorrect() throws Exception {
         mockMvc.perform(get("/transport/search")
-                .param("dateBefore", "2020-2-12")
-                .param("dateAfter", "2020-2-18"))
+                .param("dateBefore", String.valueOf(LocalDate.of(2020,2,12)))
+                .param("dateAfter", String.valueOf(LocalDate.of(2020,2,18))))
                 .andExpect(status().isOk())
                 .andExpect(view().name("transport"));
     }

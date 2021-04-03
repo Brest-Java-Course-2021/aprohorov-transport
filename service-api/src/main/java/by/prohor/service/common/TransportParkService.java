@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface TransportParkService<T> {
 
-    List<T> getAll();
-
     T save(T model);
 
     Integer delete(Integer id);

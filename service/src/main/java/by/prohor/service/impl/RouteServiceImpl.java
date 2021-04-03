@@ -34,11 +34,6 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<Route> getAll() {
-        return routeDao.getAll();
-    }
-
-    @Override
     public Route save(Route model) {
         return routeDao.save(model);
     }
