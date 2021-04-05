@@ -1,7 +1,5 @@
 package by.prohor.dao.common;
 
-import java.util.List;
-
 /**
  * Created by Artsiom Prokharau 22.02.2021
  */

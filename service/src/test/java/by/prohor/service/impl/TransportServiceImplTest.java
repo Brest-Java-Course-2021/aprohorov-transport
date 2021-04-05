@@ -52,16 +52,16 @@ class TransportServiceImplTest {
     @Test
     void testGetAll_whenDaoReturnAllTransportsWithSizeThree() {
         List<Transport> transports = Arrays.asList(
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)));
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)));
         when(transportDao.getAllTransport()).thenReturn(transports);
         assertEquals(3, transportServiceImpl.getAllTransport().size());
     }
 
     @Test
     void testSave_whenTransportIsCorrect() {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12));
         when(transportDao.save(transport)).thenReturn(transport);
         assertEquals(transportServiceImpl.save(transport), transport);
     }
@@ -87,7 +87,7 @@ class TransportServiceImplTest {
 
     @Test
     void testUpdate_whenTransportIsCorrect() {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12));
         transport.setCapacity(78);
         when(transportDao.update(any(Transport.class))).thenReturn(1);
         assertEquals(1, transportServiceImpl.update(transport));
@@ -109,9 +109,9 @@ class TransportServiceImplTest {
     @Test
     void testGetAll_whenDaoReturnAllTransportsWithNumberRouteAndSizeThree() {
         List<Transport> transports = Arrays.asList(
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020,2,12)));
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)));
         when(transportDao.findByNumberRoute(5)).thenReturn(transports);
         assertEquals(3, transportServiceImpl.findAllTransportWithNumberRoute(5).size());
     }

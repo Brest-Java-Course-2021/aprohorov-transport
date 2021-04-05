@@ -1,5 +1,6 @@
-package by.prohor;
+package by.prohor.service.rest;
 
+import by.prohor.dao.TransportDao;
 import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
@@ -54,7 +55,7 @@ public class TransportRestService implements TransportService {
     private RestTemplate restTemplate;
 
     @Autowired
-    private TransportService transportService;
+    private TransportDao transportDao;
 
 
     @Override
@@ -70,8 +71,9 @@ public class TransportRestService implements TransportService {
     }
 
     @Override
+    // Todo connect data base
     public List<Route> getAllAvailableNumberRoutes() {
-        return transportService.getAllAvailableNumberRoutes();
+        return transportDao.getAllAvailableNumberRoutes();
     }
 
     @Override

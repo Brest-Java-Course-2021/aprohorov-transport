@@ -1,4 +1,4 @@
-package by.prohor.rest;
+package by.prohor.service.rest;
 
 import by.prohor.model.Route;
 import by.prohor.model.dto.RouteDto;

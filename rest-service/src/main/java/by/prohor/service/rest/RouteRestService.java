@@ -1,4 +1,4 @@
-package by.prohor;
+package by.prohor.service.rest;
 
 import by.prohor.model.Route;
 import by.prohor.model.dto.RouteDto;
@@ -47,9 +47,6 @@ public class RouteRestService implements RouteService {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Autowired
-    private RouteService routeService;
 
     @Override
     public List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end) {

@@ -170,9 +170,9 @@ public class RouteDaoImplTestINTEGR {
     void getAllWithNumberOfVehicles_whenCorrectParameters() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
-        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, LocalDate.of(2020,2,12));
+        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, LocalDate.of(2020, 2, 12));
         transportOne.setNumberRoute(numberRoute);
-        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, LocalDate.of(2020,2,12));
+        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, LocalDate.of(2020, 2, 12));
         transportSecond.setNumberRoute(numberRoute);
 
         transportDao.save(transportOne);

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 
 @ControllerAdvice
-public class RestExceptionHandler  extends ResponseEntityExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DuplicateEntityInDbException.class)
     protected ResponseEntity<Object> handleDuplicateEntityInDb(DuplicateEntityInDbException ex) {

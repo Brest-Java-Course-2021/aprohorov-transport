@@ -1,25 +1,19 @@
-package by.prohor;
+package by.prohor.webapp;
 
+import by.prohor.webapp.config_rest.RestConnectConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.context.annotation.Import;
 
 /**
  * Created by Artsiom Prokharau 23.03.2021
  */
 
 @SpringBootApplication
-@PropertySource({"classpath:request.properties","classpath:url.properties"})
+@Import(RestConnectConfiguration.class)
 public class TransportParkApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TransportParkApplication.class, args);
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }

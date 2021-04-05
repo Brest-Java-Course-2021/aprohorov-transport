@@ -1,4 +1,4 @@
-package by.prohor.controller;
+package by.prohor.webapp.controller;
 
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;

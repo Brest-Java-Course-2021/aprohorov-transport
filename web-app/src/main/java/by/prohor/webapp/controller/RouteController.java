@@ -1,4 +1,4 @@
-package by.prohor.controller;
+package by.prohor.webapp.controller;
 
 import by.prohor.model.Route;
 import by.prohor.model.dto.RouteDto;

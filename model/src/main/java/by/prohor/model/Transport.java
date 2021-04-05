@@ -31,7 +31,7 @@ public class Transport {
     @Max(value = 9999, message = "Capacity should be less than 9999")
     private Integer capacity;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Date of manufacture should not be empty")
     @PastOrPresent(message = "Incorrect value. Date can not be future")
     private LocalDate dateOfManufacture;

@@ -2,10 +2,13 @@ package by.prohor.controller;
 
 import by.prohor.model.Route;
 import by.prohor.service.RouteService;
+import by.prohor.webapp.controller.RouteController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,7 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,6 +34,9 @@ class RouteControllerTest {
 
     @MockBean
     private RouteService routeService;
+
+    @Captor
+    private ArgumentCaptor<Route> captor;
 
 
     @Test
@@ -72,6 +80,10 @@ class RouteControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/route"));
+
+        verify(routeService).update(captor.capture());
+        Route route = captor.getValue();
+        assertEquals(Double.parseDouble(length), route.getLength());
     }
 
     @ParameterizedTest
@@ -85,12 +97,14 @@ class RouteControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("route_edit"));
+
+
     }
 
     @ParameterizedTest
     @MethodSource("correctParameters")
     void createRoute_whenObjectRouteHasCorrectValue(String numberRoute, String length, String lapTime, String numberOfStops) throws Exception {
-        mockMvc.perform(post("/route/update")
+        mockMvc.perform(post("/route/new")
                 .param("numberRoute", numberRoute)
                 .param("length", length)
                 .param("lapTime", lapTime)
@@ -98,6 +112,11 @@ class RouteControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/route"));
+
+        verify(routeService).save(captor.capture());
+
+        Route route = captor.getValue();
+        assertEquals(Double.parseDouble(length), route.getLength());
     }
 
     @Test

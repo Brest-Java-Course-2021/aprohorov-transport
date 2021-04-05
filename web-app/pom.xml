@@ -22,16 +22,6 @@
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>dao</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>by.prohorov</groupId>
-            <artifactId>dao-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>by.prohorov</groupId>
             <artifactId>service-api</artifactId>
         </dependency>
 
@@ -86,7 +76,7 @@
                 </executions>
                 <configuration>
                     <addResources>true</addResources>
-                    <mainClass>by.prohor.TransportParkApplication</mainClass>
+                    <mainClass>by.prohor.webapp.TransportParkApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

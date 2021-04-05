@@ -10,20 +10,20 @@ import java.util.List;
 
 public class ExceptionApi {
 
-        private String message;
-        private String debugMessage;
+    private String message;
+    private String debugMessage;
 
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        private List<String> errors;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<String> errors;
 
     public ExceptionApi(String debugMessage) {
         this.debugMessage = debugMessage;
     }
 
-    public ExceptionApi(String message, String debugMessage){
-            this.message=message;
-            this.debugMessage=debugMessage;
-        }
+    public ExceptionApi(String message, String debugMessage) {
+        this.message = message;
+        this.debugMessage = debugMessage;
+    }
 
     public String getMessage() {
         return message;
