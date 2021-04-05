@@ -21,7 +21,7 @@ public class Route {
     private Integer numberRoute;
 
     @NotNull(message = "Length should not be empty")
-    @Min(value = 1, message = "Length should be greater than 0")
+    @Min(value = 0, message = "Length should be greater than 0")
     @Max(value = 9999, message = "length should be less than 9999")
     private Double length;
 

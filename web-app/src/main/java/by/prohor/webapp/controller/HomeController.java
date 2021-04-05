@@ -1,4 +1,4 @@
-package by.prohor.controller;
+package by.prohor.webapp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,7 +7,7 @@ import by.prohor.service.TransportService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -31,8 +31,8 @@ public class TransportServiceImpl implements TransportService {
     }
 
     @Override
-    public List<Transport> getAll() {
-        return transportDao.getAll();
+    public List<Transport> getAllTransport() {
+        return transportDao.getAllTransport();
     }
 
     @Override
@@ -51,17 +51,17 @@ public class TransportServiceImpl implements TransportService {
     }
 
     @Override
-    public List<Transport> findByNumberRoute(Integer numberRoute) {
+    public List<Transport> findAllTransportWithNumberRoute(Integer numberRoute) {
         return transportDao.findByNumberRoute(numberRoute);
     }
 
     @Override
-    public List<Route> getAllNumberRoutes() {
-        return transportDao.getAllNumberRoutes();
+    public List<Route> getAllAvailableNumberRoutes() {
+        return transportDao.getAllAvailableNumberRoutes();
     }
 
     @Override
-    public List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter) {
+    public List<Transport> searchTransportByDate(LocalDate dateBefore, LocalDate dateAfter) {
         return transportDao.searchOnPageTransportByDate(dateBefore, dateAfter);
     }
 }

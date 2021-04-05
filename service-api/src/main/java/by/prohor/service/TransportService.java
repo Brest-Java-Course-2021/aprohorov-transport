@@ -4,7 +4,7 @@ import by.prohor.model.Route;
 import by.prohor.model.Transport;
 import by.prohor.service.common.TransportParkService;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,9 +13,11 @@ import java.util.List;
 
 public interface TransportService extends TransportParkService<Transport> {
 
-    List<Transport> findByNumberRoute(Integer numberRoute);
+    List<Transport> getAllTransport();
 
-    List<Route> getAllNumberRoutes();
+    List<Transport> findAllTransportWithNumberRoute(Integer numberRoute);
 
-    List<Transport> searchOnPageTransportByDate(Date dateBefore, Date dateAfter);
+    List<Route> getAllAvailableNumberRoutes();
+
+    List<Transport> searchTransportByDate(LocalDate dateBefore, LocalDate dateAfter);
 }

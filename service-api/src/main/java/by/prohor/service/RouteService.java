@@ -13,8 +13,6 @@ import java.util.List;
 
 public interface RouteService extends TransportParkService<Route> {
 
-    Route findByNumberRoute(Integer numberRoute);
-
     List<RouteDto> searchOnPageRoute(String search, Integer start, Integer end);
 
     List<RouteDto> getAllWithNumberOfVehicles();

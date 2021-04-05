@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -44,24 +44,24 @@ class TransportServiceImplTest {
 
     @Test
     void testGetAll_whenDaoReturnAllTransportIsEmpty() {
-        when(transportDao.getAll()).thenReturn(Collections.emptyList());
-        assertNotNull(transportServiceImpl.getAll());
-        assertEquals(0, transportServiceImpl.getAll().size());
+        when(transportDao.getAllTransport()).thenReturn(Collections.emptyList());
+        assertNotNull(transportServiceImpl.getAllTransport());
+        assertEquals(0, transportServiceImpl.getAllTransport().size());
     }
 
     @Test
     void testGetAll_whenDaoReturnAllTransportsWithSizeThree() {
         List<Transport> transports = Arrays.asList(
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")));
-        when(transportDao.getAll()).thenReturn(transports);
-        assertEquals(3, transportServiceImpl.getAll().size());
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)));
+        when(transportDao.getAllTransport()).thenReturn(transports);
+        assertEquals(3, transportServiceImpl.getAllTransport().size());
     }
 
     @Test
     void testSave_whenTransportIsCorrect() {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12));
         when(transportDao.save(transport)).thenReturn(transport);
         assertEquals(transportServiceImpl.save(transport), transport);
     }
@@ -87,7 +87,7 @@ class TransportServiceImplTest {
 
     @Test
     void testUpdate_whenTransportIsCorrect() {
-        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transport = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12));
         transport.setCapacity(78);
         when(transportDao.update(any(Transport.class))).thenReturn(1);
         assertEquals(1, transportServiceImpl.update(transport));
@@ -102,24 +102,24 @@ class TransportServiceImplTest {
     @Test
     void findByNumberRoute_whenDaoReturnAllTransportsWithNumberRouteIsEmpty() {
         when(transportDao.findByNumberRoute(any(Integer.class))).thenReturn(Collections.emptyList());
-        assertNotNull(transportServiceImpl.findByNumberRoute(0));
-        assertEquals(0, transportServiceImpl.getAll().size());
+        assertNotNull(transportServiceImpl.findAllTransportWithNumberRoute(0));
+        assertEquals(0, transportServiceImpl.getAllTransport().size());
     }
 
     @Test
     void testGetAll_whenDaoReturnAllTransportsWithNumberRouteAndSizeThree() {
         List<Transport> transports = Arrays.asList(
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")),
-                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, Date.valueOf("2020-02-12")));
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)),
+                new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2356 AB-1", 45, LocalDate.of(2020, 2, 12)));
         when(transportDao.findByNumberRoute(5)).thenReturn(transports);
-        assertEquals(3, transportServiceImpl.findByNumberRoute(5).size());
+        assertEquals(3, transportServiceImpl.findAllTransportWithNumberRoute(5).size());
     }
 
     @Test
     void testGetAll_whenDaoReturnAllNumberRoutesIsEmpty() {
-        when(transportDao.getAllNumberRoutes()).thenReturn(Collections.emptyList());
-        assertNotNull(transportServiceImpl.getAllNumberRoutes());
-        assertEquals(0, transportServiceImpl.getAllNumberRoutes().size());
+        when(transportDao.getAllAvailableNumberRoutes()).thenReturn(Collections.emptyList());
+        assertNotNull(transportServiceImpl.getAllAvailableNumberRoutes());
+        assertEquals(0, transportServiceImpl.getAllAvailableNumberRoutes().size());
     }
 }

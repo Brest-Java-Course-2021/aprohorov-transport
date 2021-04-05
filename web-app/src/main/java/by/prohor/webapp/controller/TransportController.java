@@ -1,4 +1,4 @@
-package by.prohor.controller;
+package by.prohor.webapp.controller;
 
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -33,7 +33,7 @@ public class TransportController {
 
     @GetMapping("")
     public String getTransport(Model model) {
-        List<Transport> allTransports = transportService.getAll();
+        List<Transport> allTransports = transportService.getAllTransport();
         LOGGER.debug("Used {} transports for rendering template 'transport'", allTransports.size());
         model.addAttribute("transports", allTransports);
         model.addAttribute("heading", "Transport");
@@ -93,7 +93,7 @@ public class TransportController {
         model.addAttribute("title", "Edit");
         model.addAttribute("method", "update");
         model.addAttribute("hidden", true);
-        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
+        model.addAttribute("allRoutes", transportService.getAllAvailableNumberRoutes());
         model.addAttribute("transport", transportService.findById(id));
         LOGGER.info("View start URL method GET => ( 'transport/edit/{id}' )");
         return "transport_edit";
@@ -108,7 +108,7 @@ public class TransportController {
         Transport transport = new Transport();
         transport.setNumberRoute(id);
         model.addAttribute("transport", transport);
-        model.addAttribute("allRoutes", transportService.getAllNumberRoutes());
+        model.addAttribute("allRoutes", transportService.getAllAvailableNumberRoutes());
         LOGGER.info("View start URL method GET => ( 'route/create/{id}' )");
         return "transport_edit";
     }
@@ -127,7 +127,7 @@ public class TransportController {
 
     @GetMapping("/route/{id}")
     public String getTransportWithNumberRoute(Model model, @PathVariable int id) {
-        List<Transport> transportsByNumberRoute = transportService.findByNumberRoute(id);
+        List<Transport> transportsByNumberRoute = transportService.findAllTransportWithNumberRoute(id);
         LOGGER.debug("Used {} transports for rendering template 'transport' with number route => {}", transportsByNumberRoute.size(), id);
         model.addAttribute("heading", "Transport route " + id);
         model.addAttribute("transports", transportsByNumberRoute);
@@ -137,10 +137,10 @@ public class TransportController {
     }
 
     @GetMapping("/search")
-    public String searchTransportByDate(@RequestParam("dateBefore") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateBefore,
-                                        @RequestParam("dateAfter") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAfter,
+    public String searchTransportByDate(@RequestParam("dateBefore") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateBefore,
+                                        @RequestParam("dateAfter") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateAfter,
                                         Model model) {
-        List<Transport> transports = transportService.searchOnPageTransportByDate(dateBefore, dateAfter);
+        List<Transport> transports = transportService.searchTransportByDate(dateBefore, dateAfter);
         LOGGER.debug("Found transports by date of manufacture with parameters start => {} and end => {} In the amount of {} ", dateBefore, dateAfter, transports.size());
         model.addAttribute("transports", transports);
         model.addAttribute("heading", "Transport");

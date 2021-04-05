@@ -19,12 +19,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -33,8 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {TestConfig.class})
 @JdbcTest
 @PropertySource({"classpath:request.properties"})
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
-@SqlGroup({@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql"})})
+@Transactional
 public class RouteDaoImplTestINTEGR {
 
     @Autowired
@@ -43,20 +39,12 @@ public class RouteDaoImplTestINTEGR {
     @Autowired
     private TransportDao transportDao;
 
-
-    @Test
-    void getAll() {
-        List<Route> routes = routeDao.getAll();
-        assertNotNull(routes);
-        assertEquals(0, routes.size());
-    }
-
     @Test
     void save_whenRouteCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
         assertNotNull(route);
         assertEquals(3, (int) route.getNumberRoute());
-        assertEquals(routeDao.findByNumberRoute(3), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
     }
 
     @Test
@@ -87,7 +75,7 @@ public class RouteDaoImplTestINTEGR {
     @Test
     public void delete_whenRouteCorrect() {
         Route route = routeDao.save(new Route(3, 12.3, 26, 8));
-        assertEquals(routeDao.findByNumberRoute(3), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
         assertEquals(1, (int) routeDao.delete(route.getNumberRoute()));
         assertEquals(0, (int) routeDao.delete(route.getNumberRoute()));
     }
@@ -110,7 +98,7 @@ public class RouteDaoImplTestINTEGR {
         route.setLapTime(20);
         route.setNumberOfStops(20);
         assertTrue(routeDao.update(route) > 0);
-        assertEquals(routeDao.findByNumberRoute(20), route);
+        assertEquals(routeDao.findById(route.getRouteId()), route);
     }
 
     @Test
@@ -134,22 +122,6 @@ public class RouteDaoImplTestINTEGR {
     @Test
     void update_whenValueInMethodNull_thenThrowNullPointerException() {
         assertThrows(NullPointerException.class, () -> routeDao.update(null));
-    }
-
-    @Test
-    void findByNumberRoute_whenRouteWithParametersIsCorrect() {
-        Route route = routeDao.save(new Route(3, 12.3, 26, 8));
-        assertEquals(routeDao.findByNumberRoute(3), route);
-    }
-
-    @Test
-    void findByNumberRoute_whenValueInMethodNull_thenThrowEmptyResultDataAccessException() {
-        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(null));
-    }
-
-    @Test
-    void findByNumberRoute_whenRouteDoesNotExistsInDb_thenThrowEmptyResultDataAccessException() {
-        assertThrows(EmptyResultDataAccessException.class, () -> routeDao.findByNumberRoute(0));
     }
 
     @Test
@@ -198,9 +170,9 @@ public class RouteDaoImplTestINTEGR {
     void getAllWithNumberOfVehicles_whenCorrectParameters() {
         Integer numberRoute = 1;
         routeDao.save(new Route(numberRoute, 150.5, 900, 300));
-        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transportOne = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "1111 AB-1", 45, LocalDate.of(2020, 2, 12));
         transportOne.setNumberRoute(numberRoute);
-        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, Date.valueOf("2020-02-12"));
+        Transport transportSecond = new Transport(TransportType.TROLLEY, FuelType.GASOLINE, "2222 AB-1", 45, LocalDate.of(2020, 2, 12));
         transportSecond.setNumberRoute(numberRoute);
 
         transportDao.save(transportOne);

@@ -22,22 +22,12 @@
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>dao</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>by.prohorov</groupId>
-            <artifactId>dao-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>by.prohorov</groupId>
             <artifactId>service-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>by.prohorov</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>rest-service</artifactId>
         </dependency>
 
         <dependency>
@@ -54,13 +44,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <!-- hot swapping, disable cache for template, enable live reload -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -93,7 +76,7 @@
                 </executions>
                 <configuration>
                     <addResources>true</addResources>
-                    <mainClass>by.prohor.TransportParkApplication</mainClass>
+                    <mainClass>by.prohor.webapp.TransportParkApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
