@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Artsiom Prokharau 06.04.2021
  */
@@ -14,8 +16,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class WebAppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(HttpClientErrorException.class)
-    protected String handleDuplicateEntityInDb(HttpClientErrorException ex, Model model) {
-        model.addAttribute("message", ex.getMessage());
+    protected String handleDuplicateEntityInDb(HttpServletRequest request, Model model) {
+        model.addAttribute("status", request.getRequestURI());
         return "error";
     }
 

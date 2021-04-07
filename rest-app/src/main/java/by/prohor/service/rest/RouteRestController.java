@@ -40,14 +40,20 @@ public class RouteRestController {
     public ResponseEntity<Integer> deleteRoute(@PathVariable int id) {
         LOGGER.debug("Delete route with number route => {}", id);
         LOGGER.info("View start URL method GET(REST)  => ( 'route/delete/{id}' )");
-        return new ResponseEntity<>(routeService.delete(id), HttpStatus.OK);
+        Integer delete = routeService.delete(id);
+        return delete != 0
+                ? new ResponseEntity<>(delete, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(value = "/update", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Integer> updateRoute(@RequestBody Route route) {
         LOGGER.debug("Update route with parameters =>{}", route);
         LOGGER.info("View start URL method POST(REST) => ( 'route/update/' )");
-        return new ResponseEntity<>(routeService.update(route), HttpStatus.OK);
+        Integer update = routeService.update(route);
+        return update != 0
+                ? new ResponseEntity<>(update, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(value = "/new", consumes = {"application/json"}, produces = {"application/json"})
