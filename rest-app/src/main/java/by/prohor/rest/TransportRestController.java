@@ -1,4 +1,4 @@
-package by.prohor.service.rest;
+package by.prohor.rest;
 
 import by.prohor.model.Transport;
 import by.prohor.service.TransportService;
