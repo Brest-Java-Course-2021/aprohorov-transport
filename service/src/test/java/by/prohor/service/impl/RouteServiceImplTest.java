@@ -30,7 +30,7 @@ class RouteServiceImplTest {
 
     @Test
     void testSave_whenRouteIsCorrect() {
-        Route route = new Route(9, 0.9, 9, 9);
+        Route route = new Route(10, 0.9, 9, 9);
         when(routeDaoImpl.save(route)).thenReturn(route);
         assertEquals(routeServiceImpl.save(route), route);
     }
